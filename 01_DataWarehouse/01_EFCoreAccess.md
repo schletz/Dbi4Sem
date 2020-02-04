@@ -457,7 +457,6 @@ Ersetzen Sie in der Datei *Pages/Index.razor* den Inhalt durch den folgenden Cod
         Bewerbe = (from b in Context.Bewerbe
                    orderby b.Name
                    select b).ToList();
-        //Ergebnisse = Context.GetResults(_selectedbewerb).ToList();
     }
 }
 ```
