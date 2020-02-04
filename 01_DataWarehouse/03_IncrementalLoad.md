@@ -1,4 +1,4 @@
-# Synchronisation von Datenquellen 
+# Inkrementelles Laden mit SQL*Loader
 
 ## Intro
 
