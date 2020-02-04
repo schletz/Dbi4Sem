@@ -2,5 +2,5 @@
 
 ## Inhalte
 
-- Data Warehouse
-- Business Intelligence
+- [Data Warehouse](tree/master/01_DataWarehouse)
+- [Business Intelligence](tree/master/02_BusinessIntelligence)

@@ -368,3 +368,100 @@ Platz 1 im Bewerb 5km Lauf hat Zuname1011 mit 1248.8879 s
 Platz 2 im Bewerb 5km Lauf hat Zuname1012 mit 1252.5676 s
 Platz 3 im Bewerb 5km Lauf hat Zuname1011 mit 1422.9360 s
 ```
+
+## Für interessierte: Erstellen einer kleinen Webapplikation für die Daten
+
+Mit Blazor können Sie natürlich auch auf die Datenbank zugreifen. Zum Erstellen der Applikation werden
+fast die selben Befehle verwendet, nur wird statt *console* das Temlate *blazorserver* eingegeben.
+
+![](images/webapp_demo.png)
+
+```text
+rd /S /Q SportfestApp
+md SportfestApp
+cd SportfestApp
+dotnet new blazorserver
+dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
+dotnet add package Oracle.EntityFrameworkCore
+dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
+```
+
+Öffnen Sie danach die Datei *SportfestApp.csproj* in Visual Studio. Führen Sie danach die oben
+beschriebenen Schritte in den Modelklassen durch, damit die Verbindung zur View und zur Prozedur
+hergestellt wird.
+
+Ergänzen Sie dann in der Methode *ConfigureServices* in *Startup.cs* den Datenbankkontext:
+
+```c#
+public void ConfigureServices(IServiceCollection services)
+{
+    // Andere Services (AddRazorPages, AddServerSideBlazor)
+    services.AddDbContext<ModelContext>();
+}
+```
+
+Fügen Sie in der Datei *_Imports.razor* das Using für Ihr Model ein:
+
+```c#
+@using SportfestApp.Model;
+```
+
+Ersetzen Sie in der Datei *Pages/Index.razor* den Inhalt durch den folgenden Code.
+
+```c#
+@page "/"
+@inject ModelContext Context;
+
+<div class="form-group">
+    <label for="bewerbList">Bewerbe</label>
+    <select class="form-control" id="bewerbList" @bind="@SelectedBewerb">
+        @foreach (var bewerb in @Bewerbe)
+        {
+            <option value=@bewerb.Name>@bewerb.Name (@bewerb.Count Einträge)</option>
+        }
+    </select>
+</div>
+<div>
+    <table class="table">
+        @if (SelectedBewerb != "")
+        {
+            <thead>
+                <tr><td>E-ID</td><td>Zeit</td></tr>
+            </thead>
+        }
+
+        @foreach (var ergebnis in Ergebnisse)
+        {
+            <tr><td>@ergebnis.EId</td><td>@ergebnis.EZeit sec</td></tr>
+        }
+    </table>
+
+</div>
+@code
+{
+    private List<Bewerb> Bewerbe { get; set; } = new List<Bewerb>();
+    private string _selectedbewerb = "";
+    private string SelectedBewerb
+    {
+        get => _selectedbewerb;
+        set
+        {
+            Ergebnisse = Context.GetResults(value).ToList();
+            _selectedbewerb = value;
+        }
+    }
+    private List<Ergebnisse> Ergebnisse { get; set; } = new List<Ergebnisse>();
+
+    protected override void OnInitialized()
+    {
+        Bewerbe = (from b in Context.Bewerbe
+                   orderby b.Name
+                   select b).ToList();
+        //Ergebnisse = Context.GetResults(_selectedbewerb).ToList();
+    }
+}
+```
+
+## Weitere Informationen
+
+- [oracle.com: .NET Development with Oracle Database](https://www.oracle.com/technetwork/topics/dotnet/latest-news/index.html)
