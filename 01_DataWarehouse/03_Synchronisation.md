@@ -1,1 +1,0 @@
-# Synchronisation von Datenquellen 

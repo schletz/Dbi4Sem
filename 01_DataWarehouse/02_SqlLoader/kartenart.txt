@@ -1,0 +1,5 @@
+K_ID	K_Name	K_TageGueltig
+1	Einzelfahrt	NULL
+2	Tageskarte	1
+3	Wochenkarte	7
+4	Monatskarte	30
