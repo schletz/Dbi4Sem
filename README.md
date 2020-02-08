@@ -26,3 +26,8 @@ git remote add origin https://github.com/schletz/Dbi4Sem.git
 git fetch --all
 git reset --hard origin/master
 ```
+
+### Nachträgliches Synchronisieren
+
+Führen Sie die Datei *resetGit.cmd* aus. Dadurch werden die lokalen Änderungen zurückgesetzt und der
+neue Stand wird vom Server übertragen.
