@@ -7,7 +7,6 @@
   2. [Oracle SQL*Loader](01_DataWarehouse/02_SqlLoader.md)
   3. [Inkrementelles Laden](01_DataWarehouse/03_IncrementalLoad.md)
   4. [Lesen von JSON Daten](01_DataWarehouse/04_Json.md)
-  5. [Lesen von Webquellen mit den Worker Services in .NET Core 3.0](01_DataWarehouse/05_ServiceWorker.md)
 - Business Intelligence
 
 ## Synchronisieren des Repositories in einen Ordner
