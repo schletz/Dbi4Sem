@@ -8,7 +8,7 @@ Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie i
 dotnet --info
 ```
 
-Beachten Sie dabei den Punkt **Host (useful for support)**. Diese Versionsnummer (hier 3.1.1) brauchen
+Beachten Sie dabei den Punkt *Host (useful for support)*. Diese Versionsnummer (hier 3.1.1) brauchen
 Sie für den nachfolgenden Befehl.
 
 ```text
