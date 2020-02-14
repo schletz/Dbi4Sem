@@ -2,7 +2,7 @@
 
 ## Lehrinhalte
 
-- Data Warehouse
+- [Data Warehouse](01_DataWarehouse)
   1. [Zugriff auf die Oracle Datenbank mit EF Core](01_DataWarehouse/01_EFCoreAccess.md)
   2. [Oracle SQL*Loader](01_DataWarehouse/02_SqlLoader.md)
   3. [Inkrementelles Laden](01_DataWarehouse/03_IncrementalLoad.md)
