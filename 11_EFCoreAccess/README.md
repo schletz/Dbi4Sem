@@ -380,6 +380,7 @@ dotnet new blazorserver
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
 dotnet add package Oracle.EntityFrameworkCore
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
+
 ```
 
 Öffnen Sie danach die Datei *SportfestApp.csproj* in Visual Studio. Führen Sie danach die oben
