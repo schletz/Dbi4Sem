@@ -26,6 +26,8 @@ Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete S
 Erstellen Sie zuerst einen neuen User *Sportfest* mit folgenden Berechtigungen:
 
 ```sql
+DROP USER Sportfest CASCADE;
+
 CREATE USER Sportfest IDENTIFIED BY oracle;
 GRANT CONNECT, RESOURCE, CREATE VIEW TO Sportfest;
 GRANT UNLIMITED TABLESPACE TO Sportfest;
