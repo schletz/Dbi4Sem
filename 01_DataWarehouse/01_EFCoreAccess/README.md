@@ -41,7 +41,6 @@ dotnet --version
   Eine Anleitung für die Arbeit mit DBeaver finden Sie
   [hier auf GitHub](https://github.com/schletz/Dbi1Sem/blob/master/03_OracleSQL/00a_Dbeaver.md).
 
-
 ## Erstellen eines Users und befüllen der Datenbank
 
 Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete Sportfestdatenbank.
@@ -161,7 +160,7 @@ View mit der objektorientierten Welt in C#. Damit wir die Spalten nicht händisc
 können wir über JSON Daten die Klasse erstellen. Markieren Sie dafür in DBeaver mit *STRG + A* alle
 Ergebnisse im Result. Danach wählen Sie *Copy as JSON*.
 
-![](01_EFCoreAccess/json_to_class.png)
+![](json_to_class.png)
 
 Nun erstellen Sie in Visual Studio eine neue Klasse *Bewerbe* im Ordner *Model*. Nun können Sie
 in Visual Studio mit *Edit - Paste Special* aus den JSON Daten eine Klassendefinition einfügen.
@@ -386,7 +385,7 @@ Platz 3 im Bewerb 5km Lauf hat Zuname1011 mit 1422.9360 s
 Mit Blazor können Sie natürlich auch auf die Datenbank zugreifen. Zum Erstellen der Applikation werden
 fast die selben Befehle verwendet, nur wird statt *console* das Temlate *blazorserver* eingegeben.
 
-![](01_EFCoreAccess/webapp_demo.png)
+![](webapp_demo.png)
 
 ```text
 rd /S /Q SportfestApp
