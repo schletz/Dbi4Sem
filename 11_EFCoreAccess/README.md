@@ -32,7 +32,6 @@ dotnet tool update --global dotnet-ef --version=3.1.1
 
 > **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
 > Variable geändert wurde.
-> 
 
 Die Übungen verwenden .NET Core 3.1. Prüfen Sie nach der Installation mit folgendem Befehl, ob Sie
 die Version 3.1 besitzen:
