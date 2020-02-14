@@ -1,24 +1,37 @@
 # Zugriff auf die Oracle Datenbank mit EF Core
 
-## Vorbereitung
+## Installieren der EF Core Tools
 
-Die Übungen verwenden .NET Core 3.1. Prüfen Sie nach der Installation mit folgendem Befehl, ob Sie
-die Version 3.1 besitzen:
+Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie installiert haben.
 
 ```text
 dotnet --info
 ```
 
-Um die neueste Version zu bekommen, gibt es 2 Möglichkeiten:
+Falls das Kommando gar nicht bekannt ist, müssen Sie von
+[dotnet.microsoft.com](https://dotnet.microsoft.com/download)
+die neueste .NET SDK Version (*Download .NET Core SDK*) installieren.
 
-- Wenn Sie *Visual Studio 2019* verwenden, führen Sie mit *Start* - *Visual Studio Installer* ein Update
-  auf die neueste Version durch. Hier wird auch das .NET Core Framework aktualisiert.
-- Falls Sie mit anderen Werkzeugen (VS Code, ...) arbeiten, laden Sie von
-  [dotnet.microsoft.com](https://dotnet.microsoft.com/download) die SDK Version und installieren diese.
-- Für den Zugriff auf die Oracle Datenbank wird in den Übungen der SQL Editor *DBeaver* verwendet.
-  Eine Anleitung für die Arbeit mit DBeaver finden Sie
-  [hier auf GitHub](https://github.com/schletz/Dbi1Sem/blob/master/03_OracleSQL/00a_Dbeaver.md).
+Beachten Sie dabei den Punkt *Host (useful for support)*. Diese Versionsnummer (hier 3.1.1) brauchen
+Sie für den nachfolgenden Befehl.
 
+```text
+Host (useful for support):
+  Version: 3.1.1
+  Commit:  a1388f194c
+```
+
+Führen Sie nun in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
+Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
+*Achtung: Ersetzen Sie die Version (hier 3.1.1) durch die Version, die bei Ihnen unter Host angezeigt
+wird!*
+
+```text
+dotnet tool update --global dotnet-ef --version=3.1.1
+```
+
+> **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
+> Variable geändert wurde.
 
 ## Erstellen eines Users und befüllen der Datenbank
 
@@ -26,26 +39,16 @@ Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete S
 Erstellen Sie zuerst einen neuen User *Sportfest* mit folgenden Berechtigungen:
 
 ```sql
+DROP USER Sportfest CASCADE;
+
 CREATE USER Sportfest IDENTIFIED BY oracle;
 GRANT CONNECT, RESOURCE, CREATE VIEW TO Sportfest;
 GRANT UNLIMITED TABLESPACE TO Sportfest;
 ```
 
 Verbinden Sie sich nun mit diesem User in DBeaver und führen das
-[SQL Skript aus dem Kapitel Analytische Funktionen](https://raw.githubusercontent.com/schletz/Dbi3Sem/master/02_Analytical%20Functions/sportfest.sql)
+[SQL Skript aus dem Kapitel Analytische Funktionen](sportfest.sql)
 aus.
-
-## Installieren der EF Core Tools
-
-Führen Sie in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
-Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
-
-```text
-dotnet tool update --global dotnet-ef
-```
-
-> **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
-> Variable geändert wurde.
 
 ## Erstellen einer Konsolenapplikation mit EF Core
 
@@ -63,6 +66,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
 dotnet add package Oracle.EntityFrameworkCore
 dotnet run
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
+
 ```
 
 Die einzelnen Befehle bewirken folgendes:
@@ -145,18 +149,7 @@ Um nun auf unsere View zugreifen zu können, müssen folgende Schritte erledigt 
 
 Für unsere Tabellen hat das *scaffold* Skript die Tabellendefinitionen erstellt. Bei Views
 müssen wir selbst die Modelklasse erstellen. Diese Klasse verbindet das Ergebnis mit der
-View mit der objektorientierten Welt in C#. Damit wir die Spalten nicht händisch abtippen müssen,
-können wir über JSON Daten die Klasse erstellen. Markieren Sie dafür in DBeaver mit *STRG + A* alle
-Ergebnisse im Result. Danach wählen Sie *Copy as JSON*.
-
-![](01_EFCoreAccess/json_to_class.png)
-
-Nun erstellen Sie in Visual Studio eine neue Klasse *Bewerbe* im Ordner *Model*. Nun können Sie
-in Visual Studio mit *Edit - Paste Special* aus den JSON Daten eine Klassendefinition einfügen.
-Mit [json2csharp](http://json2csharp.com/) steht Ihnen auch eine online Lösung zur Verfügung, falls
-Sie nicht mit Visual Studio arbeiten.
-
-### Anpassen der Modelklasse mit Annotations
+View mit der objektorientierten Welt in C#.
 
 EF Core arbeitet nach dem *convention over configuration* Prinzip. Das bedeutet, dass ein bestimmtes
 Standardverhalten keiner Konfiguration im Code bedarf. Das Standardverhalten lautet:
@@ -170,7 +163,8 @@ Allerdings trifft dies bei uns nicht zu, denn
 - der OR Mapper für Oracle setzt alle Objektnamen in der Datenbank als großgeschrieben um.
 
 Dadurch ist es notwendig, die einzelnen Codeelemente mit Annotations (vergleichbar mit @ in Java)
-zu versehen.
+zu versehen. Erstellen Sie eine neue Klasse mit dem Namen *Bewerb* im Ordner *Model* und fügen Sie
+den untenstehenden Code ein.
 
 ```c#
 using System;
@@ -332,7 +326,9 @@ WHERE S_Klasse = '1AHIF';
 Nun soll das Ergebnis durch eine PL/SQL Prozedur geliefert werden. Diese Prozedur hat einen *IN*
 Parameter (*klasse*) und gibt das Ergebnis zurück. Geben Sie dabei so vor:
 
-1. Schreiben Sie die Prozedur *get_ranking* und erstellen Sie sie in der Datenbank.
+1. Schreiben Sie die Prozedur *get_ranking* und erstellen Sie sie in der Datenbank. Verwenden Sie
+   als Basis die oben angezeigte SQL Abfrage, ersetzen Sie allerdings die Klasse durch den Parameter
+   der Prozedur.
 2. Da die Prozedur eine vom Aufbau her eigene Tabelle zurückgibt, müssen Sie die Modelklasse dafür
    schreiben. Dafür erstellen Sie im Ordner *Model* eine neue Klasse *Rank*. Achten Sie beim Mapping
    darauf, dass Sie die korrekten *Column* Annotations setzen.
@@ -374,7 +370,7 @@ Platz 3 im Bewerb 5km Lauf hat Zuname1011 mit 1422.9360 s
 Mit Blazor können Sie natürlich auch auf die Datenbank zugreifen. Zum Erstellen der Applikation werden
 fast die selben Befehle verwendet, nur wird statt *console* das Temlate *blazorserver* eingegeben.
 
-![](01_EFCoreAccess/webapp_demo.png)
+![](webapp_demo.png)
 
 ```text
 rd /S /Q SportfestApp
@@ -384,6 +380,7 @@ dotnet new blazorserver
 dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
 dotnet add package Oracle.EntityFrameworkCore
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
+
 ```
 
 Öffnen Sie danach die Datei *SportfestApp.csproj* in Visual Studio. Führen Sie danach die oben

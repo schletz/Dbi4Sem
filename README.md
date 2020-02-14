@@ -2,12 +2,20 @@
 
 ## Lehrinhalte
 
+<<<<<<< HEAD
 - [Data Warehouse](01_DataWarehouse)
   1. [Zugriff auf die Oracle Datenbank mit EF Core](01_DataWarehouse/01_EFCoreAccess.md)
   2. [Oracle SQL*Loader](01_DataWarehouse/02_SqlLoader.md)
   3. [Inkrementelles Laden](01_DataWarehouse/03_IncrementalLoad.md)
   4. [Lesen von JSON Daten](01_DataWarehouse/04_Json.md)
   5. [Lesen von Webquellen mit den Worker Services in .NET Core 3.0](01_DataWarehouse/05_ServiceWorker.md)
+=======
+- Data Warehouse
+  1. [Zugriff auf die Oracle Datenbank mit EF Core](11_EFCoreAccess/README.md)
+  2. [Oracle SQL*Loader](12_SqlLoader/README.md)
+  3. [Inkrementelles Laden](13_IncrementalLoad/README.md)
+  4. [Lesen von JSON Daten](14_Json/README.md)
+>>>>>>> 72212e38960c4e50a779841ef7b169c111daedc3
 - Business Intelligence
 
 ## Synchronisieren des Repositories in einen Ordner

@@ -7,7 +7,7 @@ müssen wir zuerst einen gemeinsamen Ordner mit dem Hostsystem (meist Windows) e
 Sie in Windows einen Ordner *C:\Temp*. Danach öffnen Sie VirtualBox und konfigurieren diesen Ordner als
 gemeinsamen Ordner:
 
-![](02_SqlLoader/gemeinsamerOrdnerVirtualBox.png)
+![](gemeinsamerOrdnerVirtualBox.png)
 
 Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des Befehles *cd /media/sf_Temp*
 in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. Falls der Ordner nicht erstellt wird,
