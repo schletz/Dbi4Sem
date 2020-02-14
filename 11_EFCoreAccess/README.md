@@ -66,6 +66,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
 dotnet add package Oracle.EntityFrameworkCore
 dotnet run
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
+
 ```
 
 Die einzelnen Befehle bewirken folgendes:
