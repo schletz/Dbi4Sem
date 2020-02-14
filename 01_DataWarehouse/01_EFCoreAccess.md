@@ -46,6 +46,12 @@ Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenb
 dotnet tool update --global dotnet-ef
 ```
 
+Falls Sie noch .NET 3.0 verwenden, müssen Sie die Tools in dieser Version laden:
+
+```text
+dotnet tool update --global dotnet-ef --version=3.0
+```
+
 > **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
 > Variable geändert wurde.
 
