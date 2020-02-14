@@ -8,6 +8,10 @@ Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie i
 dotnet --info
 ```
 
+Falls das Kommando gar nicht bekannt ist, müssen Sie von
+[dotnet.microsoft.com](https://dotnet.microsoft.com/download)
+die neueste .NET SDK Version (*Download .NET Core SDK*) installieren.
+
 Beachten Sie dabei den Punkt *Host (useful for support)*. Diese Versionsnummer (hier 3.1.1) brauchen
 Sie für den nachfolgenden Befehl.
 
