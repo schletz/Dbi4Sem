@@ -37,10 +37,6 @@ die Version 3.1 besitzen:
 dotnet --version
 ```
 
-- Für den Zugriff auf die Oracle Datenbank wird in den Übungen der SQL Editor *DBeaver* verwendet.
-  Eine Anleitung für die Arbeit mit DBeaver finden Sie
-  [hier auf GitHub](https://github.com/schletz/Dbi1Sem/blob/master/03_OracleSQL/00a_Dbeaver.md).
-
 ## Erstellen eines Users und befüllen der Datenbank
 
 Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete Sportfestdatenbank.
@@ -156,18 +152,7 @@ Um nun auf unsere View zugreifen zu können, müssen folgende Schritte erledigt 
 
 Für unsere Tabellen hat das *scaffold* Skript die Tabellendefinitionen erstellt. Bei Views
 müssen wir selbst die Modelklasse erstellen. Diese Klasse verbindet das Ergebnis mit der
-View mit der objektorientierten Welt in C#. Damit wir die Spalten nicht händisch abtippen müssen,
-können wir über JSON Daten die Klasse erstellen. Markieren Sie dafür in DBeaver mit *STRG + A* alle
-Ergebnisse im Result. Danach wählen Sie *Copy as JSON*.
-
-![](json_to_class.png)
-
-Nun erstellen Sie in Visual Studio eine neue Klasse *Bewerbe* im Ordner *Model*. Nun können Sie
-in Visual Studio mit *Edit - Paste Special* aus den JSON Daten eine Klassendefinition einfügen.
-Mit [json2csharp](http://json2csharp.com/) steht Ihnen auch eine online Lösung zur Verfügung, falls
-Sie nicht mit Visual Studio arbeiten.
-
-### Anpassen der Modelklasse mit Annotations
+View mit der objektorientierten Welt in C#.
 
 EF Core arbeitet nach dem *convention over configuration* Prinzip. Das bedeutet, dass ein bestimmtes
 Standardverhalten keiner Konfiguration im Code bedarf. Das Standardverhalten lautet:
@@ -181,7 +166,8 @@ Allerdings trifft dies bei uns nicht zu, denn
 - der OR Mapper für Oracle setzt alle Objektnamen in der Datenbank als großgeschrieben um.
 
 Dadurch ist es notwendig, die einzelnen Codeelemente mit Annotations (vergleichbar mit @ in Java)
-zu versehen.
+zu versehen. Erstellen Sie eine neue Klasse mit dem Namen *Bewerb* im Ordner *Model* und fügen Sie
+den untenstehenden Code ein.
 
 ```c#
 using System;
