@@ -3,7 +3,7 @@
 ## Lehrinhalte
 
 - Data Warehouse
-  1. [Zugriff auf die Oracle Datenbank mit EF Core](11_DataWarehouse/README.md)
+  1. [Zugriff auf die Oracle Datenbank mit EF Core](11_EFCoreAccess/README.md)
   2. [Oracle SQL*Loader](12_SqlLoader/README.md)
   3. [Inkrementelles Laden](13_IncrementalLoad/README.md)
   4. [Lesen von JSON Daten](14_Json/README.md)
