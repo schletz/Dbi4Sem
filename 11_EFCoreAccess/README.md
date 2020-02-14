@@ -47,7 +47,7 @@ GRANT UNLIMITED TABLESPACE TO Sportfest;
 ```
 
 Verbinden Sie sich nun mit diesem User in DBeaver und führen das
-[SQL Skript aus dem Kapitel Analytische Funktionen](https://raw.githubusercontent.com/schletz/Dbi3Sem/master/02_Analytical%20Functions/sportfest.sql)
+[SQL Skript aus dem Kapitel Analytische Funktionen](sportfest.sql)
 aus.
 
 ## Erstellen einer Konsolenapplikation mit EF Core
