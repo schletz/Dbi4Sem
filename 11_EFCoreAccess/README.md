@@ -329,7 +329,9 @@ WHERE S_Klasse = '1AHIF';
 Nun soll das Ergebnis durch eine PL/SQL Prozedur geliefert werden. Diese Prozedur hat einen *IN*
 Parameter (*klasse*) und gibt das Ergebnis zurück. Geben Sie dabei so vor:
 
-1. Schreiben Sie die Prozedur *get_ranking* und erstellen Sie sie in der Datenbank.
+1. Schreiben Sie die Prozedur *get_ranking* und erstellen Sie sie in der Datenbank. Verwenden Sie
+   als Basis die oben angezeigte SQL Abfrage, ersetzen Sie allerdings die Klasse durch den Parameter
+   der Prozedur.
 2. Da die Prozedur eine vom Aufbau her eigene Tabelle zurückgibt, müssen Sie die Modelklasse dafür
    schreiben. Dafür erstellen Sie im Ordner *Model* eine neue Klasse *Rank*. Achten Sie beim Mapping
    darauf, dass Sie die korrekten *Column* Annotations setzen.
