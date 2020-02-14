@@ -1,20 +1,42 @@
 # Zugriff auf die Oracle Datenbank mit EF Core
 
-## Vorbereitung
+## Installieren der EF Core Tools
 
-Die Übungen verwenden .NET Core 3.1. Prüfen Sie nach der Installation mit folgendem Befehl, ob Sie
-die Version 3.1 besitzen:
+Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie installiert haben.
 
 ```text
 dotnet --info
 ```
 
-Um die neueste Version zu bekommen, gibt es 2 Möglichkeiten:
+Beachten Sie dabei den Punkt **Host (useful for support)**. Diese Versionsnummer (hier 3.1.1) brauchen
+Sie für den nachfolgenden Befehl.
 
-- Wenn Sie *Visual Studio 2019* verwenden, führen Sie mit *Start* - *Visual Studio Installer* ein Update
-  auf die neueste Version durch. Hier wird auch das .NET Core Framework aktualisiert.
-- Falls Sie mit anderen Werkzeugen (VS Code, ...) arbeiten, laden Sie von
-  [dotnet.microsoft.com](https://dotnet.microsoft.com/download) die SDK Version und installieren diese.
+```text
+Host (useful for support):
+  Version: 3.1.1
+  Commit:  a1388f194c
+```
+
+Führen Sie nun in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
+Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
+*Achtung: Ersetzen Sie die Version (hier 3.1.1) durch die Version, die bei Ihnen unter Host angezeigt
+wird!*
+
+```text
+dotnet tool update --global dotnet-ef --version=3.1.1
+```
+
+> **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
+> Variable geändert wurde.
+> 
+
+Die Übungen verwenden .NET Core 3.1. Prüfen Sie nach der Installation mit folgendem Befehl, ob Sie
+die Version 3.1 besitzen:
+
+```text
+dotnet --version
+```
+
 - Für den Zugriff auf die Oracle Datenbank wird in den Übungen der SQL Editor *DBeaver* verwendet.
   Eine Anleitung für die Arbeit mit DBeaver finden Sie
   [hier auf GitHub](https://github.com/schletz/Dbi1Sem/blob/master/03_OracleSQL/00a_Dbeaver.md).
@@ -36,24 +58,6 @@ GRANT UNLIMITED TABLESPACE TO Sportfest;
 Verbinden Sie sich nun mit diesem User in DBeaver und führen das
 [SQL Skript aus dem Kapitel Analytische Funktionen](https://raw.githubusercontent.com/schletz/Dbi3Sem/master/02_Analytical%20Functions/sportfest.sql)
 aus.
-
-## Installieren der EF Core Tools
-
-Führen Sie in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
-Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
-
-```text
-dotnet tool update --global dotnet-ef
-```
-
-Falls Sie noch .NET 3.0 verwenden, müssen Sie die Tools in dieser Version laden:
-
-```text
-dotnet tool update --global dotnet-ef --version=3.0
-```
-
-> **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
-> Variable geändert wurde.
 
 ## Erstellen einer Konsolenapplikation mit EF Core
 
