@@ -218,15 +218,12 @@ Die Optionen im control file sind durch ihre Übersetzung schon weitgehend nachv
 - Die *Feldliste* orientiert sich an den Spaltennamen in der Tabelle. Der erste Wert in der
   Textdatei wird in die erste Spalte in der Liste geschrieben usw.
 
-Nachdem das Control file unter *station.ctl* in *C:/Temp* gespeichert wurde, kann in der virtuellen
-Maschine der Befehl
+Nun kann in der virtuellen Maschine mit folgendem Befehl der Import gestartet werden:
 
 ```text
 sqlldr userid=Fahrkarten/oracle control=station.ctl
 
 ```
-
-ausgeführt werden.
 
 Führen Sie nun den Befehl nochmals aus. Was passiert? Betrachten Sie die Ausgabedatei für
 fehlerhafte Daten mit *more stations.bad*.Ersetzen Sie nun in der Datei *station.ctl* das Wort
@@ -239,6 +236,7 @@ Für den Import von *kartenart.txt* erstellen Sie folgendes Control file mittels
 ```text
 OPTIONS (SKIP=1)
 LOAD DATA
+CHARACTERSET UTF8
 INFILE 'kartenarten.txt' "STR '\r'"
 INTO TABLE Kartenart
 REPLACE
@@ -271,6 +269,7 @@ Option *TRAILING NULLCOLS* eingefügt werden, damit NULL Spalten am Ende auch er
 ```text
 OPTIONS (SKIP=1)
 LOAD DATA
+CHARACTERSET UTF8
 INFILE 'kartenarten.txt' "STR '\r'"
 INTO TABLE Kartenart
 REPLACE
