@@ -11,44 +11,6 @@ festlegen.
 
 ![](german_keyboard.png)
 
-### Installation von .NET Core SDK für Linux
-
-Besuchen Sie die .NET Core Downloadseite unter
-[dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet-core).
-
-![](donetcore_download.png)
-
-Wählen Sie die .NET Core Version 3.1 (1) und danach im Bereich SDK unter Linux die Binaries für
-x64 (2). Es öffnet sich ein Downloaddialog, den sie aber abbrechen. Wir wollen nämlich das Paket in
-unserer VM direkt laden.
-
-Dafür kopieren Sie den angebotenen Direct link mit dem Copy Button (3) in die Zwischenablage. Nun
-wechseln Sie mit *cd* im Terminal in Ihr Homeverzeichnis. Danach schreiben Sie im Terminal den
-Befehl *wget* und fügen den kopierten Link nach einer Leerstelle ein (rechte Maustaste und *Paste*).
-
-Nun kopieren Sie die Befehle für die Installation mit dem Copy Button (4) in die Zwischenablage und
-führen Sie diese im Terminal aus. Prüfen Sie mit dem Befehl *dotnet --info*, ob die Installation
-geklappt hat.
-
-Damit der Pfad zur .NET Installation automatisch durchsucht wird. müssen Sie die Datei
-*.bash_profile* in ihrem Homeverzeichnis editieren. Starten Sie hierfür den Editor nano mit folgenden
-Befehlen im Terminal:
-
-```bash
-cd
-nano .bash_profile
-
-```
-
-Suchen Sie nach der Zeile, die die Veriable *PATH* definiert und fügen Sie nach einem Doppelpunkt
-*$HOME/dotnet* an:
-
-```bash
-PATH=$PATH:$HOME/.local/bin:$HOME/bin:$HOME/dotnet
-```
-
-Sie beenden den Editor, indem Sie *CTRL + X*, danach *y* und *ENTER* drücken.
-
 ### Gemeinsamer Ordner
 
 Da wir Textdateien direkt mit dem Programm *sqlldr* in der Virtuellen Maschine von Oracle laden möchten,
@@ -72,11 +34,45 @@ mount -t vboxsf Temp sf_Temp/
 
 Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
 
+### Für interessierte: Installation von .NET Core in der VM
+
+Auf [91_DotnetInOracleVm] in diesem Repository findet sich eine Anleitung, wie Sie die .NET Core
+SDK in ihrer virtuellen Maschine installieren können. Für diese Übung ist das nicht notwendig, da
+wir unter Windows eine sogenannte *self contained executable* erzeugen, die ihre Laufzeitumgebung
+schon mitbringt.
+
 ## Erstellen der Fahrkarten Datenbank mit dem DataGenerator
 
 Das Programm DataGenerator erzeugt eine kleine Datenbank, die Fahrkartenverkäufe speichert. Außerdem
 werden Musterdaten in die Tabellen sowie in Textdateien geschrieben, sodass wir Daten zum
 Importieren haben.
+
+### Kompilieren des DataGenerators für Linux
+
+Da der DataGenerator ein .NET Core 3.1 Programm ist, können Sie unter Windows das Programm für
+Linux kompilieren. Dafür gehen Sie in der Windows Konsole in das Verzeichnis mit dem DataGenerator
+Führen Sie den folgenden Befehl aus:
+
+```text
+dotnet publish -c Release -o C:/Temp/DataGeneratorBuild -r linux-x64 --self-contained
+
+```
+
+Nun wechseln Sie in der virtuellem Maschine in Ihr Homeverzeichnis (*cd*) und führen das
+kompilierte Programm einfach aus:
+
+```text
+/media/sf_Temp/DataGeneratorBuild/DataGenerator 10000
+
+```
+
+Das Programm erstellt nun den Oracle User *Fahrkarten*, erstellt die Datenbank und fügt Musterdaten
+für unsere Fahrkartenverkäufe ein. Der Parameter (10000) gibt die Anzahl der zu generierenden
+Verkäufe ein. Setzen Sie ihn so, dass das Programm in etwa 30 Sekunden benötigt.
+
+![](terminal_dotnet.png)
+
+### Erstelle Tabellen
 
 ```sql
 CREATE TABLE KARTENART (
@@ -97,43 +93,6 @@ CREATE TABLE VERKAUF (
   STATION    NUMBER(10,0) NOT NULL REFERENCES STATION(STATION_ID),
   KARTENART  NUMBER(10,0) NOT NULL REFERENCES KARTENART(KARTENART_ID)
 );
-```
-
-Kopieren Sie den Ordner [DataGenerator] (hier im Repository) in ihr Tempverzeichnis. Nun kopieren
-Sie im Terminal der virtuellen Maschine dieses Programm in ihr Homeverzeichnis und führen es aus.
-
-```bash
-clear
-cd
-cp -r /media/sf_Temp/DataGenerator/ .
-cd DataGenerator
-dotnet run 10000 -c Release
-
-```
-
-Das Programm erstellt nun den Oracle User *Fahrkarten*, erstellt die Datenbank und fügt Musterdaten
-für unsere Fahrkartenverkäufe ein. Der Parameter (10000) gibt die Anzahl der zu generierenden
-Verkäufe ein. Setzen Sie ihn so, dass das Programm in etwa 30 Sekunden benötigt.
-
-![](terminal_dotnet.png)
-
-### Für Interessierte: Kompilieren unter Windows, starten unter Linux
-
-Sie können auch Ihre Applikation unter Windows für Linux kompilieren. Dafür gehen Sie in der
-Windows Konsole in das Verzeichnis mit dem DataGenerator im Temp Ordner. Führen Sie den
-folgenden Befehl aus:
-
-```text
-dotnet publish -c Release -o ../DataGeneratorBuild -r linux-x64 --self-contained
-
-```
-
-Nun wechseln Sie in der virtuellem Maschine in Ihr Homeverzeichnis (*cd*) und führen das
-kompilierte Programm einfach aus:
-
-```text
-/media/sf_Temp/DataGeneratorBuild/DataGenerator 10000
-
 ```
 
 ## Beladen mit SQL*Loader
