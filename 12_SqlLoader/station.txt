@@ -1,5 +1,0 @@
-ST_ID	ST_Name
-1001	Meidling
-1002	Westbahnhof
-1003	Spittelau
-1004	Praterstern
