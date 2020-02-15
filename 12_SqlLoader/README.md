@@ -18,7 +18,7 @@ Besuchen Sie die .NET Core Downloadseite unter
 
 ![](donetcore_download.png)
 
-Wählen Sie die neuste .NET Version (1) und danach im Bereich SDK unter Linux die Binaries für
+Wählen Sie die .NET Core Version 3.1 (1) und danach im Bereich SDK unter Linux die Binaries für
 x64 (2). Es öffnet sich ein Downloaddialog, den sie aber abbrechen. Wir wollen nämlich das Paket in
 unserer VM direkt laden.
 
@@ -72,10 +72,35 @@ mount -t vboxsf Temp sf_Temp/
 
 Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
 
-## Erstellen der Datenbank FahrkartenDb mit dem DataGenerator
+## Erstellen der Fahrkarten Datenbank mit dem DataGenerator
+
+Das Programm DataGenerator erzeugt eine kleine Datenbank, die Fahrkartenverkäufe speichert. Außerdem
+werden Musterdaten in die Tabellen sowie in Textdateien geschrieben, sodass wir Daten zum
+Importieren haben.
+
+```sql
+CREATE TABLE KARTENART (
+    KARTENART_ID NUMBER(10,0)  PRIMARY KEY,
+    NAME         VARCHAR2(200) NOT NULL,
+    TAGEGUELTIG  NUMBER(10,0),
+    PREIS        NUMBER(18,4)
+);
+
+CREATE TABLE STATION (
+    STATION_ID NUMBER(10,0)   PRIMARY KEY,
+    NAME       VARCHAR2(200)  NOT NULL
+);
+
+CREATE TABLE VERKAUF (
+  VERKAUF_ID NUMBER(10,0) PRIMARY KEY
+  DATUM      TIMESTAMP    NOT NULL,
+  STATION    NUMBER(10,0) NOT NULL REFERENCES STATION(STATION_ID),
+  KARTENART  NUMBER(10,0) NOT NULL REFERENCES KARTENART(KARTENART_ID)
+);
+```
 
 Kopieren Sie den Ordner [DataGenerator] (hier im Repository) in ihr Tempverzeichnis. Nun kopieren
-Sie in der Konsole dieses Programm in ihr Homeverzeichnis und führen es aus.
+Sie im Terminal der virtuellen Maschine dieses Programm in ihr Homeverzeichnis und führen es aus.
 
 ```bash
 clear
@@ -88,7 +113,7 @@ dotnet run 10000 -c Release
 
 Das Programm erstellt nun den Oracle User *Fahrkarten*, erstellt die Datenbank und fügt Musterdaten
 für unsere Fahrkartenverkäufe ein. Der Parameter (10000) gibt die Anzahl der zu generierenden
-Verkäufe ein. Setzen Sie ihn so, dass das Programm in etwa 10 Sekunden benötigt.
+Verkäufe ein. Setzen Sie ihn so, dass das Programm in etwa 30 Sekunden benötigt.
 
 ![](terminal_dotnet.png)
 
@@ -133,31 +158,7 @@ Form Optionen an, um die obigen Parameter einstellen zu können.
 In Oracle ist das Tool SQL*Loader für den Import von Textdateien zuständig. Es bietet mit dem
 sogenannten *control file* eine Möglichkeit an, die Textdatei zu beschreiben.
 
-### Ansehen der Datenbank
-
-Das Programm *DataGenerator* erstellt eine neue Datenbank mit 3 Tabellen, die Verkäufe von
-Fahrkarten speichert:
-
-```sql
-CREATE TABLE KARTENART (
-    KARTENART_ID NUMBER(10,0)  PRIMARY KEY,
-    NAME         VARCHAR2(200) NOT NULL,
-    TAGEGUELTIG  NUMBER(10,0),
-    PREIS        NUMBER(18,4)
-);
-
-CREATE TABLE STATION (
-    STATION_ID NUMBER(10,0)   PRIMARY KEY,
-    NAME       VARCHAR2(200)  NOT NULL
-);
-
-CREATE TABLE VERKAUF (
-  VERKAUF_ID NUMBER(10,0) PRIMARY KEY
-  DATUM      TIMESTAMP    NOT NULL,
-  STATION    NUMBER(10,0) NOT NULL REFERENCES STATION(STATION_ID),
-  KARTENART  NUMBER(10,0) NOT NULL REFERENCES KARTENART(KARTENART_ID)
-);
-```
+### Löschen der Musterdaten
 
 Bevor wir die Daten in unsere Datenbank importieren, müssen wir die Daten, die durch
 das Importprogramm geschrieben wurden, löschen. Starten Sie dafür *sqlplus* mit dem entsprechenden
