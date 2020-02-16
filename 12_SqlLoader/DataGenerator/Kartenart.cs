@@ -19,7 +19,7 @@ namespace DataGenerator
         public string Name { get; set; }
         [Column("TAGEGUELTIG")]
         public int? TageGueltig { get; set; }
-        [Column("PREIS")]
+        [Column("PREIS", TypeName = "NUMBER(18,4)")]
         public decimal? Preis { get; set; }
         [InverseProperty("KartenartNavigation")]
         public virtual ICollection<Verkauf> Verkaufs { get; set; }

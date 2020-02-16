@@ -109,6 +109,7 @@ folgende Parameter ermittelt werden:
 - Kommazeichen (, oder .)?
 - Datumsformat?
 - Strings unter Anführungszeichen (damit das Trennzeichen dort vorkommen kann)?
+- Wie werden NULL Werte gekennzeichnet (leer, Wort "NULL", ...)?
 
 Die Hersteller der Datenbanksysteme bieten verschiedene Tools an, mit denen Textdateien effizient
 (= schnell) gelesen werden können. Die Tools sind zwar unterschiedlich, bieten aber alle in einer
@@ -146,7 +147,7 @@ die ersten Zeilen der Datei ansehen:
 head stations.txt
 ```
 
-Für die Datei (*station.txt*) erstellen wir nun ein Control file. Dazu starten Sie mit
+Für die Datei (*stations.txt*) erstellen wir nun ein Control file. Dazu starten Sie mit
 *nano station.ctl* den Texteditor und kopieren die folgenden Befehle:
 
 ```text
@@ -159,7 +160,9 @@ APPEND
 FIELDS TERMINATED BY '\t'
 (
     STATION_ID,
-    NAME
+    NAME,
+    LATITUDE,
+    LONGITUDE
 )
 
 ```

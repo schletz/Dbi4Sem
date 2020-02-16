@@ -17,6 +17,10 @@ namespace DataGenerator
         [Column("NAME")]
         [StringLength(200)]
         public string Name { get; set; }
+        [Column("LATITUDE", TypeName = "NUMBER(18,15)")]
+        public decimal Latitude { get; set; }
+        [Column("LONGITUDE", TypeName = "NUMBER(18,15)")]
+        public decimal Longitude { get; set; }
 
         [InverseProperty("StationNavigation")]
         public virtual ICollection<Verkauf> Verkaufs { get; set; }

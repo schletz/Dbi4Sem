@@ -37,10 +37,10 @@ namespace DataGenerator
 
             Station[] stations = new Station[]
             {
-                new Station { StationId = 1000, Name = "Meidling" },
-                new Station { StationId = 1001, Name = "Westbahnhof" },
-                new Station { StationId = 1002, Name = "Längenfeldgasse" },
-                new Station { StationId = 1003, Name = "Praterstern" }
+                new Station { StationId = 1000, Name = "Meidling", Latitude = 48 + 10.5M/60, Longitude = 16 + 20.1M/60 },
+                new Station { StationId = 1001, Name = "Westbahnhof", Latitude = 48 + 11.8M/60, Longitude = 16 + 20.3M/60 },
+                new Station { StationId = 1002, Name = "Längenfeldgasse", Latitude = 48 + 11.1M/60, Longitude = 16 + 20.1M/60 },
+                new Station { StationId = 1003, Name = "Praterstern", Latitude = 48 + 13.1M/60, Longitude = 16 + 23.5M/60 }
             };
 
             Kartenart[] kartenarts = new Kartenart[]
@@ -72,7 +72,7 @@ namespace DataGenerator
                     v.VerkaufId = verkaufId++;
                     v.Datum = new DateTime(2018, 12, 31)
                         .AddDays(7 * f.Random.Int(0, 52) + f.Random.WeightedRandom(weekdays, daysWeight))
-                        .AddHours(f.Random.WeightedRandom(hours, hoursWeights) + f.Random.Int(0,3600)/3600.0);
+                        .AddHours(f.Random.WeightedRandom(hours, hoursWeights) + f.Random.Int(0, 3600) / 3600.0);
                     v.Wochentag = ((int)v.Datum.DayOfWeek == 0) ? 7 : (int)v.Datum.DayOfWeek;
                     v.Stunde = v.Datum.Hour;
                     v.KartenartNavigation = f.Random.WeightedRandom(kartenarts, kartenartWeight);
@@ -98,15 +98,15 @@ namespace DataGenerator
             Console.WriteLine("Schreibe die TXT Dateien...");
             using (var fileStream = new StreamWriter("stations.txt", false, Encoding.UTF8))
             {
-                fileStream.WriteLine(string.Join("\t", "ID", "NAME"));
+                fileStream.WriteLine(string.Join("\t", "ID", "NAME", "LAT", "LON"));
                 foreach (var s in stations)
-                    fileStream.WriteLine(string.Join("\t", s.StationId, s.Name));
+                    fileStream.WriteLine(string.Join("\t", s.StationId, s.Name, s.Latitude, s.Longitude));
             }
             using (var fileStream = new StreamWriter("kartenarten.txt", false, Encoding.UTF8))
             {
                 fileStream.WriteLine(string.Join("\t", "ID", "NAME", "TAGEGUELTIG", "PREIS"));
                 foreach (var k in kartenarts)
-                    fileStream.WriteLine(string.Join("\t", 
+                    fileStream.WriteLine(string.Join("\t",
                         k.KartenartId,
                         k.Name,
                         k.TageGueltig?.ToString() ?? "N/A",
