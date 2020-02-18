@@ -1,4 +1,4 @@
-# Google Firebase Demo App
+# NoSQL Intro
 
 ![](data_management-nosql.png)
 
