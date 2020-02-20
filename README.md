@@ -20,10 +20,6 @@
         </td>
         <td valign="top" rowspan="2">
             <b>2</b> NoSQL
-            <ol>
-                <li><a href="https://docs.mongodb.com/manual/installation/">Installation von MongoDb</a></li>
-                <li>Aufbau, Lesen und Schreiben von JSON Daten</li>
-            </ol>
         <td colspan="2" valign="top">
             <b>3</b> Data Warehouse
             <ol>
