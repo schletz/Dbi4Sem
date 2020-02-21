@@ -47,7 +47,7 @@ GRANT UNLIMITED TABLESPACE TO Sportfest;
 ```
 
 Verbinden Sie sich nun mit diesem User in SQL Developer oder DBeaver
-(Anleitung im Kapitel [DBeaver](../01_Dbeaver/README.md) und führen das
+(Anleitung im Kapitel [DBeaver](../01_Dbeaver/README.md)) und führen das
 [SQL Skript aus dem Kapitel Analytische Funktionen](sportfest.sql)
 aus.
 
