@@ -33,7 +33,7 @@ dotnet tool update --global dotnet-ef --version=3.1.1
 > **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
 > Variable geändert wurde.
 
-## Erstellen eines Users und befüllen der Datenbank
+## Erstellen eines Users und Befüllen der Datenbank
 
 Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete Sportfestdatenbank.
 Erstellen Sie zuerst einen neuen User *Sportfest* mit folgenden Berechtigungen:
@@ -46,7 +46,8 @@ GRANT CONNECT, RESOURCE, CREATE VIEW TO Sportfest;
 GRANT UNLIMITED TABLESPACE TO Sportfest;
 ```
 
-Verbinden Sie sich nun mit diesem User in DBeaver und führen das
+Verbinden Sie sich nun mit diesem User in SQL Developer oder DBeaver
+(Anleitung im Kapitel [DBeaver](../01_Dbeaver/README.md) und führen das
 [SQL Skript aus dem Kapitel Analytische Funktionen](sportfest.sql)
 aus.
 
