@@ -41,7 +41,7 @@ mount -t vboxsf Temp sf_Temp/
 
 Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
 
-### Für interessierte: Installation von .NET Core in der VM
+### Für Interessierte: Installation von .NET Core in der VM
 
 Auf [91_DotnetInOracleVm](../91_DotnetInOracleVm) in diesem Repository findet sich eine Anleitung, wie Sie die .NET Core
 SDK in ihrer virtuellen Maschine installieren können. Für diese Übung ist das nicht notwendig, da
