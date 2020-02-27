@@ -20,9 +20,16 @@ gemeinsamen Ordner:
 
 ![](gemeinsamerOrdnerVirtualBox.png)
 
-Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des Befehles *cd /media/sf_Temp*
-in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. Falls der Ordner nicht erstellt wird,
-können Sie ihn in der Konsole händisch mounten:
+Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des folgenden Befehls
+in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. 
+
+```bash
+cd /media/sf_Temp
+ls
+
+```
+
+Falls der Ordner nicht erstellt wird, können Sie ihn in der Konsole händisch mounten:
 
 ```bash
 su root
