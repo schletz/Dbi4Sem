@@ -44,9 +44,11 @@
 1. Laden Sie von https://git-scm.com/downloads die Git Tools (Button *Download 2.xx for Windows*)
     herunter. Es können alle Standardeinstellungen belassen werden, bei *Adjusting your PATH environment*
     muss aber der mittlere Punkt (*Git from the command line [...]*) ausgewählt sein.
-2. Legen Sie einen Ordner auf der Festplatte an, wo die Daten gespeichert werden sollen
+2. Schließen Sie die Konsole und starten Sie sie erneut, damit die Änderungen in PATH neu gelesen
+    werden.
+3. Legen Sie einen Ordner auf der Festplatte an, wo die Daten gespeichert werden sollen
     (z. B. *C:\Schule\DBI\Repo*).
-3. Initialisieren Sie den Ordner mit folgenden Befehlen, die in der Windows Konsole in diesem Verzeichnis
+4. Initialisieren Sie den Ordner mit folgenden Befehlen, die in der Windows Konsole in diesem Verzeichnis
     ausgeführt werden:
 
 ```text
