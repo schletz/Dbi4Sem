@@ -39,6 +39,11 @@
     </tr>
 </table>
 
+## Nützliche Informationen
+
+- [Installation der Oracle 12 VM](02_OracleVM/README.md)
+- [Verwendung von Dbeaver mit Oracle](01_Dbeaver/README.md)
+
 ## Synchronisieren des Repositories in einen Ordner
 
 1. Laden Sie von https://git-scm.com/downloads die Git Tools (Button *Download 2.xx for Windows*)
