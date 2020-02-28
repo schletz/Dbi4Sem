@@ -3,7 +3,7 @@
 ## Vorbereitung der virtuellen Maschine
 
 > **Hinweis:** Sie benötigen eine virtuelle Maschine mit Oracle 12 und 64bit. Die 32bit Version mit
-> Oracle 11 funktioniert nicht mehr.
+> Oracle 11 funktioniert nicht, da .NET Core nur 64bit Applikationen für Linux erstellen kann.
 > Die Anleitung zur Installation der Oracle 12 VM ist im Ordner [Oracle VM](../02_OracleVM/README.md)
 > zu finden.
 
