@@ -26,9 +26,16 @@ gemeinsamen Ordner:
 
 ![](gemeinsamerOrdnerVirtualBox.png)
 
-Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des Befehles *cd /media/sf_Temp*
-in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. Falls der Ordner nicht erstellt wird,
-können Sie ihn in der Konsole händisch mounten:
+Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des folgenden Befehls
+in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. 
+
+```bash
+cd /media/sf_Temp
+ls
+
+```
+
+Falls der Ordner nicht erstellt wird, können Sie ihn in der Konsole händisch mounten:
 
 ```bash
 su root
@@ -40,7 +47,7 @@ mount -t vboxsf Temp sf_Temp/
 
 Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
 
-### Für interessierte: Installation von .NET Core in der VM
+### Für Interessierte: Installation von .NET Core in der VM
 
 Auf [91_DotnetInOracleVm](../91_DotnetInOracleVm) in diesem Repository findet sich eine Anleitung, wie Sie die .NET Core
 SDK in ihrer virtuellen Maschine installieren können. Für diese Übung ist das nicht notwendig, da
