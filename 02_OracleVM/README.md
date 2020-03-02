@@ -59,3 +59,8 @@ Nach dem Ausführen der Befehle (F5) ist der Benutzer SchulDb angelegt und kann 
 Nach dem Klick auf Test und Save steht die neue Verbindung nun in der Palette Connections zur Verfügung. Ein Klick auf die Verbindung öffnet das Abfragefenster.
 
 ![](images/sqlDeveloperConnection.png)
+
+## Weitere Informationen
+
+[Verwenden von DBeaver](../01_Dbeaver/README.md)
+[Verwenden von JetBrains DataGrip](../01a_DataGrip/README.md)
