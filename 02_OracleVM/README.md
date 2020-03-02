@@ -62,5 +62,5 @@ Nach dem Klick auf Test und Save steht die neue Verbindung nun in der Palette Co
 
 ## Weitere Informationen
 
-[Verwenden von DBeaver](../01_Dbeaver/README.md)
-[Verwenden von JetBrains DataGrip](../01a_DataGrip/README.md)
+- [Verwenden von DBeaver](../01_Dbeaver/README.md)
+- [Verwenden von JetBrains DataGrip](../01a_DataGrip/README.md)
