@@ -25,7 +25,14 @@ Nach jeder Sitzung kann mit dem Befehl `poweroff` in der Konsole die VM sicher h
 
 Auf <a href="https://mikesmithers.wordpress.com/2015/01/25/installing-and-configuring-an-oracle-developer-day-virtualbox-image/" target="_blank">[mikesmithers.wordpress.com]</a> gibt es eine detaillierte Beschreibung der Konfigurationsmöglichkeiten.
 
-# Installation von SQL Developer
+## Kontrolle des Portforwardings
+
+Kontrollieren Sie in den Einstellungen der virtuellen Maschine, ob das Port Forwarding des Ports 1521
+aktiviert ist. Es ist standardmäßig gesetzt, sollte also immer eingetragen sein.
+
+![](port_forwarding.png)
+
+## Installation von SQL Developer
 
 SQL Developer ist zwar in der virtuellen Maschine integriert, eine Installation unter ihrem Hostbetriebssystem erlaubt allerdings ein flüssigeres Arbeiten. Dafür verbindet sich SQL Developer über TCP (Port 1521) zu Ihrer virtuellen Maschine, die natürlich laufen muss.
 
@@ -62,5 +69,5 @@ Nach dem Klick auf Test und Save steht die neue Verbindung nun in der Palette Co
 
 ## Weitere Informationen
 
-- [Verwenden von DBeaver](../01_Dbeaver/README.md)
-- [Verwenden von JetBrains DataGrip](../01a_DataGrip/README.md)
+- [Verwenden von DBeaver](01_Dbeaver/README.md)
+- [Verwenden von JetBrains DataGrip](02_DataGrip/README.md)

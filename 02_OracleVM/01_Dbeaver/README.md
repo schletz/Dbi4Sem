@@ -4,6 +4,11 @@ Als SQL Editor kann auch DBeaver verwendet werden. Er kann sich über die JDBC T
 zu verschiedenen Datenbanken - darunter auch Oracle - verbinden. Das Programm kann auf der [DBeaver Downloadseite](https://dbeaver.io/download/)
 heruntergeladen werden.
 
+## Voraussetzung
+
+Das Portforwarding des Port 1521 muss - wie im Kapitel Installation beschrieben - in Virtual Box
+gesetzt werden.
+
 ## Verbinden zur Oracle Datenbank in der VM
 
 Durch den Button *New Database Connection* kann der Verbindungsdialog geöffnet werden. In diesem Dialog

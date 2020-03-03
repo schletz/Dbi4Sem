@@ -1,4 +1,4 @@
-# JetBrains DataGrib
+# JetBrains DataGrip
 
 Aus https://intranet.spengergasse.at/news/jetbrains-produkte-in-den-laboren-und-auf-den-laptops-von-studierenden-und-lehrkraeften/:
 > In enger Zusammenarbeit mit dem ZID (herzlichen Dank hierfür) ist es uns gelungen den von der
@@ -17,6 +17,11 @@ Nach der Registrierung können die beliebtesten Produkte von https://account.jet
 geladen werden:
 
 ![](datagrip_download.png)
+
+## Voraussetzung in der Virtuellen Maschine
+
+Das Portforwarding des Port 1521 muss - wie im Kapitel Installation beschrieben - in Virtual Box
+gesetzt werden.
 
 ## Zugriff auf Oracle
 
