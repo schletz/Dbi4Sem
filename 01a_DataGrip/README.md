@@ -16,28 +16,13 @@ Aus https://intranet.spengergasse.at/news/jetbrains-produkte-in-den-laboren-und-
 Nach der Registrierung können die beliebtesten Produkte von https://account.jetbrains.com/licenses/assets
 geladen werden:
 
-![](images/jetbrains_download.png)
+![](datagrip_download.png)
 
-## Zugriff auf Access
+## Zugriff auf Oracle
 
-Für Access muss der Treiber [UcanAccess](http://ucanaccess.sourceforge.net/) heruntergeladen werden.
-Danach erfolgt die Konfiguration in DataGrib:
+Für den Zugriff auf die Oracle VM wird eine Data Source angelegt. Wichtig ist, dass die generierte
+URL durch den String `jdbc:oracle:thin:@localhost:1521/orcl` getauscht wird. Nach dem Klicken auf
+*Test Connection* wird der Treiber geladen und die Verbindung kann hergestellt werden.
 
-1. Wähle *File* - *New* - *Driver* und lade die folgenden Dateien:
-   - <pathToUcanAccess>\ucanaccess-4.0.4.jar
-   - <pathToUcanAccess>\lib\commons-lang-2.6.jar
-   - <pathToUcanAccess>\lib\commons-logging-1.1.3.jar
-   - <pathToUcanAccess>\lib\hsqldb.jar
-   - <pathToUcanAccess>\lib\jackcess-2.1.11.jar
-2. Erstelle ein URL Template mit dem Namen default und dem Wert `jdbc:ucanaccess://{file::identifier.sqlite};newdatabaseversion=V2010`
-3. Wähle `net.ucanaccess.jdbc.UcanaccessDriver` als Class
-4. Speichere den Treiber unter Access Driver (oder einem anderen Namen).
+![](datagrip_oracle_connection.png)
 
-![](images/datagrib1b.png)
-
-Für den Zugriff wird der Treiber nun verwendet:
-
-![](images/datagrib2.png)
-
-Da die Autocompletition immer Anführungszeichen um die Tabellen- und Spaltennamen setzt, muss es dem
-Ausführen des Statements mit *CTRL+R* entfernt werden (ersetze " durch nichts)
