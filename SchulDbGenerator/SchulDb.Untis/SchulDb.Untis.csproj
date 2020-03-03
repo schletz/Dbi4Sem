@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="*" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="*" />
+    <PackageReference Include="System.Text.Json" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SchulDb.Model\SchulDb.Model.csproj" />
+  </ItemGroup>
+
+</Project>
