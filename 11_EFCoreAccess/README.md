@@ -5,6 +5,10 @@
 > Die Anleitung zur Installation der Oracle 12 VM ist im Ordner [Oracle VM](../02_OracleVM/README.md)
 > zu finden.
 
+Kontrollieren Sie, ob Sie die benötigten Schritte aus dem Kapitel
+[Download und Konfiguration der VM](../02_OracleVM/README.md) (Portforwarding, gemeinsamer Ordner, ...)
+durchgeführt haben.
+
 ## Installieren der EF Core Tools
 
 Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie installiert haben.
