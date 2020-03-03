@@ -4,54 +4,12 @@
 
 > **Hinweis:** Sie benötigen eine virtuelle Maschine mit Oracle 12 und 64bit. Die 32bit Version mit
 > Oracle 11 funktioniert nicht, da die .NET Core Runtine nur für 64bit Versionen von Linux zur
-> Verfügung steht. Die Anleitung zur Installation der Oracle 12 VM ist im Ordner
+> Verfügung steht. Die Anleitung zur Installation und Konfiguration der Oracle 12 VM ist im Ordner
 > [Oracle VM](../02_OracleVM/README.md) zu finden.
 
-Starten Sie die virtuelle Maschine und führen Sie danach die Konfigurationsschritte dort durch.
-
-### Deutsches Tastaturlayout
-
-Unter *System Tools - Region & Language - Input Sources* können Sie das deutsche Tastaturlayout
-festlegen.
-
-![](german_keyboard.png)
-
-### Gemeinsamer Ordner
-
-Da wir Textdateien direkt mit dem Programm *sqlldr* in der Virtuellen Maschine von Oracle laden möchten,
-müssen wir zuerst einen gemeinsamen Ordner mit dem Hostsystem (meist Windows) einrichten. Dafür erstellen
-Sie in Windows einen Ordner *C:\Temp*. Danach öffnen Sie VirtualBox und konfigurieren diesen Ordner als
-gemeinsamen Ordner:
-
-![](gemeinsamerOrdnerVirtualBox.png)
-
-Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des folgenden Befehls
-in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. 
-
-```bash
-cd /media/sf_Temp
-ls
-
-```
-
-Falls der Ordner nicht erstellt wird, können Sie ihn in der Konsole händisch mounten:
-
-```bash
-su root
-cd /mnt/
-mkdir sf_Temp
-mount -t vboxsf Temp sf_Temp/
-
-```
-
-Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
-
-### Für Interessierte: Installation von .NET Core in der VM
-
-Auf [91_DotnetInOracleVm](../91_DotnetInOracleVm) in diesem Repository findet sich eine Anleitung, wie Sie die .NET Core
-SDK in ihrer virtuellen Maschine installieren können. Für diese Übung ist das nicht notwendig, da
-wir unter Windows eine sogenannte *self contained executable* erzeugen, die ihre Laufzeitumgebung
-schon mitbringt.
+Kontrollieren Sie, ob Sie die benötigten Schritte aus dem Kapitel
+[Download und Konfiguration der VM](../02_OracleVM/README.md) (Portforwarding, gemeinsamer Ordner, ...)
+durchgeführt haben.
 
 ## Erstellen der Fahrkarten Datenbank mit dem DataGenerator
 

@@ -19,11 +19,44 @@ Zum Starten der VM gehen Sie so vor:
 
 1. Nun steht ihnen in Virtual Box die VM *Oracle DB Developer VM* zur Verfügung. Sie können diese nun starten. Falls eine Fehlermeldung, dass Intel VTx nicht aktiviert ist, erscheint, müssen Sie die dies im BIOS/UEFI Ihres Notebooks aktivieren. Je nach Modell ist dies anders möglich, suchen Sie einfach nach VTx und ihrem Notebookmodell im Internet nach einer Anleitung.
 
-1. Unter *Applications* - *System Tools* - *Settings* können Sie bei *Region and Language* die Sprache, das Format und die Tastatur auf Germany einstellen.
-
 Nach jeder Sitzung kann mit dem Befehl `poweroff` in der Konsole die VM sicher heruntergefahren werden.
 
-Auf <a href="https://mikesmithers.wordpress.com/2015/01/25/installing-and-configuring-an-oracle-developer-day-virtualbox-image/" target="_blank">[mikesmithers.wordpress.com]</a> gibt es eine detaillierte Beschreibung der Konfigurationsmöglichkeiten.
+## Deutsches Tastaturlayout
+
+Unter *System Tools - Region & Language - Input Sources* können Sie das deutsche Tastaturlayout
+festlegen.
+
+![](german_keyboard.png)
+
+## Gemeinsamer Ordner
+
+Da wir z. B. Textdateien direkt mit dem Programm *sqlldr* in der Virtuellen Maschine von Oracle laden möchten,
+müssen wir zuerst einen gemeinsamen Ordner mit dem Hostsystem (meist Windows) einrichten. Dafür erstellen
+Sie in Windows einen Ordner *C:\Temp*. Danach öffnen Sie VirtualBox und konfigurieren diesen Ordner als
+gemeinsamen Ordner:
+
+![](gemeinsamerOrdnerVirtualBox.png)
+
+Wenn Sie nun die virtuelle Maschine starten, können Sie im Terminal mittels des folgenden Befehls
+in diesen Ordner wechseln. Mit *ls* können Sie die Dateien auflisten. 
+
+```bash
+cd /media/sf_Temp
+ls
+
+```
+
+Falls der Ordner nicht erstellt wird, können Sie ihn in der Konsole händisch mounten:
+
+```bash
+su root
+cd /mnt/
+mkdir sf_Temp
+mount -t vboxsf Temp sf_Temp/
+
+```
+
+Nun kann im Ordner */mnt/sf_Temp* auf die Dateien zugegriffen werden.
 
 ## Kontrolle des Portforwardings
 
@@ -64,6 +97,13 @@ Nach dem Ausführen der Befehle (F5) ist der Benutzer SchulDb angelegt und kann 
 Nach dem Klick auf Test und Save steht die neue Verbindung nun in der Palette Connections zur Verfügung. Ein Klick auf die Verbindung öffnet das Abfragefenster.
 
 ![](images/sqlDeveloperConnection.png)
+
+## Für Interessierte: Installation von .NET Core in der VM
+
+Auf [91_DotnetInOracleVm](../91_DotnetInOracleVm/README.md) in diesem Repository findet sich eine Anleitung, wie Sie die .NET Core
+SDK in ihrer virtuellen Maschine installieren können. Für diese Übung ist das nicht notwendig, da
+wir unter Windows eine sogenannte *self contained executable* erzeugen, die ihre Laufzeitumgebung
+schon mitbringt.
 
 ## Weitere Informationen
 
