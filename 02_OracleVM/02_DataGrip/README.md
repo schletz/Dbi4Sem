@@ -26,8 +26,9 @@ gesetzt werden.
 ## Zugriff auf Oracle
 
 Für den Zugriff auf die Oracle VM wird eine Data Source angelegt. Wichtig ist, dass die generierte
-URL durch den String `jdbc:oracle:thin:@localhost:1521/orcl` getauscht wird. Nach dem Klicken auf
-*Test Connection* wird der Treiber geladen und die Verbindung kann hergestellt werden.
+URL durch den String `jdbc:oracle:thin:@localhost:1521/orcl` getauscht wird. Dadurch wird *orcl* als
+Service Name statt als SID eingestellt. Nach dem Klicken auf *Test Connection* wird der Treiber
+geladen und die Verbindung kann hergestellt werden.
 
 ![](datagrip_oracle_connection.png)
 
