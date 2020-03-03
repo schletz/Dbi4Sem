@@ -39,10 +39,10 @@
     </tr>
 </table>
 
-## Nützliche Informationen
+## Voraussetzungen
 
 - [Installation der Oracle 12 VM](02_OracleVM/README.md)
-- [Verwendung von Dbeaver mit Oracle](01_Dbeaver/README.md)
+- [Verwendung von Dbeaver mit Oracle](02_OracleVM/01_Dbeaver/README.md)
 
 ## Synchronisieren des Repositories in einen Ordner
 
