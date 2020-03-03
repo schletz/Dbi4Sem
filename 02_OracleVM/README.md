@@ -36,8 +36,6 @@ aktiviert ist. Es ist standardmäßig gesetzt, sollte also immer eingetragen sei
 
 SQL Developer ist zwar in der virtuellen Maschine integriert, eine Installation unter ihrem Hostbetriebssystem erlaubt allerdings ein flüssigeres Arbeiten. Dafür verbindet sich SQL Developer über TCP (Port 1521) zu Ihrer virtuellen Maschine, die natürlich laufen muss.
 
-Das Port Forwarding in den Einstellungen der VM ist dafür zuständig, dass der Zugriff über localhost:1521 an die VM weitergeleitet wird. Sie können dies in Virtual Box jederzeit einsehen oder ändern: <a href="/pluginfile.php/123157/mod_label/intro/virtualBoxNat.png">[Bild]</a>
-
 Sie können SQL Developer entweder direkt von der <a href="https://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html" target="_blank">[Downloadseite von Oracle]</a> laden, oder Sie kopieren sich die Datei *sqldeveloper-18.2.0.183.1748-x64.zip* vom Ordner `\\enterprise\ausbildung\unterricht\unterlagen\schletz\DBI_Stuff`. Die ZIP Datei muss nur entpackt und sqldeveloper.exe gestartet werden.
 
 Zu Beginn verbinden wir uns als System User, um einen Benutzer einzurichten. Dazu klicken Sie auf das grüne Plus in der Palette Connections. Nun kann die Verbindung wie folgt eingerichtet werden:
