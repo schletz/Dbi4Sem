@@ -204,7 +204,7 @@ Option *TRAILING NULLCOLS* eingefügt werden, damit NULL Spalten am Ende auch er
 OPTIONS (SKIP=1)
 LOAD DATA
 CHARACTERSET UTF8
-INFILE 'kartenarten.txt' "STR '\r'"
+INFILE 'kartenarten.txt' "STR '\n'"
 INTO TABLE Kartenart
 REPLACE
 FIELDS TERMINATED BY '\t'
