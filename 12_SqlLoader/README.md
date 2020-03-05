@@ -171,7 +171,7 @@ Für den Import von *kartenart.txt* erstellen Sie folgendes Control file mittels
 OPTIONS (SKIP=1)
 LOAD DATA
 CHARACTERSET UTF8
-INFILE 'kartenarten.txt' "STR '\r'"
+INFILE 'kartenarten.txt' "STR '\n'"
 INTO TABLE Kartenart
 REPLACE
 FIELDS TERMINATED BY '\t'
