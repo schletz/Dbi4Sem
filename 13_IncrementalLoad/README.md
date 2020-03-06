@@ -69,7 +69,35 @@ Reihenfolge:
 |        214461744 | Schanzstraße/Akkonplatz |           4 | 12A-H |
 |        214460711 | Johnstraße              |           5 | 12A-H |
 
-## 1. Schritt: Erstellen der Datenbank
+## 1. Schritt: Laden der Dateien
+
+Mit *wget* können Sie in Linux Daten direkt auf Ihr System laden. Führen Sie die folgenden Befehle
+aus, um ein Verzeichnis *wienerlinien* in ihrem Homeverzeichnis anzulegen und die Daten vom Server
+zu laden. Bestätigen Sie das Statement mit Enter, damit es ebenfalls ausgeführt wird.
+
+```bash
+cd
+rm -rf wienerlinien
+mkdir wienerlinien
+cd wienerlinien
+wget https://data.wien.gv.at/csv/wienerlinien-ogd-linien.csv
+wget https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv
+wget https://data.wien.gv.at/csv/wienerlinien-ogd-steige.csv
+ls -alh
+```
+
+Die Ausgabe des letzten Befehles (*ls*) sollte nun so lauten:
+
+```text
+total 892K
+drwxr-xr-x.  2 oracle oinstall 4.0K Mar  6 03:06 .
+drwxr-xr-x. 41 oracle oinstall 4.0K Mar  6 03:06 ..
+-rw-r--r--.  1 oracle oinstall 216K Jan 13 04:19 wienerlinien-ogd-haltestellen.csv
+-rw-r--r--.  1 oracle oinstall 7.0K Jan 13 04:19 wienerlinien-ogd-linien.csv
+-rw-r--r--.  1 oracle oinstall 653K Jan 13 04:19 wienerlinien-ogd-steige.csv
+```
+
+## 2. Schritt: Erstellen der Datenbank
 
 Für eine Applikation sollen die Daten periodisch (z. B. 1x in der Nacht)
 in eine lokale Oracle Datenbank geladen werden. Für diese wird ein User *Wienerlinien* in Oracle
@@ -120,7 +148,7 @@ Grafisch dargestellt sieht das Schema so aus:
 
 ![](modell_haltestellen.png)
 
-## 2. Schritt: Erstbeladung der Datenbank
+## 3. Schritt: Erstbeladung der Datenbank
 
 ### Beladen mit Oracle SQL Loader
 
@@ -141,7 +169,20 @@ sqlldr userid=Wienerlinien/oracle control=steig.ctl
 
 ```
 
-## 3. Schritt: Aktualisieren der Daten bei einem neuen Beladen
+## 4. Schritt: Aktualisieren der Daten bei einem neuen Beladen
+
+Da Sie nicht direkt die Haupttabellen beladen können (referentielle
+Integrität), erstellen Sie 3 Tabellen: Tabelle *LinieStage*,
+*HaltestelleStage* und *SteigStage* in der Oracle Datenbank. Diese
+Tabellen werden immer von den entsprechenden Textdateien mit *REPLACE*
+beladen. Der Aufbau der Tabellen ist natürlich ident mit den vorher definierten Tabellen, deswegen
+können Sie das *CREATE TABLE* Statement von oben übernehmen.
+
+Starten Sie nun Ihr Shellscript mit *./importLinien.sh*. Es sollte nun die Stage Tabellen
+beladen. Prüfen Sie das, indem Sie mit *sqlplus Wienerlinien/oracle* in sqlplus einsteigen und
+die Tabellen selektieren.
+
+## 5. Schritt: Prozedur für den Datenimport
 
 Nun kann es vorkommen, dass die Linienführung geändert wird (siehe 14A,
 der verlegt wurde). Da Sie immer die Originaldateien aus dem Netz
@@ -157,30 +198,8 @@ laden, müssen Sie bei einem vorhandenen Datenbestand folgendes beachten:
 Überlegen Sie sich, ob diese Reihenfolge verpflichtend ist oder ob auch
 eine andere Reihenfolge möglich ist.
 
-### Neubeladen mit Oracle SQL Loader
-
-Da Sie nicht direkt die Haupttabellen beladen können (referentielle
-Integrität), erstellen Sie 3 Tabellen: Tabelle *LinieStage*,
-*HaltestelleStage* und *SteigStage* in der Oracle Datenbank. Diese
-Tabellen werden immer von den entsprechenden Textdateien mit *REPLACE*
-beladen. Der Aufbau der Tabellen ist natürlich ident mit den vorher definierten Tabellen, deswegen
-können Sie das *CREATE TABLE* Statement von oben übernehmen.
-
-Starten Sie nun Ihr Shellscript mit *./importLinien.sh*. Es sollte nun die Stage Tabellen
-beladen. Prüfen Sie das, indem Sie mit *sqlplus Wienerlinien/oracle* in sqlplus einsteigen und
-die Tabellen selektieren.
-
-### Prozedur für den Datenimport
-
 Damit Sie die Daten von den Stage Tabellen übertragen können, muss Ihre Prozedur die oben
 beschriebenen 4 Fälle in INSERT bzw. DELETE Anweisungen umsetzen:
-
-1. Linien, die neu hinzugekommen sind, werden eingefügt.
-2. Haltestellen, die neu hinzugekommen sind, werden eingefügt.
-3. Die Tabelle Steig wird geleert und neu beladen. Das ist möglich, da
-   es keine Fremdschlüsselbeziehung auf die Tabelle Steig gibt.
-4. Linien und Haltestellen, die nicht mehr vorkommen, müssen gelöscht
-   werden.
 
 Überlegen Sie sich die notwendigen SQL Anweisungen. Sie können über den Primärschlüssel der jeweiligen
 Tabelle (*H_ID*, *S_ID* und *L_ID*) immer feststellen, ob der Datensatz schon in Ihrer Tabelle
