@@ -72,23 +72,16 @@ Reihenfolge:
 ## 1. Schritt: Erstellen der Datenbank
 
 Für eine Applikation sollen die Daten periodisch (z. B. 1x in der Nacht)
-in eine lokale SQL Server oder Oracle Datenbank geladen werden. Für diese
-wird ein User *Wienerlinien* in Oracle angelegt. Starten Sie dafür in der Konsole *sqlplus*
-unter dem System User:
+in eine lokale Oracle Datenbank geladen werden. Für diese wird ein User *Wienerlinien* in Oracle
+angelegt. Dafür führen Sie die folgenden Befehle durch Kopieren und Einfügen aus, um den Benutzer anzulegen.
+Bestätigen Sie das Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
-```bash
-sqlplus System/oracle
-```
-
-Nun führen Sie die folgenden Befehle durch Kopieren und Einfügen aus, um den Benutzer anzulegen.
-Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
-
-``` sql
-DROP USER Wienerlinien CASCADE;
-CREATE USER Wienerlinien IDENTIFIED BY oracle;
-GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
-GRANT UNLIMITED TABLESPACE TO Wienerlinien;
-exit;
+``` bash
+sqlplus -S System/oracle <<< "
+    DROP USER Wienerlinien CASCADE;
+    CREATE USER Wienerlinien IDENTIFIED BY oracle;
+    GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
+    GRANT UNLIMITED TABLESPACE TO Wienerlinien;"
 ```
 
 Um die Datenbank anzulegen melden Sie sich nun unter dem erstellten Benutzer an:
@@ -100,33 +93,33 @@ sqlplus Wienerlinien/oracle
 Danach kopieren Sie die folgenden SQL Anweisungen in die SQL Konsole. Bestätigen Sie das letzte
 Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
-```sql
-DROP TABLE Steig CASCADE CONSTRAINTS;
-DROP TABLE Haltestelle CASCADE CONSTRAINTS;
-DROP TABLE Linie CASCADE CONSTRAINTS;
-CREATE TABLE Linie (
-    L_ID             INTEGER PRIMARY KEY,
-    L_Bezeichnung    VARCHAR2(200) NOT NULL,
-    L_Verkehrsmittel VARCHAR2(200) NOT NULL
-);
-CREATE TABLE Haltestelle (
-    H_ID   INTEGER PRIMARY KEY,
-    H_Name VARCHAR2(200) NOT NULL
-);
-CREATE TABLE Steig (
-    S_ID          INTEGER PRIMARY KEY,
-    S_Linie       INTEGER NOT NULL,
-    S_Haltestelle INTEGER NOT NULL,
-    S_Steig       VARCHAR2(10),
-    S_Richtung    CHAR(1) NOT NULL,
-    S_Reihenfolge INTEGER NOT NULL,
-    FOREIGN KEY (S_Linie) REFERENCES Linie(L_ID),
-    FOREIGN KEY (S_Haltestelle) REFERENCES Haltestelle(H_ID)
-);
-SELECT COUNT(*) FROM Linie;
-SELECT COUNT(*) FROM Haltestelle;
-SELECT COUNT(*) FROM Steig;
-exit;
+```bash
+sqlplus -S System/oracle <<< "
+    DROP TABLE Steig CASCADE CONSTRAINTS;
+    DROP TABLE Haltestelle CASCADE CONSTRAINTS;
+    DROP TABLE Linie CASCADE CONSTRAINTS;
+    CREATE TABLE Linie (
+        L_ID             INTEGER PRIMARY KEY,
+        L_Bezeichnung    VARCHAR2(200) NOT NULL,
+        L_Verkehrsmittel VARCHAR2(200) NOT NULL
+    );
+    CREATE TABLE Haltestelle (
+        H_ID   INTEGER PRIMARY KEY,
+        H_Name VARCHAR2(200) NOT NULL
+    );
+    CREATE TABLE Steig (
+        S_ID          INTEGER PRIMARY KEY,
+        S_Linie       INTEGER NOT NULL,
+        S_Haltestelle INTEGER NOT NULL,
+        S_Steig       VARCHAR2(10),
+        S_Richtung    CHAR(1) NOT NULL,
+        S_Reihenfolge INTEGER NOT NULL,
+        FOREIGN KEY (S_Linie) REFERENCES Linie(L_ID),
+        FOREIGN KEY (S_Haltestelle) REFERENCES Haltestelle(H_ID)
+    );
+    SELECT COUNT(*) FROM Linie;
+    SELECT COUNT(*) FROM Haltestelle;
+    SELECT COUNT(*) FROM Steig;"
 ```
 
 Grafisch dargestellt sieht das Schema so aus:
@@ -224,9 +217,8 @@ sqlldr userid=Wienerlinien/oracle control=linie.ctl
 sqlldr userid=Wienerlinien/oracle control=haltestelle.ctl
 sqlldr userid=Wienerlinien/oracle control=steig.ctl
 sqlplus -s Wienerlinien/oracle <<< "
-CALL import_wienerlinien();
-SELECT COUNT(*) FROM LINIE;"
-
+    CALL import_wienerlinien();
+    SELECT COUNT(*) FROM LINIE;"
 ```
 
 ## Testen, Testen, Testen
