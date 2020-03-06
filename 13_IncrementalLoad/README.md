@@ -81,8 +81,7 @@ sqlplus System/oracle
 ```
 
 Nun führen Sie die folgenden Befehle durch Kopieren und Einfügen aus, um den Benutzer anzulegen.
-Kopieren Sie auch den Zeilenumbruch nach dem letzten Statement, damit es ebenfalls ausgeführt wird.
-Mit *exit* verlassen Sie danach *sqlplus*.
+Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ``` sql
 DROP USER Wienerlinien CASCADE;
@@ -90,7 +89,7 @@ DROP USER Wienerlinien CASCADE;
 CREATE USER Wienerlinien IDENTIFIED BY oracle;
 GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
 GRANT UNLIMITED TABLESPACE TO Wienerlinien;
-
+exit;
 ```
 
 Um die Datenbank anzulegen melden Sie sich nun unter dem erstellten Benutzer an:
@@ -99,8 +98,8 @@ Um die Datenbank anzulegen melden Sie sich nun unter dem erstellten Benutzer an:
 sqlplus Wienerlinien/oracle
 ```
 
-Danach kopieren Sie die folgenden SQL Anweisungen in die SQL Konsole. Kopieren Sie auch den
-Zeilenumbruch nach dem letzten Statement, damit es ebenfalls ausgeführt wird.
+Danach kopieren Sie die folgenden SQL Anweisungen in die SQL Konsole. Bestätigen Sie das letzte
+Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ```sql
 DROP TABLE Steig CASCADE CONSTRAINTS;
@@ -132,7 +131,7 @@ CREATE TABLE Steig (
 SELECT COUNT(*) FROM Linie;
 SELECT COUNT(*) FROM Haltestelle;
 SELECT COUNT(*) FROM Steig;
-
+exit;
 ```
 
 Grafisch dargestellt sieht das Schema so aus:
