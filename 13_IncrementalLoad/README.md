@@ -85,7 +85,6 @@ Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt w
 
 ``` sql
 DROP USER Wienerlinien CASCADE;
-
 CREATE USER Wienerlinien IDENTIFIED BY oracle;
 GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
 GRANT UNLIMITED TABLESPACE TO Wienerlinien;
@@ -105,18 +104,15 @@ Statement mit Enter, damit es ebenfalls ausgeführt wird.
 DROP TABLE Steig CASCADE CONSTRAINTS;
 DROP TABLE Haltestelle CASCADE CONSTRAINTS;
 DROP TABLE Linie CASCADE CONSTRAINTS;
-
 CREATE TABLE Linie (
     L_ID             INTEGER PRIMARY KEY,
     L_Bezeichnung    VARCHAR2(200) NOT NULL,
     L_Verkehrsmittel VARCHAR2(200) NOT NULL
 );
-
 CREATE TABLE Haltestelle (
     H_ID   INTEGER PRIMARY KEY,
     H_Name VARCHAR2(200) NOT NULL
 );
-
 CREATE TABLE Steig (
     S_ID          INTEGER PRIMARY KEY,
     S_Linie       INTEGER NOT NULL,
@@ -127,7 +123,6 @@ CREATE TABLE Steig (
     FOREIGN KEY (S_Linie) REFERENCES Linie(L_ID),
     FOREIGN KEY (S_Haltestelle) REFERENCES Haltestelle(H_ID)
 );
-
 SELECT COUNT(*) FROM Linie;
 SELECT COUNT(*) FROM Haltestelle;
 SELECT COUNT(*) FROM Steig;
@@ -211,8 +206,6 @@ am Ende wieder die Stage Tabellen, damit ein neuer Import einen definierten Zust
 Der Rumpf Ihrer Prozedur soll so aussehen:
 
 ```sql
-SELECT COUNT(*) FROM HALTESTELLE h;
-
 CREATE OR REPLACE PROCEDURE import_wienerlinien AS
 BEGIN
     -- Die nachfolgenden Anweisungen sind nur zur Demonstration. Ersetzen Sie sie durch Ihre
