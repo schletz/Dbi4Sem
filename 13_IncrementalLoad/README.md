@@ -163,7 +163,8 @@ Da Sie nicht direkt die Haupttabellen beladen können (referentielle
 Integrität), erstellen Sie 3 Tabellen: Tabelle *LinieStage*,
 *HaltestelleStage* und *SteigStage* in der Oracle Datenbank. Diese
 Tabellen werden immer von den entsprechenden Textdateien mit *REPLACE*
-beladen.
+beladen. Der Aufbau der Tabellen ist natürlich ident mit den vorher definierten Tabellen, deswegen
+können Sie das *CREATE TABLE* Statement von oben übernehmen.
 
 Starten Sie nun Ihr Shellscript mit *./importLinien.sh*. Es sollte nun die Stage Tabellen
 beladen. Prüfen Sie das, indem Sie mit *sqlplus Wienerlinien/oracle* in sqlplus einsteigen und
