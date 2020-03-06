@@ -72,41 +72,72 @@ Reihenfolge:
 ## 1. Schritt: Erstellen der Datenbank
 
 Für eine Applikation sollen die Daten periodisch (z. B. 1x in der Nacht)
-in eine lokale SQL Server oder Oracle Datenbank geladen werden. Diese
-Datenbank besitzt den Namen *HaltestellenDb* (SQL Server) bzw. wird ein
-User *HaltestellenDb* angelegt (Oracle). Die Datenbank besitzt folgendes
-Schema (SQL Server):
+in eine lokale SQL Server oder Oracle Datenbank geladen werden. Für diese
+wird ein User *Wienerlinien* in Oracle angelegt. Starten Sie dafür in der Konsole *sqlplus*
+unter dem System User:
+
+```bash
+sqlplus System/oracle
+```
+
+Nun führen Sie die folgenden Befehle durch Kopieren und Einfügen aus, um den Benutzer anzulegen.
+Kopieren Sie auch den Zeilenumbruch nach dem letzten Statement, damit es ebenfalls ausgeführt wird.
+Mit *exit* verlassen Sie danach *sqlplus*.
 
 ``` sql
-USE HaltestellenDb;
-GO
+DROP USER Wienerlinien CASCADE;
 
-DROP TABLE Steig;
-DROP TABLE Haltestelle;
-DROP TABLE Linie;
+CREATE USER Wienerlinien IDENTIFIED BY oracle;
+GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
+GRANT UNLIMITED TABLESPACE TO Wienerlinien;
+
+```
+
+Um die Datenbank anzulegen melden Sie sich nun unter dem erstellten Benutzer an:
+
+```bash
+sqlplus Wienerlinien/oracle
+```
+
+Danach kopieren Sie die folgenden SQL Anweisungen in die SQL Konsole. Kopieren Sie auch den
+Zeilenumbruch nach dem letzten Statement, damit es ebenfalls ausgeführt wird.
+
+```sql
+DROP TABLE Steig CASCADE CONSTRAINTS;
+DROP TABLE Haltestelle CASCADE CONSTRAINTS;
+DROP TABLE Linie CASCADE CONSTRAINTS;
 
 CREATE TABLE Linie (
     L_ID             INTEGER PRIMARY KEY,
-    L_Bezeichnung    VARCHAR(200) NOT NULL,
-    L_Verkehrsmittel VARCHAR(200) NOT NULL
+    L_Bezeichnung    VARCHAR2(200) NOT NULL,
+    L_Verkehrsmittel VARCHAR2(200) NOT NULL
 );
 
 CREATE TABLE Haltestelle (
     H_ID   INTEGER PRIMARY KEY,
-    H_Name VARCHAR(200) NOT NULL
+    H_Name VARCHAR2(200) NOT NULL
 );
 
 CREATE TABLE Steig (
     S_ID          INTEGER PRIMARY KEY,
     S_Linie       INTEGER NOT NULL,
     S_Haltestelle INTEGER NOT NULL,
-    S_Steig       VARCHAR(10),
+    S_Steig       VARCHAR2(10),
     S_Richtung    CHAR(1) NOT NULL,
     S_Reihenfolge INTEGER NOT NULL,
     FOREIGN KEY (S_Linie) REFERENCES Linie(L_ID),
     FOREIGN KEY (S_Haltestelle) REFERENCES Haltestelle(H_ID)
 );
+
+SELECT COUNT(*) FROM Linie;
+SELECT COUNT(*) FROM Haltestelle;
+SELECT COUNT(*) FROM Steig;
+
 ```
+
+Grafisch dargestellt sieht das Schema so aus:
+
+![](modell_haltestellen.png)
 
 ## 2. Schritt: Erstbeladung der Datenbank
 
@@ -118,6 +149,16 @@ Schreiben Sie ein Controlfile für die Dateien
 Linie, Haltestelle und Steig lädt. Achten Sie auf die Reihenfolge beim
 Ausführen der Befehle, durch die Fremdschlüsselbeziehungen muss zuerst
 Linie und Haltestelle, danach erst die Tabelle Steig beladen werden.
+
+Fügen Sie nun die Importe zu einem Shellscript mit dem Namen
+*importLinien.sh* zusammen. Vergessen Sie nicht, mit *chmod* die Ausführungsrechte zu setzen.
+
+```bash
+sqlldr userid=Wienerlinien/oracle control=linie.ctl
+sqlldr userid=Wienerlinien/oracle control=haltestelle.ctl
+sqlldr userid=Wienerlinien/oracle control=steig.ctl
+
+```
 
 ## 3. Schritt: Aktualisieren der Daten bei einem neuen Beladen
 
@@ -143,16 +184,58 @@ Integrität), erstellen Sie 3 Tabellen: Tabelle *LinieStage*,
 Tabellen werden immer von den entsprechenden Textdateien mit *REPLACE*
 beladen.
 
-Schreiben Sie nun ein Shellskript, welches die oberen Punkte durch die
-entsprechenden SQL Loader Befehle abbildet. Sie erhalten am Ende die
-beladenen Tabellen LinieStage, HaltstelleStage und SteigStage.
+Starten Sie nun Ihr Shellscript mit *./importLinien.sh*. Es sollte nun die Stage Tabellen
+beladen. Prüfen Sie das, indem Sie mit *sqlplus Wienerlinien/oracle* in sqlplus einsteigen und
+die Tabellen selektieren.
 
-Damit die Daten übertragen werden, müssen Sie die Daten von den Stage
-Tabellen in die Originaltabellen einfügen. Schreiben Sie dafür eine
-PL/SQL Prozedur, welche die oben genannten Schritte mit entsprechenden
-INSERT und DELETE Befehlen abbildet. Dadurch übertragen Sie die Daten
-aus den Stage Tabellen und verletzen zu keinem Zeitpunkt die
-referentielle Integrität.
+### Prozedur für den Datenimport
+
+Damit Sie die Daten von den Stage Tabellen übertragen können, muss Ihre Prozedur die oben
+beschriebenen 4 Fälle in INSERT bzw. DELETE Anweisungen umsetzen:
+
+1. Linien, die neu hinzugekommen sind, werden eingefügt.
+2. Haltestellen, die neu hinzugekommen sind, werden eingefügt.
+3. Die Tabelle Steig wird geleert und neu beladen. Das ist möglich, da
+   es keine Fremdschlüsselbeziehung auf die Tabelle Steig gibt.
+4. Linien und Haltestellen, die nicht mehr vorkommen, müssen gelöscht
+   werden.
+
+Überlegen Sie sich die notwendigen SQL Anweisungen. Sie können über den Primärschlüssel der jeweiligen
+Tabelle (*H_ID*, *S_ID* und *L_ID*) immer feststellen, ob der Datensatz schon in Ihrer Tabelle
+vorhanden ist. Testen Sie diese vorher in SQL Developer oder einem anderen SQL Editor unter dem User
+*Wienerlinien*.
+
+Nun schreiben Sie diese Anweisungen in einer PL/SQL Prozedur zusammen. Diese überträgt die Daten
+aus den Stage Tabellen und verletzen zu keinem Zeitpunkt die referentielle Integrität. Leeren Sie
+am Ende wieder die Stage Tabellen, damit ein neuer Import einen definierten Zustand vorfindet.
+
+Der Rumpf Ihrer Prozedur soll so aussehen:
+
+```sql
+SELECT COUNT(*) FROM HALTESTELLE h;
+
+CREATE OR REPLACE PROCEDURE import_wienerlinien AS
+BEGIN
+    -- Die nachfolgenden Anweisungen sind nur zur Demonstration. Ersetzen Sie sie durch Ihre
+    -- SQL Anweisungen.
+    DELETE FROM LINIE;
+    INSERT INTO LINIE VALUES (1, 'Testlinie', 'Bus');
+END;
+
+```
+
+Wenn die Prozedur angelegt wurde, können Sie Ihr Skellscript *importLinien.sh* um den Aufruf der
+Prozedur *import_wienerlinien* ergänzen und ausführen:
+
+```bash
+sqlldr userid=Wienerlinien/oracle control=linie.ctl
+sqlldr userid=Wienerlinien/oracle control=haltestelle.ctl
+sqlldr userid=Wienerlinien/oracle control=steig.ctl
+sqlplus -s Wienerlinien/oracle <<< "
+CALL import_wienerlinien();
+SELECT COUNT(*) FROM LINIE;"
+
+```
 
 ## Testen, Testen, Testen
 
