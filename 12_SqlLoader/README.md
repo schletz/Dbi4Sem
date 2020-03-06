@@ -93,22 +93,15 @@ sogenannten *control file* eine Möglichkeit an, die Textdatei zu beschreiben.
 ### Löschen der Musterdaten
 
 Bevor wir die Daten in unsere Datenbank importieren, müssen wir die Daten, die durch
-das Importprogramm geschrieben wurden, löschen. Starten Sie dafür *sqlplus* mit dem entsprechenden
-User:
+das Importprogramm geschrieben wurden, löschen. Dafür starten Sie *sqlplus* mit dem entsprechenden
+User und geben Sie die DELETE Kommantos mit:
 
 ```bash
-sqlplus Fahrkarten/oracle
+sqlplus Fahrkarten/oracle <<< "
+    DELETE FROM Verkauf;
+    DELETE FROM Station;
+    DELETE FROM Kartenart;"
 ```
-
-Nun setzen Sie die folgenden 3 Befehle ab, damit die Tabellen geleert werden:
-
-```sql
-DELETE FROM Verkauf;
-DELETE FROM Station;
-DELETE FROM Kartenart;
-```
-
-Mit *exit* beenden Sie SQL*Plus und kehren in die Shell zurück.
 
 ### Laden der Stationen
 
