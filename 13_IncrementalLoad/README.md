@@ -88,7 +88,7 @@ Um die Datenbank anzulegen kopieren Sie die folgenden SQL Anweisungen in die Kon
 Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ```bash
-sqlplus -S System/oracle <<< "
+sqlplus -S Wienerlinien/oracle <<< "
     DROP TABLE Steig CASCADE CONSTRAINTS;
     DROP TABLE Haltestelle CASCADE CONSTRAINTS;
     DROP TABLE Linie CASCADE CONSTRAINTS;
