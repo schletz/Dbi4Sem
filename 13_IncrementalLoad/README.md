@@ -73,7 +73,7 @@ Reihenfolge:
 
 Mit *wget* können Sie in Linux Daten direkt auf Ihr System laden. Führen Sie die folgenden Befehle
 aus, um ein Verzeichnis *wienerlinien* in ihrem Homeverzeichnis anzulegen und die Daten vom Server
-zu laden. Bestätigen Sie das Statement mit Enter, damit es ebenfalls ausgeführt wird.
+zu laden. Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ```bash
 cd
@@ -113,7 +113,7 @@ sqlplus -S System/oracle <<< "
 ```
 
 Um die Datenbank anzulegen kopieren Sie die folgenden SQL Anweisungen in die Konsole. Bestätigen
-Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
+Sie das Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ```bash
 sqlplus -S Wienerlinien/oracle <<< "
