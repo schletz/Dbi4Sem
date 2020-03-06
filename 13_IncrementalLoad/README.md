@@ -84,14 +84,8 @@ sqlplus -S System/oracle <<< "
     GRANT UNLIMITED TABLESPACE TO Wienerlinien;"
 ```
 
-Um die Datenbank anzulegen melden Sie sich nun unter dem erstellten Benutzer an:
-
-```bash
-sqlplus Wienerlinien/oracle
-```
-
-Danach kopieren Sie die folgenden SQL Anweisungen in die SQL Konsole. Bestätigen Sie das letzte
-Statement mit Enter, damit es ebenfalls ausgeführt wird.
+Um die Datenbank anzulegen kopieren Sie die folgenden SQL Anweisungen in die Konsole. Bestätigen
+Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 ```bash
 sqlplus -S System/oracle <<< "
