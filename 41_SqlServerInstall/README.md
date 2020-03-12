@@ -1,5 +1,8 @@
 # Installation der SQL Server 2019 Analysis Services
 
+> **Wichtig:** Starten Sie vor der Installation Windows neu. Ausstehende Updates, etc. verhindern
+> ein erfolgreiches Setup!
+
 Für den Zugriff auf die Analysis Services von SQL Server benötigen wir eine lokale Installation
 von SQL Server 2019. Sie können die Installationsdatei der Developer Edition von der
 [SQL Server Downloadseite](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
