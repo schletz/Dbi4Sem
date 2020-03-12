@@ -34,6 +34,7 @@
         <td>
             <b>4</b> Business Intelligence
             <ol>
+                <li><a href="41_SqlServerInstall/README.md">Zugriff auf die Oracle Datenbank mit EF Core</a></li>
             </ol>
         </td>
     </tr>
