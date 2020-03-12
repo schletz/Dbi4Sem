@@ -34,7 +34,7 @@
         <td>
             <b>4</b> Business Intelligence
             <ol>
-                <li><a href="41_SqlServerInstall/README.md">Zugriff auf die Oracle Datenbank mit EF Core</a></li>
+                <li><a href="41_SqlServerInstall/README.md">Installation der SQL Server 2019 Analysis Services</a></li>
             </ol>
         </td>
     </tr>
