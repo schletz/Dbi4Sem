@@ -35,6 +35,7 @@
             <b>4</b> Business Intelligence
             <ol>
                 <li><a href="41_SqlServerInstall/README.md">Installation der SQL Server 2019 Analysis Services</a></li>
+                <li><a href="42_DatabaseGenerator/README.md">Erstellung der Musterdatenbank</a></li>
             </ol>
         </td>
     </tr>
