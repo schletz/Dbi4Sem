@@ -267,3 +267,4 @@ Wie lange hat der Import mit SQL*Loader gedauert? Um welchen Faktor war der Impo
 
 - Oracle SQL*Loader Control File Reference: https://docs.oracle.com/cd/B28359_01/server.111/b28319/ldr_control_file.htm
 - Loading Examples: https://docs.oracle.com/cd/B10500_01/text.920/a96518/aload.htm
+- Character Sets: https://docs.oracle.com/cd/E41633_01/pt853pbh1/eng/pt/tgbl/concept_UnderstandingCharacterSets-0769d6.html
