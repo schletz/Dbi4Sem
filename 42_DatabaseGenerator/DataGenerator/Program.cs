@@ -63,17 +63,14 @@ namespace DataGenerator
             var verkaufFaker = new Faker<Verkauf>()
                 .Rules((f, v) =>
                 {
-                    int hour = f.Random.WeightedRandom(hours, hoursWeights);
-                    int weekday = f.Random.WeightedRandom(weekdays, daysWeight);
                     v.VerkaufId = verkaufId++;
+                    v.Menge = f.Random.Int(1, 5);
                     // Zeitwerte mit Wochen- und Tageszyklus generieren.
                     v.Datum = new DateTime(2018, 12, 31)
                         .AddDays(7 * f.Random.Int(0, 52) + f.Random.WeightedRandom(weekdays, daysWeight))
                         .AddHours(f.Random.WeightedRandom(hours, hoursWeights) + f.Random.Int(0, 3600) / 3600.0);
-                    v.Wochentag = ((int)v.Datum.DayOfWeek == 0) ? 7 : (int)v.Datum.DayOfWeek;
-                    v.Stunde = v.Datum.Hour;
-                    v.KartenartNavigation = f.Random.WeightedRandom(kartenarts, kartenartWeight);
-                    v.StationNavigation = f.Random.WeightedRandom(stations, stationsWeight);
+                    v.Kartenart = f.Random.WeightedRandom(kartenarts, kartenartWeight);
+                    v.Station = f.Random.WeightedRandom(stations, stationsWeight);
                 });
             List<Verkauf> verkaufs = verkaufFaker.Generate(verkaufCount);
 
@@ -84,9 +81,9 @@ namespace DataGenerator
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                db.Stations.AddRange(stations);
-                db.Kartenarts.AddRange(kartenarts);
-                db.Verkaufs.AddRange(verkaufs);
+                db.Stationen.AddRange(stations);
+                db.Kartenarten.AddRange(kartenarts);
+                db.Verkaeufe.AddRange(verkaufs);
                 sw.Start();
                 db.SaveChanges();
                 sw.Stop();
