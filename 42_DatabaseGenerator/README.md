@@ -19,6 +19,10 @@ Nach der Installation von SQL Server muss das Management Studio für den Zugriff
 installiert werden. Außerdem werden Musterdaten mittels eines .NET Programmes erzeugt und in die
 Datenbank *Fahrkarten* geschrieben.
 
+Zum Anzeigen Ihres aktuellen Windowsbenutzers können Sie in der Konsole den Befehl *echo %username%*
+absetzen. Falls Sie Windows mit einem Microsoft Benutzer installiert haben, kann der lokale
+Benutzername nämlich abweichen.
+
 Verwendete Links:
 
 - [Download SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)

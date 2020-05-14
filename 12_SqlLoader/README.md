@@ -119,7 +119,7 @@ Für die Datei (*stations.txt*) erstellen wir nun ein Control file. Dazu starten
 OPTIONS (SKIP=1)
 LOAD DATA
 CHARACTERSET UTF8
-INFILE 'stations.txt' "STR '\n'"
+INFILE 'stations.txt' "STR '\r\n'"
 INTO TABLE Station
 APPEND
 FIELDS TERMINATED BY '\t'
@@ -136,9 +136,9 @@ Die Optionen im control file sind durch ihre Übersetzung schon weitgehend nachv
 
 - *OPTIONS (SKIP=1)* bedeutet, dass die erste Zeile (Kopfzeile) einfach überlesen wird.
 - *CHARACTERSET UTF8* gibt an, dass die Datei UTF-8 codiert ist.
-- *INFILE 'stations.txt' "STR '`\n`'"* gibt den Namen der Textdatei an, die geladen werden soll.
-  Außerdem wird der Linux Zeilenumbruch (LF) als Zeilenumbruch eingestellt, da unser Programm,
-  welche die Dateien erzeugt hat, unter Linux ausgeführt wurde. Für Windows muss hier `\r\n` gesetzt
+- *INFILE 'stations.txt' "STR '`\r\n`'"* gibt den Namen der Textdatei an, die geladen werden soll.
+  Außerdem wird der Linux Zeilenumbruch (CR+LF) als Zeilenumbruch eingestellt, da unser Programm,
+  welche die Dateien erzeugt hat, unter Linux ausgeführt wurde. Für Linux muss hier `\n` gesetzt
   werden.
 - *APPEND* bedeutet, dass die Daten an die Tabelle angehängt werden.
 - *FIELDS TERMINATED BY '`\t`'* legt den Tabulator (`\t`) als Trennzeichen fest.
@@ -164,7 +164,7 @@ Für den Import von *kartenart.txt* erstellen Sie folgendes Control file mittels
 OPTIONS (SKIP=1)
 LOAD DATA
 CHARACTERSET UTF8
-INFILE 'kartenarten.txt' "STR '\n'"
+INFILE 'kartenarten.txt' "STR '\r\n'"
 INTO TABLE Kartenart
 REPLACE
 FIELDS TERMINATED BY '\t'
@@ -197,7 +197,7 @@ Option *TRAILING NULLCOLS* eingefügt werden, damit NULL Spalten am Ende auch er
 OPTIONS (SKIP=1)
 LOAD DATA
 CHARACTERSET UTF8
-INFILE 'kartenarten.txt' "STR '\n'"
+INFILE 'kartenarten.txt' "STR '\r\n'"
 INTO TABLE Kartenart
 REPLACE
 FIELDS TERMINATED BY '\t'
@@ -218,7 +218,7 @@ Die Verkäufe sind in 3 Dateien aufgeteilt. Diese werden mit folgendem Control f
 ```text
 OPTIONS (SKIP=1)
 LOAD DATA
-INFILE 'verkaeufe*.txt' "STR '\n'"
+INFILE 'verkaeufe*.txt' "STR '\r\n'"
 INTO TABLE Verkauf
 REPLACE
 FIELDS TERMINATED BY '\t' (
