@@ -2,7 +2,7 @@
 
 ## Generieren der Datenbank und der Importdatei
 
-Synchronisieren Sie zuerst das Git Repository in einem Ordner. Sie können auch alternativ die
+Synchronisieren Sie zuerst das Git Repository in einen Ordner. Sie können auch alternativ die
 Datei [Sportfest.zip](Sportfest.zip) laden, sie beinhaltet ebenfalls alle Daten.
 
 Öffnen Sie die Konsole und gehen Sie in das Verzeichnis Sportfest. In diesem Verzeichnis muss
