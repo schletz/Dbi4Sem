@@ -132,3 +132,18 @@ Für die Aufgabenstellung werden 16 Punkte vergeben.
 - Der Cube beinhaltet die angegebenen Measures (Minimum und Maximum der Zeit). (2 P)
 - Der Cube beinhaltet die Dimensionen *Bewerb* und *vSchuelerDimension*. (2 P)
 - Die Hierarchien für *vSchuelerDimension* wurden korrekt angelegt. (2 P)
+
+## Ergänzung für den 4. Juni 2020
+
+### Importaufgabe
+
+Importieren Sie die Datei [schueler.txt](schueler.txt) in die Tabelle *Schueler*. Schreiben Sie
+dafür ein Control File, welches über den SQL Loader die Daten in dieser Textdatei an die Tabelle
+anfügt. Beim erneuten Import wird dieser natürlich fehlschlagen, da die Primärschlüsselwerte schon
+vorhanden sind. Das ist gewollt und in Ordnung.
+
+### Analysis Services
+
+Erstellen Sie für die Dimension vSchuelerDimension eine zusätzliche Hierarchie, die eine Auswertung
+nach Jahrgang (1. Stufe) und Geschlecht (2. Stufe) ermöglicht. Bauen Sie danach in den Cube ein
+Measure ein, welches die durchschnittliche Zeit ausgibt.
