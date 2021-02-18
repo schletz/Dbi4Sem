@@ -339,7 +339,7 @@ Parameter (*klasse*) und gibt das Ergebnis zurück. Geben Sie dabei so vor:
 
 ```c#
 var ranking = db.GetRanking("1AFIT")
-                .Where(r=> r.Rang <= 3)
+                .Where(r => r.Rang <= 3)
                 .OrderBy(r => r.EBewerb);
 foreach (Rank r in ranking)
 {
@@ -371,7 +371,7 @@ rd /S /Q SportfestApp
 md SportfestApp
 cd SportfestApp
 dotnet new blazorserver
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Oracle.EntityFrameworkCore
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
 
