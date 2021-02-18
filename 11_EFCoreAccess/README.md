@@ -282,18 +282,20 @@ auch unserer Funktion. Der *=&gt;* Operator ermöglicht ab C# 7 das Einsparen de
 Statements und gibt automatisch das Ergebnis zurück.
 
 ```c#
-// Nicht vergessen:
-// using System.Data;
-// using System.Linq;
-// using Microsoft.EntityFrameworkCore
-// using Oracle.ManagedDataAccess.Client
-public partial class ModelContext : DbContext
+using System.Data;
+using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
+
+namespace SportfestApp.Model
 {
-    // Andere Tabellendefinitionen
-    public IQueryable<Ergebnisse> GetResults(string bewerb) =>
-        Ergebnisse.FromSql("BEGIN get_results(:bewerb, :result); END;",
-                            new OracleParameter("bewerb", bewerb),
-                            new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+    public partial class ModelContext : DbContext
+    {
+        public IEnumerable<Ergebnisse> GetResults(string bewerb) =>
+            Ergebnisses.FromSqlRaw("BEGIN get_results(:bewerb, :result); END;",
+                                new OracleParameter("bewerb", bewerb),
+                                new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+    }
 }
 ```
 
