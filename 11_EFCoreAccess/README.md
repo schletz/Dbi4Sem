@@ -17,26 +17,11 @@ Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie i
 dotnet --info
 ```
 
-Falls das Kommando gar nicht bekannt ist, müssen Sie von
-[dotnet.microsoft.com](https://dotnet.microsoft.com/download)
-die neueste .NET SDK Version (*Download .NET Core SDK*) installieren.
-
-Beachten Sie dabei den Punkt *Host (useful for support)*. Diese Versionsnummer (hier 3.1.1) brauchen
-Sie für den nachfolgenden Befehl.
-
-```text
-Host (useful for support):
-  Version: 3.1.1
-  Commit:  a1388f194c
-```
-
 Führen Sie nun in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
 Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
-*Achtung: Ersetzen Sie die Version (hier 3.1.1) durch die Version, die bei Ihnen unter Host angezeigt
-wird!*
 
 ```text
-dotnet tool update --global dotnet-ef --version=3.1.1
+dotnet tool update --global dotnet-ef
 ```
 
 > **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
@@ -72,7 +57,7 @@ rd /S /Q SportfestApp
 md SportfestApp
 cd SportfestApp
 dotnet new console
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Oracle.EntityFrameworkCore
 dotnet run
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
@@ -184,6 +169,7 @@ using System.Text;
 
 namespace SportfestApp.Model
 {
+    [Keyless]
     [Table("VBEWERBE")]     // using System.ComponentModel.DataAnnotations.Schema oder STRG + . in VS
     public class Bewerb
     {
@@ -201,15 +187,12 @@ Eine Modelklasse alleine gibt nur an, wie EF Code den Rückgabewert der Abfrage 
 wir die View abfragen können, muss die Klasse *ModelContext* noch editiert werden. Der nachfolgende
 Code gibt die Ergänzung in der Klasse an. Der Rest bleibt unverändert.
 
-Beachten Sie, dass hierfür der Typ *DbQuery* und nicht *DbSet* verwendet wird. Er ist sozusagen ein
-read-only Zugang zur Datenbank. Ein *DbSet* braucht einen Primärschlüssel, um schreibend zugreifen
-zu können.
 
 ```c#
 public partial class ModelContext : DbContext
 {
     // Andere Tabellen
-    public virtual DbQuery<Bewerb> Bewerbe { get; set; }
+    public virtual DbSet<Bewerb> Bewerbe { get; set; }
 }
 ```
 
@@ -278,9 +261,9 @@ using (ModelContext db = new ModelContext())
     // using System.Data;
     // using Microsoft.EntityFrameworkCore
     // using Oracle.ManagedDataAccess.Client
-    var results = db.Ergebnisse.FromSql("BEGIN get_results(:bewerb, :result); END;",
+    var results = db.Ergebnisse.FromSqlRaw("BEGIN get_results(:bewerb, :result); END;",
         new OracleParameter("bewerb", "100m Lauf"),
-        new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+        new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output)).AsEnumerable();
 
     Console.WriteLine($"{results.Count()} Bewerbe gefunden.");
 }
