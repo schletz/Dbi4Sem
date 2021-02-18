@@ -327,21 +327,20 @@ Parameter (*klasse*) und gibt das Ergebnis zurück. Geben Sie dabei so vor:
 2. Da die Prozedur eine vom Aufbau her eigene Tabelle zurückgibt, müssen Sie die Modelklasse dafür
    schreiben. Dafür erstellen Sie im Ordner *Model* eine neue Klasse *Rank*. Achten Sie beim Mapping
    darauf, dass Sie die korrekten *Column* Annotations setzen.
-3. Registrieren Sie ihre Modelklasse - wie bei der View - als *DbQuery&lt;Rank&gt;*
+3. Registrieren Sie ihre Modelklasse - wie bei der View - als *DbSet&lt;Rank&gt;*
    Property in Ihrem
    Context. Am Besten Sie benennen das Property nach der Mehrzahl (*Ranks*), damit keine Kollisionen
    mit dem Typnamen entstehen.
-4. Erstellen Sie eine Methode `public IQueryable<Rank> GetRanking(string klasse)` im Context, die
+4. Erstellen Sie eine Methode `public IEnumberable<Rank> GetRanking(string klasse)` im Context, die
    mit der FromSql() Funktion das Ergebnis der Prozedur liefert.
 5. Rufen Sie in Ihrer *Main* Methode die Funktion *GetRanking* mit folgendem Code auf. Das Ergebnis
    muss dann der untenstehenden Ausgabe entsprechen. Falls Sie andere Bezeichnungen für die Spalten
    in der Modelklasse gewählt haben, ist der Code natürlich anzupassen.
 
 ```c#
-var ranking = from r in db.GetRanking("1AFIT")
-                where r.Rang <= 3
-                orderby r.EBewerb
-                select r;
+var ranking = db.GetRanking("1AFIT")
+                .Where(r=> r.Rang <= 3)
+                .OrderBy(r => r.EBewerb);
 foreach (Rank r in ranking)
 {
     Console.WriteLine($"Platz {r.Rang} im Bewerb {r.EBewerb} hat {r.SZuname} mit {r.EZeit} s");
