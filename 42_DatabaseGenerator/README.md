@@ -1,5 +1,13 @@
 # Generierung der Musterdatenbank
 
+## Programm zum Generieren der Musterdatenbank
+
+Starten Sie das .NET Core Programm im Ordner DataGenerator mit dem Befehl
+
+```text
+dotnet run -c Release
+```
+
 ## Verfügbare Videos
 
 ### Installation von SQL Server
