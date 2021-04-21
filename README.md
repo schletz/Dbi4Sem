@@ -37,7 +37,7 @@
                 <li><a href="41_SqlServerInstall/README.md">Installation der SQL Server 2019 Analysis Services</a></li>
                 <li><a href="42_DatabaseGenerator/README.md">Generierung der Musterdatenbank</a></li>
                 <li><a href="https://web.microsoftstream.com/video/ac28cc0a-25b2-4c2e-b2f3-4aa19d7ab054">Analysis Services Intro (Video)</li>
-                <li><a href="https://web.microsoftstream.com/video/c70ac6b2-8e29-42df-8311-745756c8d8d5">Time Dimensions</li>
+                <li><a href="https://web.microsoftstream.com/video/c70ac6b2-8e29-42df-8311-745756c8d8d5">Time Dimensions (Video)</li>
             </ol>
         </td>
     </tr>
