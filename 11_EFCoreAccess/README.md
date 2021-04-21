@@ -17,26 +17,11 @@ Stellen Sie mit folgendem Befehl zuerst fest, welche Version von .NET Core Sie i
 dotnet --info
 ```
 
-Falls das Kommando gar nicht bekannt ist, müssen Sie von
-[dotnet.microsoft.com](https://dotnet.microsoft.com/download)
-die neueste .NET SDK Version (*Download .NET Core SDK*) installieren.
-
-Beachten Sie dabei den Punkt *Host (useful for support)*. Diese Versionsnummer (hier 3.1.1) brauchen
-Sie für den nachfolgenden Befehl.
-
-```text
-Host (useful for support):
-  Version: 3.1.1
-  Commit:  a1388f194c
-```
-
 Führen Sie nun in der Konsole den folgenden Befehl aus. Er installiert die EF Core Tools. Durch diese
 Tools können wir im nächsten Punkt die Modelklassen aus der bestehenden Datenbank generieren.
-*Achtung: Ersetzen Sie die Version (hier 3.1.1) durch die Version, die bei Ihnen unter Host angezeigt
-wird!*
 
 ```text
-dotnet tool update --global dotnet-ef --version=3.1.1
+dotnet tool update --global dotnet-ef
 ```
 
 > **Hinweis:** Nach der Installation der ef Tools muss die Konsole neu geöffnet werden, da die *PATH*
@@ -72,7 +57,7 @@ rd /S /Q SportfestApp
 md SportfestApp
 cd SportfestApp
 dotnet new console
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Oracle.EntityFrameworkCore
 dotnet run
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
@@ -184,6 +169,7 @@ using System.Text;
 
 namespace SportfestApp.Model
 {
+    [Keyless]
     [Table("VBEWERBE")]     // using System.ComponentModel.DataAnnotations.Schema oder STRG + . in VS
     public class Bewerb
     {
@@ -201,15 +187,12 @@ Eine Modelklasse alleine gibt nur an, wie EF Code den Rückgabewert der Abfrage 
 wir die View abfragen können, muss die Klasse *ModelContext* noch editiert werden. Der nachfolgende
 Code gibt die Ergänzung in der Klasse an. Der Rest bleibt unverändert.
 
-Beachten Sie, dass hierfür der Typ *DbQuery* und nicht *DbSet* verwendet wird. Er ist sozusagen ein
-read-only Zugang zur Datenbank. Ein *DbSet* braucht einen Primärschlüssel, um schreibend zugreifen
-zu können.
 
 ```c#
 public partial class ModelContext : DbContext
 {
     // Andere Tabellen
-    public virtual DbQuery<Bewerb> Bewerbe { get; set; }
+    public virtual DbSet<Bewerb> Bewerbe { get; set; }
 }
 ```
 
@@ -278,9 +261,9 @@ using (ModelContext db = new ModelContext())
     // using System.Data;
     // using Microsoft.EntityFrameworkCore
     // using Oracle.ManagedDataAccess.Client
-    var results = db.Ergebnisse.FromSql("BEGIN get_results(:bewerb, :result); END;",
+    var results = db.Ergebnisse.FromSqlRaw("BEGIN get_results(:bewerb, :result); END;",
         new OracleParameter("bewerb", "100m Lauf"),
-        new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+        new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output)).AsEnumerable();
 
     Console.WriteLine($"{results.Count()} Bewerbe gefunden.");
 }
@@ -299,18 +282,20 @@ auch unserer Funktion. Der *=&gt;* Operator ermöglicht ab C# 7 das Einsparen de
 Statements und gibt automatisch das Ergebnis zurück.
 
 ```c#
-// Nicht vergessen:
-// using System.Data;
-// using System.Linq;
-// using Microsoft.EntityFrameworkCore
-// using Oracle.ManagedDataAccess.Client
-public partial class ModelContext : DbContext
+using System.Data;
+using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
+using System.Collections.Generic;
+
+namespace SportfestApp.Model
 {
-    // Andere Tabellendefinitionen
-    public IQueryable<Ergebnisse> GetResults(string bewerb) =>
-        Ergebnisse.FromSql("BEGIN get_results(:bewerb, :result); END;",
-                            new OracleParameter("bewerb", bewerb),
-                            new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+    public partial class ModelContext : DbContext
+    {
+        public IEnumerable<Ergebnisse> GetResults(string bewerb) =>
+            Ergebnisses.FromSqlRaw("BEGIN get_results(:bewerb, :result); END;",
+                                new OracleParameter("bewerb", bewerb),
+                                new OracleParameter("result", OracleDbType.RefCursor, ParameterDirection.Output));
+    }
 }
 ```
 
@@ -342,21 +327,20 @@ Parameter (*klasse*) und gibt das Ergebnis zurück. Geben Sie dabei so vor:
 2. Da die Prozedur eine vom Aufbau her eigene Tabelle zurückgibt, müssen Sie die Modelklasse dafür
    schreiben. Dafür erstellen Sie im Ordner *Model* eine neue Klasse *Rank*. Achten Sie beim Mapping
    darauf, dass Sie die korrekten *Column* Annotations setzen.
-3. Registrieren Sie ihre Modelklasse - wie bei der View - als *DbQuery&lt;Rank&gt;*
+3. Registrieren Sie ihre Modelklasse - wie bei der View - als *DbSet&lt;Rank&gt;*
    Property in Ihrem
    Context. Am Besten Sie benennen das Property nach der Mehrzahl (*Ranks*), damit keine Kollisionen
    mit dem Typnamen entstehen.
-4. Erstellen Sie eine Methode `public IQueryable<Rank> GetRanking(string klasse)` im Context, die
+4. Erstellen Sie eine Methode `public IEnumberable<Rank> GetRanking(string klasse)` im Context, die
    mit der FromSql() Funktion das Ergebnis der Prozedur liefert.
 5. Rufen Sie in Ihrer *Main* Methode die Funktion *GetRanking* mit folgendem Code auf. Das Ergebnis
    muss dann der untenstehenden Ausgabe entsprechen. Falls Sie andere Bezeichnungen für die Spalten
    in der Modelklasse gewählt haben, ist der Code natürlich anzupassen.
 
 ```c#
-var ranking = from r in db.GetRanking("1AFIT")
-                where r.Rang <= 3
-                orderby r.EBewerb
-                select r;
+var ranking = db.GetRanking("1AFIT")
+                .Where(r => r.Rang <= 3)
+                .OrderBy(r => r.EBewerb);
 foreach (Rank r in ranking)
 {
     Console.WriteLine($"Platz {r.Rang} im Bewerb {r.EBewerb} hat {r.SZuname} mit {r.EZeit} s");
@@ -387,7 +371,7 @@ rd /S /Q SportfestApp
 md SportfestApp
 cd SportfestApp
 dotnet new blazorserver
-dotnet add package Microsoft.EntityFrameworkCore.Tools --version 2.2.6
+dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Oracle.EntityFrameworkCore
 dotnet ef dbcontext scaffold  "User Id=Sportfest;Password=oracle;Data Source=localhost:1521/orcl" Oracle.EntityFrameworkCore --output-dir Model --force --data-annotations
 
