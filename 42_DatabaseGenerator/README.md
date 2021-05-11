@@ -9,7 +9,7 @@ dotnet run -c Release
 ```
 
 Das Programm erstellt die SQL Server Datenbank und fügt 10000 Verkäufe ein. Für eine genauere
-Analyse ist aber ein Datebestand von 100 000 Verkäufen nötig. Das Programm schreibt diese Daten
+Analyse ist aber ein Datenbestand von 100 000 Verkäufen nötig. Das Programm schreibt diese Daten
 in eine Tab getrennte Textdatei.
 
 ```text
