@@ -13,7 +13,7 @@ namespace DataGenerator
     class Program
     {
         private const string connection = @"Server=.\SQLSERVER2019;Database=Fahrkarten;Trusted_Connection=True;";
-        static int verkaufCount = 10000;
+        static int verkaufCount = 100000;
 
         static void Main(string[] args)
         {
@@ -38,7 +38,7 @@ namespace DataGenerator
                 new Kartenart{KartenartId = 1000, Name = "1 Fahrt WIEN", TageGueltig = null, Preis = 2.4M},
                 new Kartenart{KartenartId = 1001, Name = "1 Tag WIEN", TageGueltig = 1, Preis = 8M},
                 new Kartenart{KartenartId = 1002, Name = "Wochenkarte", TageGueltig = 7, Preis = 17.10M},
-                new Kartenart{KartenartId = 1003, Name = "Monatskarte", TageGueltig = 30, Preis = null}
+                new Kartenart{KartenartId = 1003, Name = "Monatskarte", TageGueltig = 30, Preis = 41.20M}
             };
 
             // Damit immer die gleichen Daten pro Programmlauf generiert werden, initialisieren
@@ -70,25 +70,60 @@ namespace DataGenerator
                         .AddDays(7 * f.Random.Int(0, 52) + f.Random.WeightedRandom(weekdays, daysWeight))
                         .AddHours(f.Random.WeightedRandom(hours, hoursWeights) + f.Random.Int(0, 3600) / 3600.0);
                     v.Kartenart = f.Random.WeightedRandom(kartenarts, kartenartWeight);
+                    v.KartenartId = v.Kartenart.KartenartId;
                     v.Station = f.Random.WeightedRandom(stations, stationsWeight);
+                    v.StationId = v.Station.StationId;
                 });
             List<Verkauf> verkaufs = verkaufFaker.Generate(verkaufCount);
 
             Stopwatch sw = new Stopwatch();
-            Console.WriteLine("Erstelle die Datenbank...");
 
             using (FahrkartenContext db = new FahrkartenContext(connection))
             {
+                Console.WriteLine("Erstelle die Datenbank...");
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
+                Console.WriteLine("Füge die Daten ein (10000 Verkäufe)...");
                 db.Stationen.AddRange(stations);
                 db.Kartenarten.AddRange(kartenarts);
-                db.Verkaeufe.AddRange(verkaufs);
+                db.Verkaeufe.AddRange(verkaufs.Take(10000));
                 sw.Start();
                 db.SaveChanges();
                 sw.Stop();
             }
-            Console.WriteLine($"{verkaufCount} Verkäufe in {sw.ElapsedMilliseconds / 1000:0.0} s eingefügt.");
+            Console.WriteLine($"{10000} Verkäufe in {sw.ElapsedMilliseconds / 1000:0.0} s eingefügt.");
+
+
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+            {
+                Directory.CreateDirectory(@"C:\Temp");
+            }
+            var filename = Environment.OSVersion.Platform == PlatformID.Win32NT
+                ? Path.Combine(@"C:\Temp", "verkauf.tsv") : "verkauf.txt";
+
+            WriteVerkaufFile(verkaufs, filename);
+            Console.WriteLine($"{verkaufCount} Verkäufe in die Datei {filename} geschrieben.");
+
+            Console.WriteLine($@"
+TRUNCATE TABLE Verkauf;	
+BULK INSERT Verkauf
+FROM '{filename}' WITH (
+        CODEPAGE  = '65001',
+        FIRSTROW = 1,
+        FIELDTERMINATOR = '\t'
+);
+");
+
+        }
+
+        private static void WriteVerkaufFile(List<Verkauf> verkaufs, string filename)
+        {
+            using var verkaufStream = new StreamWriter(filename, false, Encoding.UTF8);
+            for (int i = 0; i < verkaufs.Count; i++)
+            {
+                Verkauf v = verkaufs[i];
+                verkaufStream.WriteLine($"{v.VerkaufId}\t{v.Datum:yyyy-MM-ddTHH:mm:ss}\t{v.Menge}\t{v.KartenartId}\t{v.StationId}");
+            }
         }
     }
 }

@@ -28,7 +28,9 @@ namespace DataGenerator
         public int VerkaufId { get; set; }
         public DateTime Datum { get; set; }
         public int Menge { get; set; }
+        public int KartenartId { get; set; }
         public Kartenart Kartenart { get; set; }
+        public int StationId { get; set; }
         public Station Station { get; set; }
     }
 
