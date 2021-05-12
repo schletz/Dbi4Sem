@@ -13,7 +13,7 @@ namespace DataGenerator
     class Program
     {
         private const string connection = @"Server=.\SQLSERVER2019;Database=Fahrkarten;Trusted_Connection=True;";
-        static int verkaufCount = 100000;
+        static int verkaufCount = 500000;
 
         static void Main(string[] args)
         {
