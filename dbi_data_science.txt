@@ -1,0 +1,27 @@
+# Data Science
+
+VS Code + Python
+Virtual Env: https://docs.python.org/3/tutorial/venv.html
+
+Pandas & Numpy
+Covid Daten, Fahrkarten
+
+Reale Daten
+	Bilddaten mit OpenCV: Wie groﬂ ist eine Form?
+	Fotos auf Zeitungen erkennen. Webcam.
+	Standbild aus Video extrahieren.
+
+Decition Tree
+	Data Table, Prediction.
+	Soundkanal? Lautst‰rke @300Hz, 600Hz, ...
+
+KNN
+	Modell wie Decition Tree
+	Parameter Tuning (k festlegen)
+
+Flask + API oder Flask + Server rendered
+
+Neuronale Netzwerke
+	Selbes Modell wie Classification
+
+https://www.tensorflow.org/tutorials/quickstart/beginner

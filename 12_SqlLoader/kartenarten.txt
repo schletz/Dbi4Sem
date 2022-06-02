@@ -1,0 +1,5 @@
+﻿ID	NAME	TAGEGUELTIG	PREIS
+1000	1 Fahrt WIEN	N/A	2.4
+1001	1 Tag WIEN	1	8
+1002	Wochenkarte	7	17.10
+1003	Monatskarte	30	

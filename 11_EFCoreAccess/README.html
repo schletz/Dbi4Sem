@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Zugriff auf Views und Stored Procedures mit einem OR Mapper</title>
+        <style>
+/* From extension vscode.markdown-math */
+@font-face{font-family:KaTeX_AMS;src:url(fonts/KaTeX_AMS-Regular.woff2) format("woff2"),url(fonts/KaTeX_AMS-Regular.woff) format("woff"),url(fonts/KaTeX_AMS-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Bold.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Bold.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Caligraphic;src:url(fonts/KaTeX_Caligraphic-Regular.woff2) format("woff2"),url(fonts/KaTeX_Caligraphic-Regular.woff) format("woff"),url(fonts/KaTeX_Caligraphic-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Bold.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Bold.woff) format("woff"),url(fonts/KaTeX_Fraktur-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Fraktur;src:url(fonts/KaTeX_Fraktur-Regular.woff2) format("woff2"),url(fonts/KaTeX_Fraktur-Regular.woff) format("woff"),url(fonts/KaTeX_Fraktur-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Bold.woff2) format("woff2"),url(fonts/KaTeX_Main-Bold.woff) format("woff"),url(fonts/KaTeX_Main-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Main-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Main-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Italic.woff2) format("woff2"),url(fonts/KaTeX_Main-Italic.woff) format("woff"),url(fonts/KaTeX_Main-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:KaTeX_Main;src:url(fonts/KaTeX_Main-Regular.woff2) format("woff2"),url(fonts/KaTeX_Main-Regular.woff) format("woff"),url(fonts/KaTeX_Main-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-BoldItalic.woff2) format("woff2"),url(fonts/KaTeX_Math-BoldItalic.woff) format("woff"),url(fonts/KaTeX_Math-BoldItalic.ttf) format("truetype");font-weight:700;font-style:italic}@font-face{font-family:KaTeX_Math;src:url(fonts/KaTeX_Math-Italic.woff2) format("woff2"),url(fonts/KaTeX_Math-Italic.woff) format("woff"),url(fonts/KaTeX_Math-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Bold.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Bold.woff) format("woff"),url(fonts/KaTeX_SansSerif-Bold.ttf) format("truetype");font-weight:700;font-style:normal}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Italic.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Italic.woff) format("woff"),url(fonts/KaTeX_SansSerif-Italic.ttf) format("truetype");font-weight:400;font-style:italic}@font-face{font-family:"KaTeX_SansSerif";src:url(fonts/KaTeX_SansSerif-Regular.woff2) format("woff2"),url(fonts/KaTeX_SansSerif-Regular.woff) format("woff"),url(fonts/KaTeX_SansSerif-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Script;src:url(fonts/KaTeX_Script-Regular.woff2) format("woff2"),url(fonts/KaTeX_Script-Regular.woff) format("woff"),url(fonts/KaTeX_Script-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size1;src:url(fonts/KaTeX_Size1-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size1-Regular.woff) format("woff"),url(fonts/KaTeX_Size1-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size2;src:url(fonts/KaTeX_Size2-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size2-Regular.woff) format("woff"),url(fonts/KaTeX_Size2-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size3;src:url(fonts/KaTeX_Size3-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size3-Regular.woff) format("woff"),url(fonts/KaTeX_Size3-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Size4;src:url(fonts/KaTeX_Size4-Regular.woff2) format("woff2"),url(fonts/KaTeX_Size4-Regular.woff) format("woff"),url(fonts/KaTeX_Size4-Regular.ttf) format("truetype");font-weight:400;font-style:normal}@font-face{font-family:KaTeX_Typewriter;src:url(fonts/KaTeX_Typewriter-Regular.woff2) format("woff2"),url(fonts/KaTeX_Typewriter-Regular.woff) format("woff"),url(fonts/KaTeX_Typewriter-Regular.ttf) format("truetype");font-weight:400;font-style:normal}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;text-indent:0;text-rendering:auto;border-color:currentColor}.katex *{-ms-high-contrast-adjust:none!important}.katex .katex-version:after{content:"0.13.0"}.katex .katex-mathml{position:absolute;clip:rect(1px,1px,1px,1px);padding:0;border:0;height:1px;width:1px;overflow:hidden}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-weight:700;font-style:italic}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{display:inline-table;table-layout:fixed;border-collapse:collapse}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;vertical-align:bottom;position:relative}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;vertical-align:bottom;font-size:1px;width:2px;min-width:2px}.katex .vbox{display:inline-flex;flex-direction:column;align-items:baseline}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{width:0;max-width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .clap,.katex .llap,.katex .rlap{width:0;position:relative}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{display:inline-block;border:0 solid;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{display:inline-block;width:100%;border-bottom-style:solid}.katex .hdashline{display:inline-block;width:100%;border-bottom-style:dashed}.katex .sqrt>.root{margin-left:.27777778em;margin-right:-.55555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.83333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.16666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.66666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.45666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.14666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.71428571em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.85714286em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.14285714em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.28571429em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.42857143em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.71428571em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.05714286em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.46857143em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.96285714em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.55428571em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.55555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.66666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.77777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.88888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.11111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.33333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.30444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.76444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.41666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.58333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.66666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.83333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.72833333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.07333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.34722222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.41666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.48611111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.55555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.69444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.83333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.44027778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.72777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.28935185em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.34722222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.40509259em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.46296296em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.52083333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.69444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.83333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.20023148em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.43981481em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.24108004em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.28929605em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.33751205em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.38572806em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.43394407em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.48216008em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.57859209em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.69431051em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.83317261em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.19961427em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.20096463em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.24115756em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.28135048em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.32154341em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.36173633em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.40192926em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.48231511em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.57877814em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.69453376em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.83360129em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{display:block;position:absolute;width:100%;height:inherit;fill:currentColor;stroke:currentColor;fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex svg path{stroke:none}.katex img{border-style:none;min-width:0;min-height:0;max-width:none;max-height:none}.katex .stretchy{width:100%;display:block;position:relative;overflow:hidden}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{width:100%;position:relative;overflow:hidden}.katex .halfarrow-left{position:absolute;left:0;width:50.2%;overflow:hidden}.katex .halfarrow-right{position:absolute;right:0;width:50.2%;overflow:hidden}.katex .brace-left{position:absolute;left:0;width:25.1%;overflow:hidden}.katex .brace-center{position:absolute;left:25%;width:50%;overflow:hidden}.katex .brace-right{position:absolute;right:0;width:25.1%;overflow:hidden}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{box-sizing:border-box;border:.04em solid}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{box-sizing:border-content;border-top:.049em solid;border-right:.049em solid;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{counter-increment:katexEqnNo;content:"(" counter(katexEqnNo) ")"}.katex .mml-eqn-num:before{counter-increment:mmlEqnNo;content:"(" counter(mmlEqnNo) ")"}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;position:absolute;left:calc(50% + .3em);text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{text-align:left;padding-left:2em}body{counter-reset:katexEqnNo mmlEqnNo}
+
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.katex-error {
+	color: var(--vscode-editorError-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="zugriff-auf-views-und-stored-procedures-mit-einem-or-mapper">Zugriff auf Views und Stored Procedures mit einem OR Mapper</h1>
+<blockquote>
+<p><strong>Hinweis:</strong> Sie benötigen eine virtuelle Maschine mit Oracle 12 oder einen Docker Container
+mit Oracle 19 bzw. 21.  Anleitungen befinden sich im Kurs <em>Dbi2Sem</em> auf
+<a href="https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM">https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM</a> (VM mit Oracle 12) und auf
+<a href="https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/03_Docker">https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/03_Docker</a> (Oracle 21 als Docker image)</p>
+</blockquote>
+<h2 id="erstellen-eines-users-und-befüllen-der-datenbank">Erstellen eines Users und Befüllen der Datenbank</h2>
+<p>Verbinden Sie sich mit dem User System SQL Developer oder DBeaver
+(Anleitung im Kurs <em>Dbi2Sem</em> auf <a href="https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/01_Dbeaver">https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/01_Dbeaver</a>).</p>
+<p>Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete Sportfestdatenbank.
+Erstellen Sie zuerst einen neuen User <em>Sportfest</em> mit folgenden Berechtigungen:</p>
+<pre><code class="language-sql"><div><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">USER</span> Sportfest <span class="hljs-keyword">CASCADE</span>;
+<span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">USER</span> Sportfest <span class="hljs-keyword">IDENTIFIED</span> <span class="hljs-keyword">BY</span> <span class="hljs-keyword">oracle</span>;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">CONNECT</span>, <span class="hljs-keyword">RESOURCE</span>, <span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">VIEW</span> <span class="hljs-keyword">TO</span> Sportfest;
+<span class="hljs-keyword">GRANT</span> <span class="hljs-keyword">UNLIMITED</span> <span class="hljs-keyword">TABLESPACE</span> <span class="hljs-keyword">TO</span> Sportfest;
+</div></code></pre>
+<p>Die erste Zeile (<em>DROP USER</em>) wird beim ersten Ausführen fehlschlagen, da der User noch nicht
+existiert. Überspringen Sie mit <em>Skip</em> diesen Befehl.</p>
+<p>Verbinden Sie sich nun mit dem User Sportfest und kopieren das
+<a href="sportfest.sql">SQL Skript aus dem Kapitel Analytische Funktionen</a>
+in das Abfragefenster.</p>
+<h2 id="erstellen-einer-konsolenapplikation-mit-ef-core">Erstellen einer Konsolenapplikation mit EF Core</h2>
+<p>Geben Sie nun in der Konsole in ein Verzeichnis Ihrer Wahl. Führen Sie danach die folgenden
+Befehle aus. Unter Linux oder macOS müssen die md und rd Befehle angepasst werden.</p>
+<pre><code class="language-text"><div>rd /S /Q SportfestApp
+md SportfestApp
+cd SportfestApp
+md SportfestApp.Application
+cd SportfestApp.Application
+dotnet new classlib
+dotnet add package Microsoft.EntityFrameworkCore --version 6.*
+dotnet add package Oracle.EntityFrameworkCore --version 6.*
+dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 6.*
+cd ..
+md SportfestApp.Test
+cd SportfestApp.Test
+dotnet new xunit
+dotnet add reference ..\SportfestApp.Application
+cd ..
+md SportfestApp.ConsoleApp
+cd SportfestApp.ConsoleApp
+dotnet new console
+dotnet add reference ..\SportfestApp.Application
+cd ..
+dotnet new sln
+dotnet sln add SportfestApp.ConsoleApp
+dotnet sln add SportfestApp.Application
+dotnet sln add SportfestApp.Test
+start SportfestApp.sln
+</div></code></pre>
+<p>Öffnen Sie nun die Datei SportfestApp.sln in Visual Studio. In der Konsole können Sie dies mit
+<em>start SportfestApp.sln</em> am Schnellsten erledigen.</p>
+<h2 id="erstellen-und-nutzen-einer-view">Erstellen und Nutzen einer View</h2>
+<p>Erstellen Sie in der Datenbank unter dem User <em>Sportfest</em> folgende View und prüfen Sie das Ergebnis:</p>
+<pre><code class="language-sql"><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span> <span class="hljs-keyword">VIEW</span> vBewerbe <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">SELECT</span> E_Bewerb <span class="hljs-keyword">AS</span> B_Name, <span class="hljs-keyword">COUNT</span>(*) <span class="hljs-keyword">AS</span> B_Count
+<span class="hljs-keyword">FROM</span> Ergebnisse
+<span class="hljs-keyword">GROUP</span> <span class="hljs-keyword">BY</span> E_Bewerb;
+<span class="hljs-keyword">SELECT</span> * <span class="hljs-keyword">FROM</span> vBewerbe;
+</div></code></pre>
+<p>Sie sehen nun folgende Ausgabe:</p>
+<table>
+<thead>
+<tr>
+<th>B_NAME</th>
+<th>B_COUNT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100m Lauf</td>
+<td>217</td>
+</tr>
+<tr>
+<td>5km Lauf</td>
+<td>197</td>
+</tr>
+<tr>
+<td>400m Lauf</td>
+<td>199</td>
+</tr>
+</tbody>
+</table>
+<p>Nun wollen wir auf diese View mittels EF Core zugreifen.</p>
+<h3 id="erstellen-der-modelklasse-und-des-dbcontextes">Erstellen der Modelklasse und des DbContextes</h3>
+<p>Unsere View liefert wie eine Tabelle ein Ergebnis (ein Resultset) an das Programm. Damit daraus
+eine zugreifbare Klasse wird, legen wir eine entsprechende Modelklasse und eine
+Contextklasse im Application Projekt an:</p>
+<p><strong>Bewerb.cs</strong></p>
+<pre><code class="language-c#"><div>[<span class="hljs-meta">Keyless</span>]
+[<span class="hljs-meta">Table(<span class="hljs-meta-string">&quot;VBEWERBE&quot;</span>)</span>]     <span class="hljs-comment">// using System.ComponentModel.DataAnnotations.Schema oder STRG + . in VS</span>
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Bewerb</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Bewerb</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> name, <span class="hljs-keyword">int</span> count</span>)</span>
+    {
+        Name = name;
+        Count = count;
+    }
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> <span class="hljs-meta-keyword">warning</span> disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">Bewerb</span>(<span class="hljs-params"></span>)</span> { }
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> <span class="hljs-meta-keyword">warning</span> restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.</span>
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;B_NAME&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Name { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;B_COUNT&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> Count { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+}
+</div></code></pre>
+<p><strong>SportfestContext.cs</strong></p>
+<pre><code class="language-c#"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SportfestContext</span> : <span class="hljs-title">DbContext</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SportfestContext</span>(<span class="hljs-params">DbContextOptions opt</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">opt</span>)</span> { }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DbSet</span>&lt;<span class="hljs-title">Bewerb</span>&gt; Bewerbe</span> =&gt; Set&lt;Bewerb&gt;();
+}
+</div></code></pre>
+<p>Es fallen folgende Dinge auf:</p>
+<ul>
+<li><strong>Keyless</strong> ist eine Annotation über der Modelkalsse die angibt, dass die darunterliegende
+&quot;Tabelle&quot; keinen Primary Key besitzt. Das ist bei Views der Fall.</li>
+<li><strong>Table(&quot;NAME&quot;)</strong> gibt den Namen der Tabelle an, da dieser vom Namen des DbSets abweicht.
+Für Oracle müssen wir den Namen in Großbuchstaben schreiben.</li>
+<li><strong>Column(&quot;NAME&quot;)</strong> verweist auf die Spaltennamen, da diese von den Namen der Properties
+abweichen. Auch hier muss die Großschreibung verwendet werden.</li>
+<li><strong>Protected setter</strong> werden für alle Properties definiert, da es nicht Sinn macht, diese
+Werte im Programm ändern zu können.</li>
+</ul>
+<p>Um den Zugriff zu testen, legen wir im Test Projekt eine Klasse <em>SportfestContextTests</em> an.</p>
+<p><strong>SportfestContextTests.cs</strong></p>
+<pre><code class="language-c#"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SportfestContextTests</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> DbContextOptions _options = <span class="hljs-keyword">new</span> DbContextOptionsBuilder()
+        .UseOracle(<span class="hljs-string">$&quot;User Id=Sportfest;Password=oracle;Data Source=localhost:1521/XEPDB1&quot;</span>)
+        .Options;
+
+    [<span class="hljs-meta">Fact</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ReadViewSuccessTest</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> db = <span class="hljs-keyword">new</span> SportfestContext(_options);
+        <span class="hljs-keyword">var</span> bewerbe = db.Bewerbe.ToList();
+        Assert.True(bewerbe.Count &gt; <span class="hljs-number">0</span>);
+    }
+}
+</div></code></pre>
+<p>Hier sehen Sie den <em>Verbindungsstring</em> zur Oracle Datenbank. Er hat einen ähnlichen Aufbau
+wie die Strings für SQL Server.</p>
+<blockquote>
+<p><strong>Hinweis:</strong> Bei Oracle 12 ist der Service Name <em>XEPDB1</em> durch <em>ORCL</em> zu ersetzen.</p>
+</blockquote>
+<h2 id="zugreifen-auf-stored-procedures">Zugreifen auf Stored Procedures</h2>
+<p>Legen Sie in der Sportfestdatenbank eine Prozedur mit dem Namen <em>get_results</em> an. Diese
+Prozedur liest Werte aus der Datenbank in einen Cursor. Dieser Cursor wird als<em>OUT</em> Parameter
+an unsere Applikation geliefert.</p>
+<pre><code class="language-sql"><div><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">OR</span> <span class="hljs-keyword">REPLACE</span>
+<span class="hljs-keyword">PROCEDURE</span> get_results (bewerb     <span class="hljs-keyword">IN</span>  Ergebnisse.E_Bewerb%<span class="hljs-keyword">TYPE</span>,
+                      p_recordset <span class="hljs-keyword">OUT</span> SYS_REFCURSOR) <span class="hljs-keyword">AS</span>
+<span class="hljs-keyword">BEGIN</span>
+  <span class="hljs-keyword">OPEN</span> p_recordset <span class="hljs-keyword">FOR</span>
+    <span class="hljs-keyword">SELECT</span> e.E_ID, s.S_ID, s.S_ZUNAME, s.S_ABTEILUNG, s.S_KLASSE, e.E_BEWERB, e.E_ZEIT
+    <span class="hljs-keyword">FROM</span>   Ergebnisse e <span class="hljs-keyword">INNER</span> <span class="hljs-keyword">JOIN</span> Schueler s <span class="hljs-keyword">ON</span> (e.E_SCHUELER = s.S_ID)
+    <span class="hljs-keyword">WHERE</span>  E_Bewerb = bewerb
+    <span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> E_Schueler;
+<span class="hljs-keyword">END</span>;
+</div></code></pre>
+<p>Beim Aufruf der Prozedur im SQL Editor sehen wir einen seltsamen Rückgabewert:</p>
+<pre><code class="language-sql"><div><span class="hljs-keyword">CALL</span> get_results(<span class="hljs-string">&#x27;100m Lauf&#x27;</span>,?);
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>P_RECORDSET</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REFCURSOR</td>
+</tr>
+</tbody>
+</table>
+<p>Die Prozedur öffnet nämlich einen Cursor und befüllt ihn mit dem Ergebnis des Statements
+<code>SELECT ... FROM Ergebnisse WHERE E_Bewerb=bewerb ORDER BY E_Schueler;</code></p>
+<h3 id="erstellen-der-modelklasse-und-einer-methode-im-dbcontext">Erstellen der Modelklasse und einer Methode im DbContext</h3>
+<p>Würden wir das SQL Statement, die die Prozedur als Cursor liefert, ausführen, wäre das
+Ergebnis wie folgt:</p>
+<table>
+<thead>
+<tr>
+<th>E_ID</th>
+<th>S_ID</th>
+<th>S_ZUNAME</th>
+<th>S_ABTEILUNG</th>
+<th>S_KLASSE</th>
+<th>E_BEWERB</th>
+<th>E_ZEIT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1011</td>
+<td>1001</td>
+<td>Zuname1001</td>
+<td>HIF</td>
+<td>1AHIF</td>
+<td>400m Lauf</td>
+<td>78.4594</td>
+</tr>
+<tr>
+<td>1048</td>
+<td>1001</td>
+<td>Zuname1001</td>
+<td>HIF</td>
+<td>1AHIF</td>
+<td>400m Lauf</td>
+<td>69.4872</td>
+</tr>
+<tr>
+<td>1056</td>
+<td>1001</td>
+<td>Zuname1001</td>
+<td>HIF</td>
+<td>1AHIF</td>
+<td>5km Lauf</td>
+<td>1589.6944</td>
+</tr>
+<tr>
+<td>1084</td>
+<td>1001</td>
+<td>Zuname1001</td>
+<td>HIF</td>
+<td>1AHIF</td>
+<td>5km Lauf</td>
+<td>1555.0421</td>
+</tr>
+</tbody>
+</table>
+<p>Wir müssen daher wieder eine Modelklasse erstellen, die das Ergebnis dieser Prozedur
+abbildet.</p>
+<p><strong>Ergebnis.cs</strong></p>
+<pre><code class="language-c#"><div>[<span class="hljs-meta">Keyless</span>]
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Ergebnis</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Ergebnis</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> ergebnisNr, <span class="hljs-keyword">int</span> schuelerNr, <span class="hljs-keyword">string</span> zuname, <span class="hljs-keyword">string</span> abteilung, <span class="hljs-keyword">string</span> klasse, <span class="hljs-keyword">string</span> bewerb, <span class="hljs-keyword">decimal</span> zeit</span>)</span>
+    {
+        ErgebnisNr = ergebnisNr;
+        SchuelerNr = schuelerNr;
+        Zuname = zuname;
+        Abteilung = abteilung;
+        Klasse = klasse;
+        Bewerb = bewerb;
+        Zeit = zeit;
+    }
+
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> <span class="hljs-meta-keyword">warning</span> disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.</span>
+    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-title">Ergebnis</span>(<span class="hljs-params"></span>)</span> { }
+    <span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> <span class="hljs-meta-keyword">warning</span> restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.</span>
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;E_ID&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ErgebnisNr { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;S_ID&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> SchuelerNr { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;S_ZUNAME&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Zuname { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;S_ABTEILUNG&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Abteilung { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;S_KLASSE&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Klasse { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;E_BEWERB&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">string</span> Bewerb { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+    [<span class="hljs-meta">Column(<span class="hljs-meta-string">&quot;E_ZEIT&quot;</span>)</span>]
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">decimal</span> Zeit { <span class="hljs-keyword">get</span>; <span class="hljs-keyword">protected</span> <span class="hljs-keyword">set</span>; }
+}
+</div></code></pre>
+<p>Unseren Datenbankcontext müssen wir jetzt mit 2 Dingen erweitern: Einerseits muss die Modelklasse
+als Set registriert werden. Andererseits ist eine Prozedur ja eine Methode, die Parameter verarbeitet.
+Diese müssen wir aus unserem C# Programm mitgeben. Daher legen wir auch eine <em>Methode</em> mit dem
+Namen <em>GetResults()</em> an. Sie bekommt die Argumente für die Prozedur und reicht diese weiter.</p>
+<pre><code class="language-c#"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SportfestContext</span> : <span class="hljs-title">DbContext</span>
+{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">SportfestContext</span>(<span class="hljs-params">DbContextOptions opt</span>) : <span class="hljs-title">base</span>(<span class="hljs-params">opt</span>)</span> { }
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">DbSet</span>&lt;<span class="hljs-title">Bewerb</span>&gt; Bewerbe</span> =&gt; Set&lt;Bewerb&gt;();
+    <span class="hljs-function"><span class="hljs-keyword">public</span> IQueryable&lt;Ergebnis&gt; <span class="hljs-title">GetResults</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> bewerb</span>)</span> =&gt;
+        Set&lt;Ergebnis&gt;().FromSqlRaw(<span class="hljs-string">&quot;BEGIN get_results(:bewerb, :result); END;&quot;</span>,
+                            <span class="hljs-keyword">new</span> OracleParameter(<span class="hljs-string">&quot;bewerb&quot;</span>, bewerb),
+                            <span class="hljs-keyword">new</span> OracleParameter(<span class="hljs-string">&quot;result&quot;</span>, OracleDbType.RefCursor, ParameterDirection.Output));
+
+}
+</div></code></pre>
+<p>Zum Schluss erstellen wir noch in der Klasse <em>SportfestContextTests</em> im Testprojekt eine
+Testmethode <em>ReadProcedureSuccessTest()</em>.</p>
+<pre><code class="language-c#"><div><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">SportfestContextTests</span>
+{
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">readonly</span> DbContextOptions _options = <span class="hljs-keyword">new</span> DbContextOptionsBuilder()
+        .UseOracle(<span class="hljs-string">$&quot;User Id=Sportfest;Password=oracle;Data Source=localhost:1521/XEPDB1&quot;</span>)
+        .Options;
+
+    [<span class="hljs-meta">Fact</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ReadViewSuccessTest</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> db = <span class="hljs-keyword">new</span> SportfestContext(_options);
+        <span class="hljs-keyword">var</span> bewerbe = db.Bewerbe.ToList();
+        Assert.True(bewerbe.Count &gt; <span class="hljs-number">0</span>);
+    }
+    [<span class="hljs-meta">Fact</span>]
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">ReadProcedureSuccessTest</span>(<span class="hljs-params"></span>)</span>
+    {
+        <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> db = <span class="hljs-keyword">new</span> SportfestContext(_options);
+        <span class="hljs-keyword">var</span> ergebnisse = db.GetResults(<span class="hljs-string">&quot;100m Lauf&quot;</span>).ToList();
+        Assert.True(ergebnisse.Count &gt; <span class="hljs-number">0</span>);
+    }
+}
+</div></code></pre>
+<h2 id="übung">Übung</h2>
+<p>In der Solution gibt es noch ein Projekt, welches wir nicht bearbeitet haben: Das <em>ConsoleApp</em>
+Projekt. Sie soll folgendes umsetzen:</p>
+<ul>
+<li>Beim Starten des Programmes sollen aus der angelegten View <em>vBewerbe</em> die Bewerbe und die
+Anzahl der Ergebnisse gelesen werden. Listen Sie diese Bewerbe nach der Anzahl der Ergebnisse
+sortiert in der Konsole auf.</li>
+<li>Geben Sie darunter eine Zeile mit dem Text *Geben Sie den Bewerb ein: * aus.</li>
+<li>Der User kann dann den Namen eines Bewerbes eingeben.</li>
+<li>Diese Eingabe verwenden Sie, um über die angelegte Prozedur <em>get_results</em> die Liste der
+Ergebnisse nach Klasse und Schülernamen sortiert auszugeben.</li>
+</ul>
+<p>Eine mögliche Darstellung ist die Folgende (100m Lauf ist eine Eingabe):</p>
+<pre><code class="language-text"><div>BEWERBE IN DER DATENBANK
+   100m Lauf (217 Ergebnisse)
+   400m Lauf (199 Ergebnisse)
+   5km Lauf (197 Ergebnisse)
+
+Geben Sie einen Bewerb ein: 100m Lauf
+
+ERGEBNISSE DES BEWERBES 100m Lauf
+   1368	Zuname1011, Klasse 1AFIT: 18.5175 Sekunden
+   1367	Zuname1011, Klasse 1AFIT: 16.7377 Sekunden
+</div></code></pre>
+<p>Sie können natürlich auch eine <a href="http://ASP.NET">ASP.NET</a> Core Webapplikation erstellen, die diese Daten als
+HTML View ausgibt. Dies ist der Vorteil des OR Mappers und eines Application Projektes: Der
+Zugriff erfolgt vollkommen unabhängig von der verwendeten Datenbank.</p>
+
+    </body>
+    </html>
