@@ -42,6 +42,39 @@ class Ad_Client:
                 raise RuntimeError("Fehler beim Durchsuchen des AD.")
             return results
 
+    def get_student_mails(self):
+        """
+        Liefert ein Dictionary mit allen Mailadressen der Schüler. Key ist die Schülernummer.
+        """
+        if os.path.isfile("student_mails.parquet") and dt.date.fromtimestamp(os.path.getmtime("student_mails.parquet")) == dt.date.today():
+            return pd.read_parquet("student_mails.parquet").mail.to_dict()
+        mails = self.get_entries(attributes = ["mail", "employeeID"], base_dn = "OU=Schueler,OU=Automatisch gewartete Benutzer,OU=Benutzer,OU=SPG,DC=htl-wien5,DC=schule") \
+            .explode("mail") \
+            .query("employeeID.str.match('^\d+$', na=False) & mail.str.match('^[A-Za-z0-9]+@spengergasse\.at$', na=False)") \
+            .assign(
+                employeeID = lambda df: df.employeeID.astype("int64"),
+                mail = lambda df: df.mail.astype("string")) \
+            .set_index("employeeID").sort_index()
+        mails.to_parquet("student_mails.parquet")
+        return mails.mail.to_dict()
+
+    def get_teacher_mails(self):
+        """
+        Liefert ein Dictionary mit allen Mailadressen der Lehrer. Key ist das Lehrerkürzel.
+        """
+        if os.path.isfile("teacher_mails.parquet") and dt.date.fromtimestamp(os.path.getmtime("teacher_mails.parquet")) == dt.date.today():
+            return pd.read_parquet("teacher_mails.parquet").mail.to_dict()
+        mails = self.get_entries(attributes = ["mail", "description"], base_dn = "OU=Lehrer,OU=Automatisch gewartete Benutzer,OU=Benutzer,OU=SPG,DC=htl-wien5,DC=schule") \
+            .explode("mail") \
+            .explode("description") \
+            .query("description.str.match('^[A-Z]+$', na=False) & mail.str.match('^[A-Za-z0-9]+@spengergasse\.at$', na=False)") \
+            .assign(
+                description = lambda df: df.description.astype("string"),
+                mail = lambda df: df.mail.astype("string")) \
+            .set_index("description").sort_index()
+        mails.to_parquet("teacher_mails.parquet")
+        return mails.mail.to_dict()
+
     def read_ad(self):
         """
         Liest Grunddaten in einen Dataframe und bereitet die Daten auf. Dabei werden Listen, die
