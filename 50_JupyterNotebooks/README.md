@@ -25,10 +25,18 @@ pip install matplotlib --upgrade
 pip install pandas --upgrade
 pip install scipy --upgrade
 pip install statsmodels --upgrade
+pip install nbconvert[webpdf] --upgrade
 ```
 
 Mit dem Parameter *upgrade* wird die aktuellste Version installiert, falls vorher durch
-dependencies eine andere Versions schon installiert wurde.
+dependencies eine andere Versions schon installiert wurde. Durch das letzte Paket können Jupyter
+Notebooks in ein PDF konvertiert werden. Dies geschieht von der Konsole aus mit folgendem Aufruf:
+
+```
+jupyter nbconvert --to WebPDF --TemplateExporter.exclude_input=True --allow-chromium-download (file.ipynb)
+```
+
+
 
 ### Vorhandene SQL Server Datenbank
 
