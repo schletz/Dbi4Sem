@@ -12,13 +12,13 @@ Um ein Jupyter Notebook zu erstellen, muss folgendes vorbereitet werden:
 - Installation von Visual Studio Code (wenn noch nicht vorhanden)
   - Installation der Extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) in VS Code.
   - Installation der Extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) in VS Code.
-- Aktualisieren des Python Package Managers in der Konsole mit *python -m pip install --upgrade pip*
-- Installieren der folgenden Pakete in der Konsole:
+- Aktualisieren des Packaga Managers und Installieren der folgenden Pakete in der Konsole:
 
 ```
+python -m pip install --upgrade pip
+pip install ipykernel --upgrade
 pip install sqlalchemy --upgrade
 pip install pyodbc --upgrade
-pip install ipykernel --upgrade
 pip install requests --upgrade
 pip install numpy --upgrade
 pip install matplotlib --upgrade
