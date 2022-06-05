@@ -30,23 +30,7 @@ pip install nbconvert[webpdf] --upgrade
 
 Mit dem Parameter *upgrade* wird die aktuellste Version installiert, falls vorher durch
 dependencies eine andere Versions schon installiert wurde. Durch das letzte Paket können Jupyter
-Notebooks in ein PDF konvertiert werden. Dies geschieht von der Konsole aus mit folgendem Aufruf:
-
-```
-jupyter nbconvert --to WebPDF --TemplateExporter.exclude_input=True --allow-chromium-download (file.ipynb)
-```
-
-Um Zeilenumbrüche beim Export zu vermeiden, kann vor der Hauptüberschrift eine kleine style Anweisung
-eingegeben werden:
-```md
-<style>
-    .jp-Cell {
-        break-inside: avoid;
-    }
-</style>
-# Meine Hauptüberschrift
-```
-
+Notebooks in ein PDF konvertiert werden.
 
 ### Vorhandene SQL Server Datenbank
 
@@ -127,6 +111,26 @@ VS Code. Dort finden Sie *Create: New Jupyter Notebook*. Speichern Sie das Noteb
 
 Nun fügen wir eine Codezelle mit dem kleinen Skript von oben ein und starten es. Wir sehen nun
 die Ausgaben im Notebook. 
+
+### Ausgabe als PDF
+
+Die Ausgaben des Jupyter Notebooks können wir auch als PDF weitergeben. Der Export geschieht
+in der Kommandozeile:
+
+```
+jupyter nbconvert --to WebPDF --TemplateExporter.exclude_input=True --allow-chromium-download (file.ipynb)
+```
+
+Um Zeilenumbrüche beim Export zu vermeiden, kann vor der Hauptüberschrift eine kleine style Anweisung
+eingegeben werden:
+```md
+<style>
+    .jp-Cell {
+        break-inside: avoid;
+    }
+</style>
+# Meine Hauptüberschrift
+```
 
 ### Data Wrangling
 
