@@ -36,6 +36,16 @@ Notebooks in ein PDF konvertiert werden. Dies geschieht von der Konsole aus mit 
 jupyter nbconvert --to WebPDF --TemplateExporter.exclude_input=True --allow-chromium-download (file.ipynb)
 ```
 
+Um Zeilenumbrüche beim Export zu vermeiden, kann vor der Hauptüberschrift eine kleine style Anweisung
+eingegeben werden:
+```md
+<style>
+    .jp-Cell {
+        break-inside: avoid;
+    }
+</style>
+# Meine Hauptüberschrift
+```
 
 
 ### Vorhandene SQL Server Datenbank
