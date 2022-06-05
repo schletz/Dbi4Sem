@@ -128,6 +128,9 @@ eingegeben werden:
     .jp-Cell {
         break-inside: avoid;
     }
+    .jp-mod-noOutputs {
+        display:none;
+    }
 </style>
 # Meine Hauptüberschrift
 ```
