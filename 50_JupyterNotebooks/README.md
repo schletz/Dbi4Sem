@@ -21,10 +21,10 @@ pip install pyodbc --upgrade
 pip install ipykernel --upgrade
 pip install requests --upgrade
 pip install numpy --upgrade
-pip install pandas --upgrade
 pip install matplotlib --upgrade
-pip install statsmodels --upgrade
+pip install pandas --upgrade
 pip install scipy --upgrade
+pip install statsmodels --upgrade
 ```
 
 Mit dem Parameter *upgrade* wird die aktuellste Version installiert, falls vorher durch
