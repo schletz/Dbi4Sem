@@ -1,3 +1,5 @@
+# AD Client
+# Braucht Python >= 3.9
 import ldap3  # pip install ldap3
 import os, datetime as dt
 import pandas as pd
@@ -23,24 +25,38 @@ class Ad_Client:
         :param attributes: Die zu lesenden Attribute.
         :return: Ein Dataframe mit den Spalten dn und eine Spalte pro Attribut.
         """
+        def get_attributes(response):
+            attributes = []
+            for val in response:
+                val["attributes"]["DN"] = val["dn"]
+                attributes.append(val["attributes"])
+            return attributes
+
         # See https://ldap3.readthedocs.io/en/latest/searches.html#simple-paged-search
         with ldap3.Connection(self._server, user=f'{self._user}@htl-wien5.schule', password=self._pass) as conn:
             # Der Server liefert max. 1000 Einträge. Wir machen also eine paged search mit 512 Einträgen.
             if conn.search(base_dn, filter,
                         search_scope=ldap3.SUBTREE, attributes=attributes, paged_size=512):
                 cookie = conn.result['controls']['1.2.840.113556.1.4.319']['value']['cookie']
-                results = pd.DataFrame(map(lambda val: val.get("attributes"), conn.response))
+                results = pd.DataFrame(get_attributes(conn.response))
                 while cookie:
                     # Die nächsten Seiten abfragen.
                     conn.search(base_dn, filter,
                                 search_scope=ldap3.SUBTREE, attributes=attributes, paged_size=512,
                                 paged_cookie=cookie)
-                    result = pd.DataFrame(map(lambda val: val.get("attributes"), conn.response))
-                    results = pd.concat([results, result])
+                    results = pd.concat([results, pd.DataFrame(get_attributes(conn.response))])
                     cookie = conn.result['controls']['1.2.840.113556.1.4.319']['value']['cookie']
             else:
                 raise RuntimeError("Fehler beim Durchsuchen des AD.")
             return results
+
+    def udpate_entries(self, dn, modifications):
+        """
+        Aktualisiert LDAP Attribute.
+        param modifications: Dictionary vom typ {"attribut1": new_val1, ...}
+        """
+        with ldap3.Connection(self._server, user=f'{self._user}@htl-wien5.schule', password=self._pass) as conn:
+            conn.modify(dn, {key: [(ldap3.MODIFY_REPLACE, val)] for key, val in modifications.items()})
 
     def get_student_mails(self):
         """
