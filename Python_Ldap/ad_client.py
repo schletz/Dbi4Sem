@@ -80,7 +80,11 @@ class Ad_Client:
         """
         if os.path.isfile("teacher_mails.parquet") and dt.date.fromtimestamp(os.path.getmtime("teacher_mails.parquet")) == dt.date.today():
             return pd.read_parquet("teacher_mails.parquet").mail.to_dict()
-        mails = self.get_entries(attributes = ["mail", "description"], base_dn = "OU=Lehrer,OU=Automatisch gewartete Benutzer,OU=Benutzer,OU=SPG,DC=htl-wien5,DC=schule") \
+        lehrer = self.get_entries(attributes = ["mail", "description"], base_dn = "OU=Lehrer,OU=Automatisch gewartete Benutzer,OU=Benutzer,OU=SPG,DC=htl-wien5,DC=schule")
+        # Lehrer gibt es auch in der Verwaltungs OU, deswegen fragen wir diese auch ab.
+        verwaltung = self.get_entries(attributes = ["mail", "description"], base_dn = "OU=Verwaltung,OU=Automatisch gewartete Benutzer,OU=Benutzer,OU=SPG,DC=htl-wien5,DC=schule")
+        # Nur Datensätze mit einem gültigen Kürzel in Description suchen (z. B. SZ, ...)
+        mails = pd.concat([lehrer, verwaltung]) \
             .explode("mail") \
             .explode("description") \
             .query("description.str.match('^[A-Z]+$', na=False) & mail.str.match('^[A-Za-z0-9]+@spengergasse\.at$', na=False)") \
