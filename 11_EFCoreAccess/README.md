@@ -1,66 +1,88 @@
 # Zugriff auf Views und Stored Procedures mit einem OR Mapper
 
-> **Hinweis:** Sie benötigen eine virtuelle Maschine mit Oracle 12 oder einen Docker Container
-> mit Oracle 19 bzw. 21.  Anleitungen befinden sich im Kurs *Dbi2Sem* auf
-> https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM (VM mit Oracle 12) und auf
-> https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/03_Docker (Oracle 21 als Docker image)
+> **Hinweis:** Sie benötigen den Docker Container
+> mit Oracle 19 bzw. 21.  Die Anleitung befindet sich im Kurs *Dbi2Sem* auf
+> https://github.com/schletz/Dbi2Sem/blob/master/01_OracleVM/03_Docker/README.md
 
 ## Erstellen eines Users und Befüllen der Datenbank
 
-Verbinden Sie sich mit dem User System SQL Developer oder DBeaver
-(Anleitung im Kurs *Dbi2Sem* auf https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/01_Dbeaver).
-
-Als Ausgangsbasis verwenden wir die bei den analytischen Funktionen verwendete Sportfestdatenbank.
-Erstellen Sie zuerst einen neuen User *Sportfest* mit folgenden Berechtigungen:
-
-```sql
-DROP USER Sportfest CASCADE;
-CREATE USER Sportfest IDENTIFIED BY oracle;
-GRANT CONNECT, RESOURCE, CREATE VIEW TO Sportfest;
-GRANT UNLIMITED TABLESPACE TO Sportfest;
-```
-
-Die erste Zeile (*DROP USER*) wird beim ersten Ausführen fehlschlagen, da der User noch nicht
-existiert. Überspringen Sie mit *Skip* diesen Befehl.
-
-Verbinden Sie sich nun mit dem User Sportfest und kopieren das
-[SQL Skript aus dem Kapitel Analytische Funktionen](sportfest.sql)
-in das Abfragefenster.
+Erstelle wie im Kapitel
+[Analytische Funktionen in Oracle](https://github.com/schletz/Dbi3Sem/blob/master/02_Analytical%20Functions/README.md)
+aus dem Kurs *Dbi3Sem* die Datenbank mit den Ergebnissen eines Schul-Sportfestes.
 
 ## Erstellen einer Konsolenapplikation mit EF Core
 
 Geben Sie nun in der Konsole in ein Verzeichnis Ihrer Wahl. Führen Sie danach die folgenden
-Befehle aus. Unter Linux oder macOS müssen die md und rd Befehle angepasst werden.
+Befehle aus.
 
+**Windows**
 ```text
-rd /S /Q SportfestApp
-md SportfestApp
-cd SportfestApp
-md SportfestApp.Application
-cd SportfestApp.Application
-dotnet new classlib
+SET SLN_NAME=SportfestApp
+rd /S /Q %SLN_NAME%
+md %SLN_NAME%
+cd %SLN_NAME%
+md %SLN_NAME%.Application
+cd %SLN_NAME%.Application
+dotnet new classlib -f net6.0
 dotnet add package Microsoft.EntityFrameworkCore --version 6.*
 dotnet add package Oracle.EntityFrameworkCore --version 6.*
 dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 6.*
 cd ..
-md SportfestApp.Test
-cd SportfestApp.Test
-dotnet new xunit
-dotnet add reference ..\SportfestApp.Application
+md %SLN_NAME%.Test
+cd %SLN_NAME%.Test
+dotnet new xunit -f net6.0
+dotnet add reference ..\%SLN_NAME%.Application
 cd ..
-md SportfestApp.ConsoleApp
-cd SportfestApp.ConsoleApp
-dotnet new console
-dotnet add reference ..\SportfestApp.Application
+md %SLN_NAME%.ConsoleApp
+cd %SLN_NAME%.ConsoleApp
+dotnet new console -f net6.0
+dotnet add reference ..\%SLN_NAME%.Application
 cd ..
 dotnet new sln
-dotnet sln add SportfestApp.ConsoleApp
-dotnet sln add SportfestApp.Application
-dotnet sln add SportfestApp.Test
-start SportfestApp.sln
+dotnet sln add %SLN_NAME%.ConsoleApp
+dotnet sln add %SLN_NAME%.Application
+dotnet sln add %SLN_NAME%.Test
+echo **/.vs >> .gitignore
+echo **/.vscode >> .gitignore
+echo **/bin >> .gitignore
+echo **/obj >> .gitignore
+
 ```
 
-Öffnen Sie nun die Datei SportfestApp.sln in Visual Studio. In der Konsole können Sie dies mit
+**macOS, Linux**
+```bash
+SLN_NAME=SportfestApp
+rm -rf $SLN_NAME
+mkdir $SLN_NAME
+cd $SLN_NAME
+mkdir $SLN_NAME.Application
+cd $SLN_NAME.Application
+dotnet new classlib -f net6.0
+dotnet add package Microsoft.EntityFrameworkCore --version 6.*
+dotnet add package Oracle.EntityFrameworkCore --version 6.*
+dotnet add package Microsoft.EntityFrameworkCore.Proxies --version 6.*
+cd ..
+mkdir $SLN_NAME.Test
+cd $SLN_NAME.Test
+dotnet new xunit -f net6.0
+dotnet add reference ../$SLN_NAME.Application
+cd ..
+mkdir $SLN_NAME.ConsoleApp
+cd $SLN_NAME.ConsoleApp
+dotnet new console -f net6.0
+dotnet add reference ../$SLN_NAME.Application
+cd ..
+dotnet new sln
+dotnet sln add $SLN_NAME.ConsoleApp
+dotnet sln add $SLN_NAME.Application
+dotnet sln add $SLN_NAME.Test
+echo **/.vs >> .gitignore
+echo **/.vscode >> .gitignore
+echo **/bin >> .gitignore
+echo **/obj >> .gitignore
+```
+
+Öffnen Sie nun die Datei *SportfestApp.sln* in Visual Studio. In der Konsole können Sie dies mit
 *start SportfestApp.sln* am Schnellsten erledigen.
 
 ## Erstellen und Nutzen einer View
