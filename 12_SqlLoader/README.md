@@ -24,12 +24,12 @@ Führen Sie den folgenden Befehl aus:
 dotnet publish -c Release -o C:/Temp/oracle-home/DataGeneratorBuild -r linux-x64 --self-contained
 ```
 
-Nun wechseln Sie in Ihr Homeverzeichnis und führen das kompilierte Programm einfach aus:
+Nun wechseln Sie in das Verzeichnis */tmp* und führen das kompilierte Programm einfach aus:
 
 **Oracle 21 (Docker Image)**
 ```text
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /home
+cd /tmp
 ./DataGeneratorBuild/DataGenerator 10000
 ```
 

@@ -72,7 +72,7 @@ Reihenfolge:
 ## 1. Schritt: Laden der Dateien
 
 Mit *wget* können Sie in Linux Daten direkt auf Ihr System laden. Führen Sie die folgenden Befehle
-aus, um ein Verzeichnis *wienerlinien* in ihrem Homeverzeichnis anzulegen und die Daten vom Server
+im Verzeichnis */tmp* aus, um ein Verzeichnis *wienerlinien* dort anzulegen und die Daten vom Server
 zu laden. Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 **Oracle 19/21 Container**
