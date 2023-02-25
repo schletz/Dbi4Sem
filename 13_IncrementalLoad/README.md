@@ -1,5 +1,24 @@
 # Inkrementelles Laden mit SQL*Loader
 
+> **Hinweis:** Sie benötigen einen gestarteten Docker Container mit Oracle 19 bzw. 21. 
+> Die Anleitung zur Installation befindet sich auf https://github.com/schletz/Dbi2Sem/tree/master/01_OracleVM/03_Docker.
+
+Das *docker run* Kommando aus der Anleitung ist
+
+```
+docker run -d -p 1521:1521 -e ORACLE_PASSWORD=oracle -v C:/Temp/oracle-home:/tmp --name oracle21c gvenzl/oracle-xe:21-full
+```
+
+Voraussetzung für diesen Punkt ist, dass *C:\Temp\oracle-home* im Docker Container (Oracle 21) sichtbar ist.
+Öffnen Sie daher das Terminal *des Oracle Containers* und geben Sie die folgenden Befehle ein:
+
+```
+cd /tmp
+echo "Hello from Oracle" > test.txt
+```
+
+Sie sehen nun in *C:\Temp\oracle-home* die Datei *test.txt*.
+
 ## Intro
 
 Auf
@@ -77,25 +96,13 @@ zu laden. Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls aus
 
 **Oracle 19/21 Container**
 ```bash
-cd
+cd /tmp
 rm -rf wienerlinien
 mkdir wienerlinien
 cd wienerlinien
 curl https://data.wien.gv.at/csv/wienerlinien-ogd-linien.csv --output wienerlinien-ogd-linien.csv
 curl https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv --output wienerlinien-ogd-haltestellen.csv
 curl https://data.wien.gv.at/csv/wienerlinien-ogd-steige.csv --output wienerlinien-ogd-steige.csv
-ls -alh
-```
-
-**Oracle 12 VM**
-```bash
-cd
-rm -rf wienerlinien
-mkdir wienerlinien
-cd wienerlinien
-wget https://data.wien.gv.at/csv/wienerlinien-ogd-linien.csv
-wget https://data.wien.gv.at/csv/wienerlinien-ogd-haltestellen.csv
-wget https://data.wien.gv.at/csv/wienerlinien-ogd-steige.csv
 ls -alh
 ```
 
@@ -126,51 +133,12 @@ sqlplus System/oracle@//localhost/XEPDB1 <<< "
     GRANT UNLIMITED TABLESPACE TO Wienerlinien;"
 ```
 
-**Oracle 12**
-``` bash
-sqlplus -S System/oracle <<< "
-    DROP USER Wienerlinien CASCADE;
-    CREATE USER Wienerlinien IDENTIFIED BY oracle;
-    GRANT CONNECT, RESOURCE, CREATE VIEW TO Wienerlinien;
-    GRANT UNLIMITED TABLESPACE TO Wienerlinien;"
-```
-
 Um die Datenbank anzulegen kopieren Sie die folgenden SQL Anweisungen in die Konsole. Bestätigen
 Sie das Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 **Oracle 19/21**
 ```bash
 sqlplus Wienerlinien/oracle@//localhost/XEPDB1 <<< "
-    DROP TABLE Steig CASCADE CONSTRAINTS;
-    DROP TABLE Haltestelle CASCADE CONSTRAINTS;
-    DROP TABLE Linie CASCADE CONSTRAINTS;
-    CREATE TABLE Linie (
-        L_ID             INTEGER PRIMARY KEY,
-        L_Bezeichnung    VARCHAR2(200) NOT NULL,
-        L_Verkehrsmittel VARCHAR2(200) NOT NULL
-    );
-    CREATE TABLE Haltestelle (
-        H_ID   INTEGER PRIMARY KEY,
-        H_Name VARCHAR2(200) NOT NULL
-    );
-    CREATE TABLE Steig (
-        S_ID          INTEGER PRIMARY KEY,
-        S_Linie       INTEGER NOT NULL,
-        S_Haltestelle INTEGER NOT NULL,
-        S_Steig       VARCHAR2(10),
-        S_Richtung    CHAR(1) NOT NULL,
-        S_Reihenfolge INTEGER NOT NULL,
-        FOREIGN KEY (S_Linie) REFERENCES Linie(L_ID),
-        FOREIGN KEY (S_Haltestelle) REFERENCES Haltestelle(H_ID)
-    );
-    SELECT COUNT(*) FROM Linie;
-    SELECT COUNT(*) FROM Haltestelle;
-    SELECT COUNT(*) FROM Steig;"
-```
-
-**Oracle 12**
-```bash
-sqlplus -S Wienerlinien/oracle <<< "
     DROP TABLE Steig CASCADE CONSTRAINTS;
     DROP TABLE Haltestelle CASCADE CONSTRAINTS;
     DROP TABLE Linie CASCADE CONSTRAINTS;
@@ -221,15 +189,6 @@ Fügen Sie nun die Importe zu einem Shellscript mit dem Namen
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=linie.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=haltestelle.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=steig.ctl
-
-```
-
-**Oracle 12 VM**
-
-```bash
-sqlldr userid=Wienerlinien/oracle control=linie.ctl
-sqlldr userid=Wienerlinien/oracle control=haltestelle.ctl
-sqlldr userid=Wienerlinien/oracle control=steig.ctl
 
 ```
 
@@ -295,16 +254,6 @@ Prozedur *import_wienerlinien* ergänzen und ausführen:
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=linie.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=haltestelle.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=steig.ctl
-sqlplus -s Wienerlinien/oracle <<< "
-    CALL import_wienerlinien();
-    SELECT COUNT(*) FROM LINIE;"
-```
-
-**Oracle 12 VM**
-```bash
-sqlldr userid=Wienerlinien/oracle control=linie.ctl
-sqlldr userid=Wienerlinien/oracle control=haltestelle.ctl
-sqlldr userid=Wienerlinien/oracle control=steig.ctl
 sqlplus -s Wienerlinien/oracle <<< "
     CALL import_wienerlinien();
     SELECT COUNT(*) FROM LINIE;"

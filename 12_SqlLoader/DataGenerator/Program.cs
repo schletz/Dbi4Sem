@@ -32,8 +32,7 @@ namespace DataGenerator
 
             // Mit dem system User (oben definiert) verbinden und den User Fahrkarten (Passwort oracle)
             // anlegen.
-            Console.Write("Welche Oracle Version wird verwendet? [1] Oracle 12   [2] Oracle 19/21   ");
-            var serviceName = Console.ReadLine() == "1" ? "orcl" : "xepdb1";
+            var serviceName = "xepdb1";
             Console.WriteLine("Erstelle den User Fahrkarten...");
             using (FahrkartenContext db = new FahrkartenContext($"User Id={sysUser};Password={sysPassword};Data Source=localhost:1521/{serviceName}"))
             {
