@@ -6,14 +6,14 @@
 Das *docker run* Kommando aus der Anleitung ist
 
 ```
-docker run -d -p 1521:1521 -e ORACLE_PASSWORD=oracle -v C:/Temp/oracle-home:/tmp --name oracle21c gvenzl/oracle-xe:21-full
+docker run -d -p 1521:1521 -e ORACLE_PASSWORD=oracle -v C:/Temp/oracle-home:/host --name oracle21c gvenzl/oracle-xe:21-full
 ```
 
 Voraussetzung für diesen Punkt ist, dass *C:\Temp\oracle-home* im Docker Container (Oracle 21) sichtbar ist.
 Öffnen Sie daher das Terminal *des Oracle Containers* und geben Sie die folgenden Befehle ein:
 
 ```
-cd /tmp
+cd /host
 echo "Hello from Oracle" > test.txt
 ```
 
@@ -49,12 +49,12 @@ Führen Sie den folgenden Befehl aus:
 dotnet publish -c Release -o C:/Temp/oracle-home/DataGeneratorBuild -r linux-x64 --self-contained
 ```
 
-Nun wechseln Sie in das Verzeichnis */tmp* und führen das kompilierte Programm einfach aus:
+Nun wechseln Sie in das Verzeichnis */host* und führen das kompilierte Programm einfach aus:
 
 **Oracle 21 (Docker Image)**
 ```text
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-cd /tmp
+cd /host
 ./DataGeneratorBuild/DataGenerator 10000
 ```
 

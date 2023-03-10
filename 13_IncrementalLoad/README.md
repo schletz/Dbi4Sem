@@ -6,14 +6,14 @@
 Das *docker run* Kommando aus der Anleitung ist
 
 ```
-docker run -d -p 1521:1521 -e ORACLE_PASSWORD=oracle -v C:/Temp/oracle-home:/tmp --name oracle21c gvenzl/oracle-xe:21-full
+docker run -d -p 1521:1521 -e ORACLE_PASSWORD=oracle -v C:/Temp/oracle-home:/host --name oracle21c gvenzl/oracle-xe:21-full
 ```
 
 Voraussetzung für diesen Punkt ist, dass *C:\Temp\oracle-home* im Docker Container (Oracle 21) sichtbar ist.
 Öffnen Sie daher das Terminal *des Oracle Containers* und geben Sie die folgenden Befehle ein:
 
 ```
-cd /tmp
+cd /host
 echo "Hello from Oracle" > test.txt
 ```
 
@@ -91,12 +91,12 @@ Reihenfolge:
 ## 1. Schritt: Laden der Dateien
 
 Mit *wget* können Sie in Linux Daten direkt auf Ihr System laden. Führen Sie die folgenden Befehle
-im Verzeichnis */tmp* aus, um ein Verzeichnis *wienerlinien* dort anzulegen und die Daten vom Server
+im Verzeichnis */host* aus, um ein Verzeichnis *wienerlinien* dort anzulegen und die Daten vom Server
 zu laden. Bestätigen Sie das letzte Statement mit Enter, damit es ebenfalls ausgeführt wird.
 
 **Oracle 19/21 Container**
 ```bash
-cd /tmp
+cd /host
 rm -rf wienerlinien
 mkdir wienerlinien
 cd wienerlinien
