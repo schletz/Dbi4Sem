@@ -254,7 +254,7 @@ Prozedur *import_wienerlinien* ergänzen und ausführen:
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=linie.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=haltestelle.ctl
 sqlldr userid=Wienerlinien/oracle@//localhost/XEPDB1 control=steig.ctl
-sqlplus -s Wienerlinien/oracle <<< "
+sqlplus Wienerlinien/oracle@//localhost/XEPDB1 <<< "
     CALL import_wienerlinien();
     SELECT COUNT(*) FROM LINIE;"
 ```
