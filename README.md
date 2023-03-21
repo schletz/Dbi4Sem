@@ -34,9 +34,8 @@
                 <li><a href="13_IncrementalLoad/README.md">Inkrementelles Laden</a></li>
                 <li><a href="14_Dwh_Griesmayer/README.md">Docker Materialien zu http://griesmayer.com</a></li>
             </ul>
-            <strong>3 Business Intelligence</strong>
+            <strong>3 Business Intelligence mit SQL Server</strong>
             <ul>
-                <li><a href="41_SqlServerInstall/README.md">Installation der SQL Server 2019 Analysis Services</a></li>
                 <li><a href="42_DatabaseGenerator/README.md">Generierung der Musterdatenbank, Zeitreihenanalyse</a></li>
                 <li><a href="https://web.microsoftstream.com/video/ac28cc0a-25b2-4c2e-b2f3-4aa19d7ab054">Analysis
                         Services Intro (Video)</li>

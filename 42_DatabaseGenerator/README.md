@@ -1,16 +1,47 @@
 # Generierung der Musterdatenbank, Zeitreihenanalyse
 
+## SQL Server als Docker Image
+
+Für die Übung brauchen Sie das Docker Image von SQL Server.
+Es läuft auch auf ARM Architekturen, deswegen ist eine Emulation wie Colima unter Apple M1 oder M2 nicht nötig.
+Prüfen Sie vorher, ob der Port 1433 nicht schon durch einen lokalen Server belegt ist.
+Der nachfolgende Befehl wird **in der Git Bash** oder im Terminal von macOS ausgeführt.
+
+```
+netstat -a -n  | grep :1433
+```
+
+Liefert er nichts zurück, dann ist der Port 1433 frei.
+Ansonsten beenden Sie lokale SQL Server Installationen über *Dienste*.
+Der nachfolgende Befehl legt einen Container mit dem Namen *sqlserver2019* an:
+
+```
+docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge
+```
+
+### Verbinden mit DBeaver oder dem SQL Server Management Studio
+
+Für den Zugriff auf SQL Server können alle gängigen SQL Editoren wie DBeaver, ... verwendet werden.
+Speziell für SQL Server gibt es das Programm *[SQL Server Management Studio](https://learn.microsoft.com/de-de/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)*.
+Es ermöglicht spezifischere Konfigurationen wie Anlegen von Usern in der GUI, Management von Datenbanken, ...
+Sie können sich zum oben angelegten Docker Container mit folgenden Daten verbinden:
+
+- **Server:** localhost
+- **Datenbank:** master
+- **Username:** sa
+- **Passwort:** SqlServer2019
+
 ## Programm zum Generieren der Musterdatenbank
 
 Starten Sie das .NET 6 Programm im Ordner DataGenerator mit dem Befehl
 *dotnet run -c Release* im Ordner *42_DatabaseGenerator/DataGenerator*:
 
 ```text
-Dbi4Sem\42_DatabaseGenerator\DataGenerator>dotnet run -c Release
+42_DatabaseGenerator\DataGenerator>dotnet run -c Release 
 ```
 
 Danach werden Serveradresse, Datenbankname, ... abgefragt. In den eckigen Klammern sind die
-Standardwerte angegeben, die mit der vorigen SQL Server Installation funktionieren.
+Standardwerte angegeben, die mit dem vorher angegebenen Docker Container funktionieren.
 
 Das Programm erstellt die SQL Server Datenbank und fügt 10000 Verkäufe ein. Für eine genauere
 Analyse ist aber ein Datenbestand von 1 000 000 Verkäufen nötig. Das Programm schreibt diese Daten
@@ -32,7 +63,7 @@ FROM 'C:\Temp\verkauf.tsv' WITH (
 );
 ```
 
-## Durchführen einer einfachen Auswertung
+## Durchführen einer einfachen Auswertung: Zerlegung der Zeitreihe in Komponenten
 
 Nach dem Erstellen der Datenbank muss noch die Timetable Tabelle erstellt und der Inhalt
 geladen werden. Kopieren Sie vorher die Datei [Timetable.tsv](Timetable.tsv) in das
@@ -109,57 +140,18 @@ WHERE Tag < '2019-03-01'
 ORDER BY Datum
 ```
 
-## Verfügbare Videos
-
-### Installation von SQL Server
-
-Dieses Video beschreibt die Installation von SQL Server 2019 Developer Edition mit den Analysis
-Services auf einem Windows Rechner.
-
-Verwendete Links:
-
-- [SQL Server Downloadseite](https://www.microsoft.com/de-de/sql-server/sql-server-downloads)
-
-Videolink: https://youtu.be/gqALFWGl0Bk
-
-## Das SQL Server Management Studio und der DataGenerator
-
-Nach der Installation von SQL Server muss das Management Studio für den Zugriff auf den Server
-installiert werden. Außerdem werden Musterdaten mittels eines .NET Programmes erzeugt und in die
-Datenbank *Fahrkarten* geschrieben.
-
-Zum Anzeigen Ihres aktuellen Windowsbenutzers können Sie in der Konsole den Befehl *echo %username%*
-absetzen. Falls Sie Windows mit einem Microsoft Benutzer installiert haben, kann der lokale
-Benutzername nämlich abweichen.
-
-Verwendete Links:
-
-- [Download SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15)
-
-Videolink: https://youtu.be/ZogvBKhvLko
-
-## Warum Analysis Services?
-
-Dieses Video erklärt die Auswertung von Daten ohne Analysis Services. Am Beispiel von Excel werden
-die Daten in eine Pivot Tabelle übertragen und dargestellt. Der Nachteil: Die Datenbank wird
-jedes mal abgefragt und das gesamte Abfrageergebnis wird an den Client übertragen.
-
-Videolink: https://youtu.be/4loI2-U7VwY
-
 ## Übung
 
-**(1)** Laden Sie von 
-https://info.gesundheitsministerium.gv.at/data/timeline-faelle-bundeslaender.csv
-die neuesten COVID Daten und laden Sie diese Datei in *C:\Temp*
+**(1)** Laden Sie die Datei [timeline-faelle-bundeslaender.csv](timeline-faelle-bundeslaender.csv) in das Verzeichnis *C:\Temp*.
+Es sind Daten der COVID Fallzahlen, die auf https://info.gesundheitsministerium.gv.at/data/timeline-faelle-bundeslaender.csv publiziert werden.
 
-**(2)**  Erstellen Sie eine SQL Server Datenbank COVID
+**(2)**  Erstellen Sie eine SQL Server Datenbank COVID, indem Sie sich mit DBeaver, ... als User *sa* zum SQL Server verbinden und den folgenden Befehl eingeben:
 
 ```sql
 CREATE DATABASE Covid
 ```
 
-**(3)**  Erstellen Sie eine Tabelle für die Rohdaten. Achten Sie darauf, dass Sie sich
-in der Datenbank *Covid* befinden. Sie können mit *USE Covid* die Datenbank wechseln.
+**(3)**  Erstellen Sie eine Tabelle für die Rohdaten. Achten Sie darauf, dass Sie sich in der Datenbank *Covid* befinden. Sie können mit *USE Covid* die Datenbank wechseln.
 
 ```sql
 CREATE TABLE CovidTimeline (
