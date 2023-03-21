@@ -17,13 +17,13 @@ namespace DataGenerator
             Console.Clear();
             Console.WriteLine("DATENGENERATOR FÜR VERKÄUFE");
             Console.WriteLine();
-            var server = Input("Servername oder IP des SQL Servers", @".\SQLSERVER2019");
+            var server = Input("Servername oder IP des SQL Servers", @"127.0.0.1,1433", checkExp: @"^[0-9\.\,]");
             var database = Input("Datenbank", @"Fahrkarten");
             var username = Input("Username", @"sa");
-            var password = Input("Passwort", checkExp: ".+");
+            var password = Input("Passwort", "SqlServer2019", checkExp: ".+");
             var verkaufCount = int.Parse(Input("Anzahl der Verkäufe", "1000000", checkExp: @"\d{1,9}"));
 
-            var connection = $@"Server={server};Database={database};User Id={username};Password={password}";
+            var connection = $@"Server={server};Database={database};User Id={username};Password={password};TrustServerCertificate=true";
             // Setzt die CultureInfo, damit . als Dezimaltrennzeichen eingestellt wird.
             System.Globalization.CultureInfo.DefaultThreadCurrentCulture =
                 System.Globalization.CultureInfo.InvariantCulture;
@@ -102,27 +102,30 @@ namespace DataGenerator
 
             // Unter Windows verwenden wir C:\Temp, da das Tempverzeichnis des Users in C:\Users
             // nicht für den SQL Server User zugreifbar ist.
-            var tempPath = Environment.OSVersion.Platform == PlatformID.Win32NT ? @"C:\Temp" : Path.GetTempPath();
+            var tempPath = Environment.OSVersion.Platform == PlatformID.Win32NT ? @"C:\Temp" : "/tmp";
             Directory.CreateDirectory(tempPath);
-            var filename = Path.Combine(tempPath, "verkauf.tsv");
+            var filename = Path.Combine(tempPath, "verkauf_unicode.tsv");
             WriteVerkaufFile(verkaufs, filename);
             Console.WriteLine($"{verkaufCount} Verkäufe in die Datei {filename} geschrieben.");
-            Console.WriteLine($"Um alle Verkäufe in die Tabelle Verkauf zu laden, führe folgenden Befehl im SQL Editor aus:");
+            Console.WriteLine($"Um alle Verkäufe in die Tabelle Verkauf zu laden, kopiere sie in ein Verzeichnis auf das der SQL Server Container Zugriff hat.");
+            Console.WriteLine($"Führe folgenden Befehl im SQL Editor aus. /host ist das Volume, wo die tsv Datei liegt:");
             Console.WriteLine($@"
+USE Fahrkarten;            
 TRUNCATE TABLE Verkauf;	
 BULK INSERT Verkauf
-FROM '{filename}' WITH (
-        CODEPAGE  = '65001',
+FROM '/host/verkauf_unicode.tsv' WITH (
+        CODEPAGE  = 'RAW',
         FIRSTROW = 1,
         FIELDTERMINATOR = '\t'
 );
+SELECT COUNT(*) FROM Verkauf v; 
 ");
 
         }
 
         private static void WriteVerkaufFile(List<Verkauf> verkaufs, string filename)
         {
-            using var verkaufStream = new StreamWriter(filename, false, new UTF8Encoding(false));
+            using var verkaufStream = new StreamWriter(filename, false, Encoding.Unicode);
             for (int i = 0; i < verkaufs.Count; i++)
             {
                 Verkauf v = verkaufs[i];

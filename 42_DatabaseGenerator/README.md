@@ -15,8 +15,16 @@ Liefert er nichts zurück, dann ist der Port 1433 frei.
 Ansonsten beenden Sie lokale SQL Server Installationen über *Dienste*.
 Der nachfolgende Befehl legt einen Container mit dem Namen *sqlserver2019* an:
 
+**für Windows**
 ```
-docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge
+docker run -d -p 1433:1433  --name sqlserver2019 -v C:\Temp\sql-home:/host -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge
+```
+
+**für macOS und Linux**
+```bash
+mkdir $HOME/sql-home
+chmod 777 $HOME/sql-home
+docker run -d -p 1433:1433  --name sqlserver2019 -v $HOME/sql-home:/host -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge
 ```
 
 ### Verbinden mit DBeaver oder dem SQL Server Management Studio
@@ -33,11 +41,10 @@ Sie können sich zum oben angelegten Docker Container mit folgenden Daten verbin
 
 ## Programm zum Generieren der Musterdatenbank
 
-Starten Sie das .NET 6 Programm im Ordner DataGenerator mit dem Befehl
-*dotnet run -c Release* im Ordner *42_DatabaseGenerator/DataGenerator*:
+Starten Sie das .NET 6 Programm im Ordner DataGenerator mit dem folgenden Befehl im Ordner *42_DatabaseGenerator/DataGenerator*:
 
 ```text
-42_DatabaseGenerator\DataGenerator>dotnet run -c Release 
+dotnet restore --no-cache && dotnet run -c Release 
 ```
 
 Danach werden Serveradresse, Datenbankname, ... abgefragt. In den eckigen Klammern sind die
@@ -52,22 +59,26 @@ DATENGENERATOR FÜR VERKÄUFE
 Erstelle die Datenbank...
 Füge die Daten ein (10000 Verkäufe)...
 10000 Verkäufe in 3.0 s eingefügt.
-100000 Verkäufe in die Datei C:\Temp\verkauf.tsv geschrieben.
+1000000 Verkäufe in die Datei C:\Temp\verkauf_unicode.tsv geschrieben.
+Um alle Verkäufe in die Tabelle Verkauf zu laden, kopiere sie in ein Verzeichnis auf das der SQL Server Container Zugriff hat.
+Führe folgenden Befehl im SQL Editor aus. /host ist das Volume, wo die tsv Datei liegt:
 
+USE Fahrkarten;
 TRUNCATE TABLE Verkauf;
 BULK INSERT Verkauf
-FROM 'C:\Temp\verkauf.tsv' WITH (
-        CODEPAGE  = '65001',
+FROM '/host/verkauf_unicode.tsv' WITH (
+        CODEPAGE  = 'RAW',
         FIRSTROW = 1,
         FIELDTERMINATOR = '\t'
 );
+SELECT COUNT(*) FROM Verkauf v;
 ```
 
 ## Durchführen einer einfachen Auswertung: Zerlegung der Zeitreihe in Komponenten
 
-Nach dem Erstellen der Datenbank muss noch die Timetable Tabelle erstellt und der Inhalt
-geladen werden. Kopieren Sie vorher die Datei [Timetable.tsv](Timetable.tsv) in das
-Verzeichnis *C:\Temp*. Führen Sie dann den folgenden SQL Dump aus:
+Nach dem Erstellen der Datenbank muss noch die Timetable Tabelle erstellt und der Inhalt geladen werden.
+Kopieren Sie vorher die Datei [timetable_unicode.tsv](timetable_unicode.tsv) in das Verzeichnis *C:\Temp\sql-home* (oder das Verzeichnis, auf das der SQL Server Container Zugriff hat).
+Führen Sie dann den folgenden SQL Dump aus:
 
 ```sql
 CREATE TABLE Timetable (    
@@ -85,8 +96,8 @@ CREATE TABLE Timetable (
 GO
 
 BULK INSERT Timetable    
-FROM 'C:\Temp\Timetable.tsv' WITH (    
-    CODEPAGE  = '65001',
+FROM '/host/timetable_unicode.tsv' WITH (    
+    CODEPAGE  = 'RAW',
     FIRSTROW = 2,
     FIELDTERMINATOR = '\t'
 );    
@@ -94,10 +105,10 @@ GO
 
 TRUNCATE TABLE Verkauf;
 BULK INSERT Verkauf
-FROM 'C:\Temp\verkauf.tsv' WITH (
-        CODEPAGE  = '65001',
-        FIRSTROW = 1,
-        FIELDTERMINATOR = '\t'
+FROM '/host/verkauf_unicode.tsv' WITH (
+    CODEPAGE  = 'RAW',
+    FIRSTROW = 1,
+    FIELDTERMINATOR = '\t'
 );
 GO
 
@@ -142,7 +153,7 @@ ORDER BY Datum
 
 ## Übung
 
-**(1)** Laden Sie die Datei [timeline-faelle-bundeslaender.csv](timeline-faelle-bundeslaender.csv) in das Verzeichnis *C:\Temp*.
+**(1)** Laden Sie die Datei [timeline-faelle-bundeslaender_unicode.csv](timeline-faelle-bundeslaender_unicode.csv) in das Verzeichnis *C:\Temp*.
 Es sind Daten der COVID Fallzahlen, die auf https://info.gesundheitsministerium.gv.at/data/timeline-faelle-bundeslaender.csv publiziert werden.
 
 **(2)**  Erstellen Sie eine SQL Server Datenbank COVID, indem Sie sich mit DBeaver, ... als User *sa* zum SQL Server verbinden und den folgenden Befehl eingeben:
@@ -174,8 +185,8 @@ CREATE TABLE CovidTimeline (
 
 ```sql
 BULK INSERT CovidTimeline    
-FROM 'C:\Temp\timeline-faelle-bundeslaender.csv' WITH (    
-    CODEPAGE  = '65001',
+FROM '/host/timeline-faelle-bundeslaender_unicode.csv' WITH (    
+    CODEPAGE  = 'RAW',
     FIRSTROW = 2,
     FIELDTERMINATOR = ';'
 );    
