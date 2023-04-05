@@ -410,3 +410,9 @@ GROUP BY CityBundesland;
 -- TODO: Schreibe dein Star Schema und füge die Daten dort ein.
 
 ```
+
+## 2. Dataset: Landtagswahlen in NÖ seit 1993
+
+Für eine freiwillige Übung befinden sich in der Datei [ltw_noe.7z](ltw_noe.7z) die Ergebnisse der NÖ Landtagswahlen seit 1993.
+Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
+Es hat die Tabellen *Election* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
