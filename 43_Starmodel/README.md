@@ -304,7 +304,6 @@ Nach dem Laden der Tabellen erscheint in der *Model view* das Star Schema:
 ## Übung: Bevölkerungsstand 2022
 
 In der Datei [population.7z](population.7z) befindet sich der Stand der Österreichischen Bevölkerung mit Stichtag 1.1.2022.
-Die Daten wurden von https://www.data.gv.at/katalog/dataset/688b289e-ab72-3ef0-ab7e-b8dc0d2c21d1 geladen und mit den Verwaltungsgrenzen kombiniert, um die Koordinaten der Gemeinden auf einer Karte darstellen zu können.
 Verwende die CSV Datei *population_unicode.csv*, da im SQL Server Container nur Unicode Formate importiert werden können.
 Die CSV Datei ist UTF-8 codiert, Zeilenumbruch: CR+LF, Trennzeichen: ; und hat eine Headerzeile.
 Sie hat folgendes Aussehen:
@@ -410,9 +409,38 @@ GROUP BY CityBundesland;
 -- TODO: Schreibe dein Star Schema und füge die Daten dort ein.
 
 ```
+Datenquellen:
+[data.gv.at - Population 2002](https://www.data.gv.at/katalog/dataset/688b289e-ab72-3ef0-ab7e-b8dc0d2c21d1),
+[bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
+[data.gv.at - Bezirksgrenzen Wien](https://www.data.gv.at/katalog/dataset/stat_gliederung-osterreichs-in-politische-bezirke131e2)
 
 ## 2. Dataset: Landtagswahlen in NÖ seit 1993
 
 Für eine freiwillige Übung befinden sich in der Datei [ltw_noe.7z](ltw_noe.7z) die Ergebnisse der NÖ Landtagswahlen seit 1993.
 Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
 Es hat die Tabellen *Election* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
+
+Datenquellen: 
+[noel.gv.at - Landtagswahlen seit 1998](https://www.noel.gv.at/noe/Wahlen/Landtagswahlen.html),
+[bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
+[data.gv.at - Umcodierung der Gemeindekennziffern Niederösterreich](https://www.data.gv.at/katalog/dataset/7f759371-bdb3-4f58-9dbd-835eb3c19efa)
+
+## 3. Dataset: Tagesmittel der Grundwasserspiegel in NÖ ab 2009
+
+In der Datei [grundwasserspiegel_noe.7z](grundwasserspiegel_noe.7z) befinden sich die Daten zum Grundwasserspiegel aus dem Messnetz des Hydrografischen Dienstes in NÖ.
+Zeitraum: 2009 - 2022 (inkl.).
+
+**StationNumber:** Eindeutige Nummer der hydrografischen Station.
+**StationName:** Name der Station.
+**StationLatitude:** Breitengrad der Station in GPS (WGS84) Koordinaten.
+**StationLongitude:** Längengrad der Station in GPS (WGS84) Koordinaten.
+**StationCatchment:** Einflussbereich eines Flusses (Optional).
+**StationHeight:** Seehöhe der Station in m über Adria.
+**StationNgw:** Niederster, jemals gemessene Grundwasserstand in m über Adria.
+**StationHgw:** Höchster, jemals gemessene Grundwasserstand in m über Adria.
+**Datum:** Tag, für den der Messwert gilt.
+**Wert:** Tagesmittel des Grundwasserspiegels in m über Adria.
+**GwLevel:** Höhe des Grundwasserspiegels in m in Relation zur Stationshöhe. Negativer Wert.
+
+Datenquelle:
+[noel.gv.at - Hydrografischer Dienst NÖ](https://www.noel.gv.at/wasserstand/#/de/Messstellen/Map/Grundwasserspiegel)
