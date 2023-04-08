@@ -1,0 +1,117 @@
+BKZ	BLKZ	PB	BL	WKNR	WKNAME	AREA	CENTER_X	CENTER_Y
+101	1	Eisenstadt (Stadt)	Burgenland	1A	Burgenland Nord	42.844	16.533228	47.845255
+102	1	Rust (Stadt)	Burgenland	1A	Burgenland Nord	19.991	16.686455	47.802296
+103	1	Eisenstadt-Umgebung	Burgenland	1A	Burgenland Nord	452.676	16.591821	47.854284
+104	1	Güssing	Burgenland	1B	Burgenland Süd	485.032	16.297412	47.102314
+105	1	Jennersdorf	Burgenland	1B	Burgenland Süd	253.196	16.144689	46.967578
+106	1	Mattersburg	Burgenland	1A	Burgenland Nord	237.643	16.401114	47.735931
+107	1	Neusiedl am See	Burgenland	1A	Burgenland Nord	1037.629	16.916924	47.881008
+108	1	Oberpullendorf	Burgenland	1B	Burgenland Süd	700.794	16.483454	47.512994
+109	1	Oberwart	Burgenland	1B	Burgenland Süd	732.085	16.26588	47.295707
+201	2	Klagenfurt Stadt	Kärnten	2A	Klagenfurt	120.032	14.295763	46.638872
+202	2	Villach Stadt	Kärnten	2B	Villach	134.918	13.83523	46.610839
+203	2	Hermagor	Kärnten	2C	Kärnten West	808.972	13.120905	46.647193
+204	2	Klagenfurt Land	Kärnten	2A	Klagenfurt	766.416	14.29473	46.569878
+205	2	Sankt Veit an der Glan	Kärnten	2D	Kärnten Ost	1493.692	14.340737	46.883957
+206	2	Spittal an der Drau	Kärnten	2C	Kärnten West	2764.153	13.271634	46.898825
+207	2	Villach Land	Kärnten	2B	Villach	1009.165	13.76844	46.643238
+208	2	Völkermarkt	Kärnten	2D	Kärnten Ost	908.029	14.656579	46.595957
+209	2	Wolfsberg	Kärnten	2D	Kärnten Ost	974.068	14.850371	46.845828
+210	2	Feldkirchen	Kärnten	2C	Kärnten West	558.568	14.006357	46.788418
+301	3	Krems an der Donau (Stadt)	Niederösterreich	3B	Waldviertel	51.701	15.618149	48.409025
+302	3	Sankt Pölten (Stadt)	Niederösterreich	3D	Niederösterreich Mitte	108.444	15.641912	48.198916
+303	3	Waidhofen an der Ybbs (Stadt)	Niederösterreich	3C	Mostviertel	131.183	14.778499	47.956518
+304	3	Wiener Neustadt (Stadt)	Niederösterreich	3E	Niederösterreich Süd	60.89	16.222105	47.804801
+305	3	Amstetten	Niederösterreich	3C	Mostviertel	1186.193	14.747304	48.033955
+306	3	Baden	Niederösterreich	3F	Thermenregion	753.655	16.167356	47.988964
+307	3	Bruck an der Leitha	Niederösterreich	3G	Niederösterreich Ost	703.257	16.681814	48.063954
+308	3	Gänserndorf	Niederösterreich	3G	Niederösterreich Ost	1272.008	16.750709	48.35077
+309	3	Gmünd	Niederösterreich	3B	Waldviertel	786.702	14.97348	48.776517
+310	3	Hollabrunn	Niederösterreich	3A	Weinviertel	1010.756	16.005449	48.637468
+311	3	Horn	Niederösterreich	3B	Waldviertel	783.728	15.678488	48.713425
+312	3	Korneuburg	Niederösterreich	3A	Weinviertel	662.067	16.266462	48.432039
+313	3	Krems (Land)	Niederösterreich	3B	Waldviertel	922.9	15.510853	48.461753
+314	3	Lilienfeld	Niederösterreich	3D	Niederösterreich Mitte	932.123	15.582085	47.927771
+315	3	Melk	Niederösterreich	3C	Mostviertel	1014.283	15.227067	48.21355
+316	3	Mistelbach	Niederösterreich	3A	Weinviertel	1292.346	16.538481	48.60983
+317	3	Mödling	Niederösterreich	3F	Thermenregion	277.485	16.242818	48.088613
+318	3	Neunkirchen	Niederösterreich	3E	Niederösterreich Süd	1150.229	15.942758	47.688158
+319	3	Sankt Pölten (Land)	Niederösterreich	3D	Niederösterreich Mitte	1287.909	15.705059	48.163893
+320	3	Scheibbs	Niederösterreich	3C	Mostviertel	1023.606	15.089145	47.927927
+321	3	Tulln	Niederösterreich	3D	Niederösterreich Mitte	734.024	15.99777	48.346302
+322	3	Waidhofen an der Thaya	Niederösterreich	3B	Waldviertel	669.133	15.347653	48.852149
+323	3	Wiener Neustadt (Land)	Niederösterreich	3E	Niederösterreich Süd	972.325	16.109465	47.755807
+325	3	Zwettl	Niederösterreich	3B	Waldviertel	1399.142	15.153749	48.555141
+401	4	Stadt Linz	Oberösterreich	4A	Linz und Umgebung	95.987	14.316153	48.284325
+402	4	Stadt Steyr	Oberösterreich	4D	Traunviertel	26.54	14.421818	48.054215
+403	4	Stadt Wels	Oberösterreich	4C	Hausruckviertel	45.882	14.020207	48.174629
+404	4	Braunau	Oberösterreich	4B	Innviertel	1040.109	13.085307	48.127298
+405	4	Eferding	Oberösterreich	4C	Hausruckviertel	259.523	13.984454	48.322928
+406	4	Freistadt	Oberösterreich	4E	Mühlviertel	994.095	14.630578	48.466218
+407	4	Gmunden	Oberösterreich	4D	Traunviertel	1430.913	13.754814	47.761155
+408	4	Grieskirchen	Oberösterreich	4C	Hausruckviertel	578.667	13.769244	48.269299
+409	4	Kirchdorf	Oberösterreich	4D	Traunviertel	1238.665	14.209593	47.816976
+410	4	Linz-Land	Oberösterreich	4A	Linz und Umgebung	459.833	14.281311	48.190724
+411	4	Perg	Oberösterreich	4E	Mühlviertel	612.691	14.738029	48.275224
+412	4	Ried	Oberösterreich	4B	Innviertel	584.323	13.442087	48.220185
+413	4	Rohrbach	Oberösterreich	4E	Mühlviertel	817.194	13.957814	48.558426
+414	4	Schärding	Oberösterreich	4B	Innviertel	618.145	13.589481	48.43221
+415	4	Steyr-Land	Oberösterreich	4D	Traunviertel	972.823	14.477555	47.913874
+416	4	Urfahr-Umgebung	Oberösterreich	4E	Mühlviertel	660.222	14.268911	48.421915
+417	4	Vöcklabruck	Oberösterreich	4C	Hausruckviertel	1084.871	13.532844	47.963976
+418	4	Wels-Land	Oberösterreich	4C	Hausruckviertel	457.822	13.973098	48.126233
+501	5	Salzburg (Stadt)	Salzburg	5A	Salzburg Stadt	65.641	13.046573	47.797523
+502	5	Hallein	Salzburg	5B	Flachgau/Tennengau	668.35	13.267689	47.608069
+503	5	Salzburg-Umgebung	Salzburg	5B	Flachgau/Tennengau	1004.779	13.186026	47.842059
+504	5	Sankt Johann im Pongau	Salzburg	5C	Lungau/Pinzgau/Pongau	1755.119	13.267596	47.307735
+505	5	Tamsweg	Salzburg	5C	Lungau/Pinzgau/Pongau	1019.746	13.666222	47.140513
+506	5	Zell am See	Salzburg	5C	Lungau/Pinzgau/Pongau	2642.264	12.653486	47.297062
+601	6	Graz (Stadt)	Steiermark	6A	Graz und Umgebung	127.483	15.439337	47.075117
+603	6	Deutschlandsberg	Steiermark	6C	Weststeiermark	864.032	15.198298	46.807383
+606	6	Graz-Umgebung	Steiermark	6A	Graz und Umgebung	1086.269	15.384321	47.126772
+610	6	Leibnitz	Steiermark	6C	Weststeiermark	751.256	15.527739	46.781215
+611	6	Leoben	Steiermark	6D	Obersteiermark	1052.085	14.914274	47.422497
+612	6	Liezen	Steiermark	6D	Obersteiermark	3317.008	14.212193	47.521407
+614	6	Murau	Steiermark	6D	Obersteiermark	1384.079	14.176594	47.128043
+616	6	Voitsberg	Steiermark	6C	Weststeiermark	679.226	15.078033	47.058055
+617	6	Weiz	Steiermark	6B	Oststeiermark	1097.864	15.673148	47.280932
+620	6	Murtal	Steiermark	6D	Obersteiermark	1675.753	14.641917	47.24033
+621	6	Bruck-Mürzzuschlag	Steiermark	6D	Obersteiermark	2154.869	15.379009	47.576812
+622	6	Hartberg-Fürstenfeld	Steiermark	6B	Oststeiermark	1227.576	15.945894	47.284912
+623	6	Südoststeiermark	Steiermark	6B	Oststeiermark	985.214	15.853527	46.881451
+701	7	Innsbruck-Stadt	Tirol	7A	Innsbruck	104.809	11.38056	47.288873
+702	7	Imst	Tirol	7D	Oberland	1723.832	10.896436	47.086167
+703	7	Innsbruck-Land	Tirol	7B	Innsbruck-Land	1989.364	11.341794	47.196191
+704	7	Kitzbühel	Tirol	7C	Unterland	1161.777	12.37534	47.463858
+705	7	Kufstein	Tirol	7C	Unterland	969.285	12.057729	47.519321
+706	7	Landeck	Tirol	7D	Oberland	1594.535	10.482785	47.033696
+707	7	Lienz	Tirol	7E	Osttirol	2019.295	12.522812	46.90607
+708	7	Reutte	Tirol	7D	Oberland	1235.677	10.5826	47.380029
+709	7	Schwaz	Tirol	7B	Innsbruck-Land	1841.621	11.783472	47.273895
+801	8	Bludenz	Vorarlberg	8B	Vorarlberg Süd	1285.635	9.941847	47.10256
+802	8	Bregenz	Vorarlberg	8A	Vorarlberg Nord	865.656	9.931753	47.405339
+803	8	Dornbirn	Vorarlberg	8A	Vorarlberg Nord	172.262	9.746987	47.380288
+804	8	Feldkirch	Vorarlberg	8B	Vorarlberg Süd	277.89	9.666587	47.26742
+901	9	Wien 1., Innere Stadt	Wien	9B	Wien Innen-West	2.868	16.369402	48.208362
+902	9	Wien 2., Leopoldstadt	Wien	9C	Wien Innen-Ost	19.236	16.423273	48.203641
+903	9	Wien 3., Landstraße	Wien	9A	Wien Innen-Süd	7.395	16.396097	48.193764
+904	9	Wien 4., Wieden	Wien	9A	Wien Innen-Süd	1.774	16.37037	48.192569
+905	9	Wien 5., Margareten	Wien	9A	Wien Innen-Süd	2.01	16.355937	48.186802
+906	9	Wien 6., Mariahilf	Wien	9B	Wien Innen-West	1.454	16.349822	48.194757
+907	9	Wien 7., Neubau	Wien	9B	Wien Innen-West	1.607	16.346963	48.20252
+908	9	Wien 8., Josefstadt	Wien	9B	Wien Innen-West	1.089	16.347823	48.211029
+909	9	Wien 9., Alsergrund	Wien	9B	Wien Innen-West	2.966	16.356488	48.222813
+910	9	Wien 10., Favoriten	Wien	9D	Wien Süd	31.812	16.387629	48.152114
+911	9	Wien 11., Simmering	Wien	9D	Wien Süd	23.242	16.446301	48.163996
+912	9	Wien 12., Meidling	Wien	9D	Wien Süd	8.099	16.322346	48.170521
+913	9	Wien 13., Hietzing	Wien	9E	Wien Süd-West	37.694	16.245607	48.177337
+914	9	Wien 14., Penzing	Wien	9E	Wien Süd-West	33.744	16.241603	48.221065
+915	9	Wien 15., Rudolfsheim-Fünfhaus	Wien	9E	Wien Süd-West	3.916	16.32607	48.195469
+916	9	Wien 16., Ottakring	Wien	9F	Wien Nord-West	8.67	16.2996	48.215399
+917	9	Wien 17., Hernals	Wien	9F	Wien Nord-West	11.384	16.290215	48.233715
+918	9	Wien 18., Währing	Wien	9F	Wien Nord-West	6.344	16.318976	48.235552
+919	9	Wien 19., Döbling	Wien	9F	Wien Nord-West	24.931	16.333693	48.259031
+920	9	Wien 20., Brigittenau	Wien	9C	Wien Innen-Ost	5.707	16.377272	48.240191
+921	9	Wien 21., Floridsdorf	Wien	9G	Wien Nord	44.42	16.411173	48.281189
+922	9	Wien 22., Donaustadt	Wien	9G	Wien Nord	102.242	16.494937	48.218867
+923	9	Wien 23., Liesing	Wien	9E	Wien Süd-West	32.043	16.293235	48.143285

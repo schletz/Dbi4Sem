@@ -414,18 +414,73 @@ Datenquellen:
 [bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
 [data.gv.at - Bezirksgrenzen Wien](https://www.data.gv.at/katalog/dataset/stat_gliederung-osterreichs-in-politische-bezirke131e2)
 
-## 2. Dataset: Landtagswahlen in NÖ seit 1993
+## 2. Dataset: Nationalratswahlen seit 1995
+
+![](nr_wahlen_1943.png)
+
+Für eine freiwillige Übung befinden sich in der Datei [nrw_ergebnisse.7z](nrw_ergebnisse.7z) die Ergebnisse der Nationalratswahlen seit 1995.
+Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
+Es hat die Tabellen *ElectionResult* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
+Die CSV Datei hat folgende Felder:
+
+**YEAR:** Wahljahr (1995, 1999, 2002, 2006, 2008, 2013, 2017, 2019)
+**GKZ_BEV:** Gemeindekennzahl der Statistik Austria aus dem Datensatz des BEV (Bundesamt für Eich- und Vermessungswesen).
+Sie ist immer 5stellig und hat den Aufbau LBBGG (L = Bundesland, B = Bezirk, G = Gemeinde).
+**Partei:** Kürzel der wahlwerbenden Partei (SPÖ, ÖVP, ...)
+**BKZ_BEV:** Bezirkskennzahl, abgeleitet aus der Gemeindekennzahl (LBB).
+**BLKZ:** Bundesland Kennzahl, abgeleitet aus der Gemeindekennzahl (L).
+**PG:** Name der politischen Gemeinde. In Wien wird der Name des Gemeindebezirkes verwendet.
+**PB:** Name des politischen Bezirkes. In Wien wird der Name des Gemeindebezirkes verwendet.
+**BL:** Name des Bundeslandes
+**WKNR_BEV:** Kennzahl des Wahlkreises (1A = Burgenland Nord, ...).
+Ein Wahlkreis umfasst mehrere Bezirke im selben Bundesland.
+**WKNAME:** Name des Wahlkreises.
+**AREA:** Fläche der Gemeinde in km².
+**CENTER_X:** Längengrad des Mittelpunktes der Gemeinde in WGS84 (GPS) Koordinaten.
+**CENTER_Y:** Breitengrad des Mittelpunktes der Gemeinde in WGS84 (GPS) Koordinaten.
+**Wahlberechtigte:** Anzahl der Wahlberechtigten der Gemeinde.
+**StimmenAbgegeben:** Anzahl der abgegebenen Stimmen der Gemeinde.
+**StimmenGueltig:** Anzahl der abgegebenen gültigen Stimmen der Gemeinde.
+**StimmenUngueltig:** Anzahl der abgegebenen ungültigen Stimmen der Gemeinde.
+**Stimmen:** Anzahl der Stimmen für die angegebene Partei der Gemeinde.
+**StimmenAbgegebenMitWk:** Anzahl der abgegebenen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
+Deswegen ist diese Zahl auch nicht ganzzahlig.
+**StimmenGueltigMitWk:** Anzahl der abgegebenen gültigen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
+Deswegen ist diese Zahl auch nicht ganzzahlig.
+**StimmenUngueltigMitWk:** Anzahl der abgegebenen ungültigen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
+Deswegen ist diese Zahl auch nicht ganzzahlig.
+**StimmenMitWk:** Anzahl der Stimmen für die angegebene Partei der Gemeinde, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
+Deswegen ist diese Zahl auch nicht ganzzahlig.
+**Parteibezeichnung:** Langbezeichnung der Partei.
+
+Datenquellen:
+[BEV: Verwaltungsgrenzen - VGD](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html)
+[Gliederung Österreichs in Politische Bezirke](https://www.data.gv.at/katalog/dataset/stat_gliederung-osterreichs-in-politische-bezirke131e2)
+[Wahlkreiseinteilung](https://www.bmi.gv.at/412/Nationalratswahlen/Wahlkreiseinteilung.aspx)
+[NRW 1995](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_1995_Wiederholungswahl_1996/start.aspx)
+[NRW 1999](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_1999/start.aspx)
+[NRW 2002](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2002/start.aspx)
+[NRW 2006](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2006/start.aspx)
+[NRW 2008](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2008/start.aspx)
+[NRW 2013](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2013/start.aspx)
+[NRW 2017](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2017/start.aspx)
+[NRW 2019](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2019/start.aspx)
+[Umcodierung der Gemeindekennziffern Niederösterreich](https://www.data.gv.at/katalog/dataset/7f759371-bdb3-4f58-9dbd-835eb3c19efa)
+[Die neue Gemeinde- und Bezirksstruktur in der Steiermark](https://www.landesentwicklung.steiermark.at/cms/beitrag/12658686/141979478/)
+[Land Steiermark: Gebietsstands- und Namensänderungen 2020](https://www.landesentwicklung.steiermark.at/cms/dokumente/12658757_142970621/716b52c0/STMK%20Gebietsstands%C3%A4nderungen%20GM%202020.pdf)
+
+## 3. Dataset: Landtagswahlen in NÖ seit 1993
 
 Für eine freiwillige Übung befinden sich in der Datei [ltw_noe.7z](ltw_noe.7z) die Ergebnisse der NÖ Landtagswahlen seit 1993.
 Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
-Es hat die Tabellen *Election* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
+Es hat die Tabellen *ElectionResult* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
 
 Datenquellen: 
 [noel.gv.at - Landtagswahlen seit 1998](https://www.noel.gv.at/noe/Wahlen/Landtagswahlen.html),
 [bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
 [data.gv.at - Umcodierung der Gemeindekennziffern Niederösterreich](https://www.data.gv.at/katalog/dataset/7f759371-bdb3-4f58-9dbd-835eb3c19efa)
 
-## 3. Dataset: Tagesmittel der Grundwasserspiegel in NÖ ab 2009
+## 4. Dataset: Tagesmittel der Grundwasserspiegel in NÖ ab 2009
 
 In der Datei [grundwasserspiegel_noe.7z](grundwasserspiegel_noe.7z) befinden sich die Daten zum Grundwasserspiegel aus dem Messnetz des Hydrografischen Dienstes in NÖ.
 Zeitraum: 2009 - 2022 (inkl.).
@@ -444,3 +499,4 @@ Zeitraum: 2009 - 2022 (inkl.).
 
 Datenquelle:
 [noel.gv.at - Hydrografischer Dienst NÖ](https://www.noel.gv.at/wasserstand/#/de/Messstellen/Map/Grundwasserspiegel)
+
