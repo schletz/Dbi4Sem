@@ -1,0 +1,58 @@
+Typ	Jahr	Pos	Partei	ParteiName
+L	2023	1	ÖVP	Österreichische Volkspartei
+L	2023	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	2023	3	FPÖ	Freiheitliche Partei Österreichs
+L	2023	4	GRÜNE	Die Grünen
+L	2023	5	NEOS	NEOS – Das Neue Österreich und Liberales Forum
+L	2023	6	MFG	MFG Österreich - Menschen Freiheit Grundrechte
+L	2023	7	KPÖ	Kommunistische Partei Österreichs
+L	2023	8	ZIEL	Dein Ziel
+L	2018	1	ÖVP	Österreichische Volkspartei
+L	2018	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	2018	3	FPÖ	Freiheitliche Partei Österreichs
+L	2018	4	GRÜNE	Die Grünen
+L	2018	5	WFNOE	Wir für Niederösterreich
+L	2018	6	NEOS	NEOS – Das Neue Österreich und Liberales Forum
+L	2018	7	CPÖ	Christliche Partei Österreichs
+L	2013	1	ÖVP	Österreichische Volkspartei
+L	2013	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	2013	3	FPÖ	Freiheitliche Partei Österreichs
+L	2013	4	GRÜNE	Die Grünen
+L	2013	5	PIRAT	Piratenpartei Österreichs
+L	2013	6	KPÖ	Kommunistische Partei Österreichs
+L	2013	7	FRANK	Team Frank Stronach
+L	2013	8	MUT	Mutbürger
+L	2013	9	CPÖ	Christliche Partei Österreichs
+L	2008	1	ÖVP	Österreichische Volkspartei
+L	2008	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	2008	3	GRÜNE	Die Grünen
+L	2008	4	FPÖ	Freiheitliche Partei Österreichs
+L	2008	5	LNÖ	Liste für unser Niederösterreich
+L	2008	6	CPÖ	Christliche Partei Österreichs
+L	2008	7	KPÖ	Kommunistische Partei Österreichs
+L	2008	8	BZÖ	Bündnis Zukunft Österreich
+L	2008	9	TRP	Tierrechtspartei - earth-human-animals-nature
+L	2003	1	ÖVP	Österreichische Volkspartei
+L	2003	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	2003	3	FPÖ	Freiheitliche Partei Österreichs
+L	2003	4	GRÜNE	Die Grünen
+L	2003	5	GRÜNÖ	Grünes Unabhängiges Österreich, Liste der EU-Opposition, Gabriele Wladyka
+L	2003	6	KPÖ	Kommunistische Partei Österreichs
+L	2003	7	CWG	Christliche Wählergemeinschaft
+L	1998	1	ÖVP	Österreichische Volkspartei
+L	1998	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	1998	3	FPÖ	Freiheitliche Partei Österreichs
+L	1998	4	LIF	Liberales Forum
+L	1998	5	GRÜNE	Die Grünen
+L	1998	6	BGÖ	Bürgerliche Grüne Österreichs
+L	1998	7	LPW	Liste Pepi Wagner
+L	1998	8	KPÖ	Kommunistische Partei Österreichs
+L	1998	9	L.ZÖCH	Vernunft für Niederösterreich - Dr. Wolfgang Zöch
+L	1993	1	ÖVP	Österreichische Volkspartei
+L	1993	2	SPÖ	Sozialdemokratische Partei Österreichs
+L	1993	3	FPÖ	Freiheitliche Partei Österreichs
+L	1993	4	GRÜNE	Die Grünen
+L	1993	5	VGÖ	Vereinte Grüne Österreichs
+L	1993	6	LIF	Liberales Forum
+L	1993	7	KPÖ	Kommunistische Partei Österreichs
+L	1993	8	ÖABP	Österreichische Autofahrer- und Bürgerinteressens-Partei

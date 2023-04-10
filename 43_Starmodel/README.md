@@ -303,36 +303,8 @@ Nach dem Laden der Tabellen erscheint in der *Model view* das Star Schema:
 
 ## Übung: Bevölkerungsstand 2022
 
-In der Datei [population.7z](population.7z) befindet sich der Stand der Österreichischen Bevölkerung mit Stichtag 1.1.2022.
-Verwende die CSV Datei *population_unicode.csv*, da im SQL Server Container nur Unicode Formate importiert werden können.
-Die CSV Datei ist UTF-8 codiert, Zeilenumbruch: CR+LF, Trennzeichen: ; und hat eine Headerzeile.
-Sie hat folgendes Aussehen:
-
-```
-| Population | GenderNameDe | GenderNameEn | GenderId | CityKennziffer | CityName               | CityBezirk | CityBundesland   | CityArea | CityLongitude | CityLatitude | AgeValue | AgeRange5 | AgeRange10 |
-| ---------- | ------------ | ------------ | -------- | -------------- | ---------------------- | ---------- | ---------------- | -------- | ------------- | ------------ | -------- | --------- | ---------- |
-| 62         | weiblich     | female       | 2        | 40701          | Altmünster             | Gmunden    | Oberösterreich   | 78.769   | 13.738913     | 47.885038    | 66       | 65-69     | 60-69      |
-| 13         | weiblich     | female       | 2        | 31508          | Erlauf                 | Melk       | Niederösterreich | 9.685    | 15.188165     | 48.183388    | 35       | 35-39     | 30-39      |
-| 27         | weiblich     | female       | 2        | 41228          | St. Martin im Innkreis | Ried       | Oberösterreich   | 8.854    | 13.441676     | 48.295854    | 55       | 55-59     | 50-59      |
-| 4          | männlich     | male         | 1        | 61708          | Fischbach              | Weiz       | Steiermark       | 61.573   | 15.643826     | 47.443902    | 19       | 15-19     | 10-19      |
-| 16         | männlich     | male         | 1        | 32110          | Großweikersdorf        | Tulln      | Niederösterreich | 43.41    | 15.979489     | 48.465488    | 70       | 70-74     | 70-79      |
-```
-
-**Population:** Anzahl der Personen mit diesem Alter.
-**GenderNameDe:** *männlich/weiblich*
-**GenderNameEn:** *male/female*
-**GenderId:** 1 für *male*, 2 für *female*.
-**CityKennziffer:** Amtliche Gemeindekennziffer. Eindeutig pro Gemeinde (City). In Wien gilt jeder Gemeindebezirk als Gemeinde (Kennzahl *9xx01*).
-**CityName:** Name der politischen Gemeinde. In Wien der Name des Gemeindebezirkes.
-**CityBezirk:** Politischer Bezirk oder Gemeindebezirk (in Wien).
-**CityBundesland:** Bundesland.
-**CityArea:** Fläche in km².
-**CityLongitude:** Längengrad in GPS Koordinaten (WGS84).
-**CityLatitude:** Breitengrad in GPS Koordinaten (WGS84).
-**AgeValue:** Alter in Jahren (18 bedeutet 18 - 18.99 Jahre).
-**AgeRange5:** Altersgruppe bei einer Einteilung in 5er Schritten.
-**AgeRange10:** Altersgruppe bei einer Einteilung in 10er Schritten.
-
+Lade die Datei [population_unicode.csv.bz2](../60_Datasets/population_unicode.csv.bz2) aus den Datasets.
+Eine Beschreibung ist auf [der Startseite der Datasets](../60_Datasets/README.md#bevölkerungsentwicklung-in-österreich) enthalten.
 
 Die Datei soll in SQL Server importiert und in Form eines Star Schemas gespeichert werden.
 Führe daher folgende Schritte durch:
@@ -409,94 +381,25 @@ GROUP BY CityBundesland;
 -- TODO: Schreibe dein Star Schema und füge die Daten dort ein.
 
 ```
-Datenquellen:
-[data.gv.at - Population 2002](https://www.data.gv.at/katalog/dataset/688b289e-ab72-3ef0-ab7e-b8dc0d2c21d1),
-[bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
-[data.gv.at - Bezirksgrenzen Wien](https://www.data.gv.at/katalog/dataset/stat_gliederung-osterreichs-in-politische-bezirke131e2)
 
 ## 2. Dataset: Nationalratswahlen seit 1995
 
-![](nr_wahlen_1943.png)
-
-Für eine freiwillige Übung befinden sich in der Datei [nrw_ergebnisse.7z](nrw_ergebnisse.7z) die Ergebnisse der Nationalratswahlen seit 1995.
+Für eine freiwillige Übung befinden sich in der Datei [nrw_ergebnisse_unicode.csv.bz2](../60_Datasets/nrw_ergebnisse_unicode.csv.bz2) die Ergebnisse der Nationalratswahlen seit 1995.
+Eine Beschreibung ist auf [der Startseite der Datasets](../60_Datasets/README.md#ergebnisse-der-nationalratswahlen-seit-1995-auf-gemeindeebene) enthalten.
 Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
 Es hat die Tabellen *ElectionResult* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
-Die CSV Datei hat folgende Felder:
-
-**YEAR:** Wahljahr (1995, 1999, 2002, 2006, 2008, 2013, 2017, 2019)
-**GKZ_BEV:** Gemeindekennzahl der Statistik Austria aus dem Datensatz des BEV (Bundesamt für Eich- und Vermessungswesen).
-Sie ist immer 5stellig und hat den Aufbau LBBGG (L = Bundesland, B = Bezirk, G = Gemeinde).
-**Partei:** Kürzel der wahlwerbenden Partei (SPÖ, ÖVP, ...)
-**BKZ_BEV:** Bezirkskennzahl, abgeleitet aus der Gemeindekennzahl (LBB).
-**BLKZ:** Bundesland Kennzahl, abgeleitet aus der Gemeindekennzahl (L).
-**PG:** Name der politischen Gemeinde. In Wien wird der Name des Gemeindebezirkes verwendet.
-**PB:** Name des politischen Bezirkes. In Wien wird der Name des Gemeindebezirkes verwendet.
-**BL:** Name des Bundeslandes
-**WKNR_BEV:** Kennzahl des Wahlkreises (1A = Burgenland Nord, ...).
-Ein Wahlkreis umfasst mehrere Bezirke im selben Bundesland.
-**WKNAME:** Name des Wahlkreises.
-**AREA:** Fläche der Gemeinde in km².
-**CENTER_X:** Längengrad des Mittelpunktes der Gemeinde in WGS84 (GPS) Koordinaten.
-**CENTER_Y:** Breitengrad des Mittelpunktes der Gemeinde in WGS84 (GPS) Koordinaten.
-**Wahlberechtigte:** Anzahl der Wahlberechtigten der Gemeinde.
-**StimmenAbgegeben:** Anzahl der abgegebenen Stimmen der Gemeinde.
-**StimmenGueltig:** Anzahl der abgegebenen gültigen Stimmen der Gemeinde.
-**StimmenUngueltig:** Anzahl der abgegebenen ungültigen Stimmen der Gemeinde.
-**Stimmen:** Anzahl der Stimmen für die angegebene Partei der Gemeinde.
-**StimmenAbgegebenMitWk:** Anzahl der abgegebenen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
-Deswegen ist diese Zahl auch nicht ganzzahlig.
-**StimmenGueltigMitWk:** Anzahl der abgegebenen gültigen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
-Deswegen ist diese Zahl auch nicht ganzzahlig.
-**StimmenUngueltigMitWk:** Anzahl der abgegebenen ungültigen Stimmen, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
-Deswegen ist diese Zahl auch nicht ganzzahlig.
-**StimmenMitWk:** Anzahl der Stimmen für die angegebene Partei der Gemeinde, wobei die Wahlkarten und Briefwahlkarten aliquot zugeteilt werden.
-Deswegen ist diese Zahl auch nicht ganzzahlig.
-**Parteibezeichnung:** Langbezeichnung der Partei.
-
-Datenquellen:
-[BEV: Verwaltungsgrenzen - VGD](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html)
-[Gliederung Österreichs in Politische Bezirke](https://www.data.gv.at/katalog/dataset/stat_gliederung-osterreichs-in-politische-bezirke131e2)
-[Wahlkreiseinteilung](https://www.bmi.gv.at/412/Nationalratswahlen/Wahlkreiseinteilung.aspx)
-[NRW 1995](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_1995_Wiederholungswahl_1996/start.aspx)
-[NRW 1999](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_1999/start.aspx)
-[NRW 2002](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2002/start.aspx)
-[NRW 2006](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2006/start.aspx)
-[NRW 2008](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2008/start.aspx)
-[NRW 2013](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2013/start.aspx)
-[NRW 2017](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2017/start.aspx)
-[NRW 2019](https://www.bmi.gv.at/412/Nationalratswahlen/Nationalratswahl_2019/start.aspx)
-[Umcodierung der Gemeindekennziffern Niederösterreich](https://www.data.gv.at/katalog/dataset/7f759371-bdb3-4f58-9dbd-835eb3c19efa)
-[Die neue Gemeinde- und Bezirksstruktur in der Steiermark](https://www.landesentwicklung.steiermark.at/cms/beitrag/12658686/141979478/)
-[Land Steiermark: Gebietsstands- und Namensänderungen 2020](https://www.landesentwicklung.steiermark.at/cms/dokumente/12658757_142970621/716b52c0/STMK%20Gebietsstands%C3%A4nderungen%20GM%202020.pdf)
 
 ## 3. Dataset: Landtagswahlen in NÖ seit 1993
 
-Für eine freiwillige Übung befinden sich in der Datei [ltw_noe.7z](ltw_noe.7z) die Ergebnisse der NÖ Landtagswahlen seit 1993.
+Für eine freiwillige Übung befinden sich in der Datei [ltw_noe_unicode.csv.bz2](../60_Datasets/ltw_noe_unicode.csv.bz2) die Ergebnisse der Nationalratswahlen seit 1995.
+Eine Beschreibung ist auf [der Startseite der Datasets](../60_Datasets/README.md#ergebnisse-der-nö-landtagswahlen-seit-1993) enthalten.
 Sie können wie die vorigen Übungen in ein Star Schema geladen werden.
 Es hat die Tabellen *ElectionResult* als Fact Table und *Gemeinde, Jahr und Partei* als Dimension Tables.
 
-Datenquellen: 
-[noel.gv.at - Landtagswahlen seit 1998](https://www.noel.gv.at/noe/Wahlen/Landtagswahlen.html),
-[bev.gv.at - Verwaltungsgrenzen](https://www.bev.gv.at/Services/Downloads/Produktbezogene-Downloads/Unentgeltliche-Produkte/Kataster-Verzeichnisse.html),
-[data.gv.at - Umcodierung der Gemeindekennziffern Niederösterreich](https://www.data.gv.at/katalog/dataset/7f759371-bdb3-4f58-9dbd-835eb3c19efa)
-
 ## 4. Dataset: Tagesmittel der Grundwasserspiegel in NÖ ab 2009
 
-In der Datei [grundwasserspiegel_noe.7z](grundwasserspiegel_noe.7z) befinden sich die Daten zum Grundwasserspiegel aus dem Messnetz des Hydrografischen Dienstes in NÖ.
-Zeitraum: 2009 - 2022 (inkl.).
-
-**StationNumber:** Eindeutige Nummer der hydrografischen Station.
-**StationName:** Name der Station.
-**StationLatitude:** Breitengrad der Station in GPS (WGS84) Koordinaten.
-**StationLongitude:** Längengrad der Station in GPS (WGS84) Koordinaten.
-**StationCatchment:** Einflussbereich eines Flusses (Optional).
-**StationHeight:** Seehöhe der Station in m über Adria.
-**StationNgw:** Niederster, jemals gemessene Grundwasserstand in m über Adria.
-**StationHgw:** Höchster, jemals gemessene Grundwasserstand in m über Adria.
-**Datum:** Tag, für den der Messwert gilt.
-**Wert:** Tagesmittel des Grundwasserspiegels in m über Adria.
-**GwLevel:** Höhe des Grundwasserspiegels in m in Relation zur Stationshöhe. Negativer Wert.
-
-Datenquelle:
-[noel.gv.at - Hydrografischer Dienst NÖ](https://www.noel.gv.at/wasserstand/#/de/Messstellen/Map/Grundwasserspiegel)
+Für eine freiwillige Übung befinden sich in der Datei [grundwasserspiegel_noe_unicode.csv.bz2](../60_Datasets/grundwasserspiegel_noe_unicode.csv.bz2) die Grundwasserstände der Stationen des NÖ hydrografischen Dienstes.
+Eine Beschreibung ist auf [der Startseite der Datasets](../60_Datasets/README.md#grundwasserspiegel-in-nö-ab-2009) enthalten.
+Überlege dir ein Stat Schema.
+Du kannst die Datumstabelle für das 21. Jahrhundert aus der vorigen Übung (Zeitreihenanalyse) verwenden.
 

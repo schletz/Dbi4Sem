@@ -51,6 +51,7 @@
                 <li><a href="57_Cubes/README.md">Cubes</a></li>
             </ul>
             <p><strong><a href="https://scikit-learn.org/stable/index.html" target="_blank">5 Machine Learning mit scikit learn</a></strong></p>
+            <p><strong><a href="60_Datasets/README.md">6 Datasets für den Unterricht</a></strong></p>
             <p><strong><a href="dbi_maturainfo.md" target="_blank">Infos zur Diplomprüfung in DBI</a></strong></p>    
         </td>
     </tr>

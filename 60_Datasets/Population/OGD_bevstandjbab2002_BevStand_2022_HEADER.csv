@@ -1,0 +1,6 @@
+code;name;en_name;;;;;;;
+F-ISIS-1;Fallzahl;Number;;;;;;;
+C-A10-0;Jahr;Time section;;;;;;;
+C-C11-0;Geschlecht;Sex;;;;;;;
+C-GRGEMAKT-0;Gemeinde (Vergröberung über Politischen Bezirk);Commune (aggregation by political district);;;;;;;
+C-GALTEJ112-0;Alter in Einzeljahren;Age in single years;;;;;;;
