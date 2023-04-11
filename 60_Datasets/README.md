@@ -1,5 +1,36 @@
 # Datasets für Data Science
 
+## Wetterdaten seit 2000
+
+In diesem Dataset befinden sich die Stundenmeldungen von 4 ausgewählten Wetterstationen der ZAMG:
+
+- Wien Innere Stadt (ID 11034)
+- Wien Hohe Warte (ID 11035)
+- Gumpoldskirchen (ID 11082)
+- Rax Bergstation (ID 11180)
+
+### Dateien
+
+- [weatherdata.csv.bz2](weatherdata.csv.bz2): UTF-8, Separator `;`, Header, CR+LF
+- [weatherdata_unicode.csv.bz2](weatherdata_unicode.csv.bz2): UTF-16 (Unicode), Separator `;`, Header, CR+LF
+- [weatherdata.parquet](weatherdata.parquet)
+
+### Sample
+
+```
+|   station | date                | datetime            |   year |   month |   day |   hour |   minute |   temp |   dewp |   pressure |   prec_amount |   prec_duration |   cloud_octas |   wind_dir |   wind_speed |   max_temp |   min_temp |   sunshine |
+|----------:|:--------------------|:--------------------|-------:|--------:|------:|-------:|---------:|-------:|-------:|-----------:|--------------:|----------------:|--------------:|-----------:|-------------:|-----------:|-----------:|-----------:|
+|     11034 | 2011-08-26 00:00:00 | 2011-08-26 21:00:00 |   2011 |       8 |    26 |     21 |        0 |   29.3 |   17.5 |      988.8 |           nan |             nan |           nan |         17 |            8 |        nan |        nan |        nan |
+|     11180 | 2002-12-01 00:00:00 | 2002-12-01 17:00:00 |   2002 |      12 |     1 |     17 |        0 |   -2   |   -2.4 |      839.6 |           nan |             nan |           nan |         18 |            5 |        nan |        nan |        nan |
+|     11034 | 2021-10-04 00:00:00 | 2021-10-04 12:00:00 |   2021 |      10 |     4 |     12 |        0 |   20.6 |   12.5 |      996   |             0 |               6 |           nan |         12 |            3 |        nan |        nan |         60 |
+|     11035 | 2019-08-20 00:00:00 | 2019-08-20 04:00:00 |   2019 |       8 |    20 |      4 |        0 |   20.9 |   16.2 |      994.9 |           nan |             nan |           nan |         32 |            1 |        nan |        nan |          0 |
+|     11082 | 2013-10-30 00:00:00 | 2013-10-30 21:00:00 |   2013 |      10 |    30 |     21 |        0 |   11.2 |    4.4 |     1001.1 |           nan |             nan |           nan |         31 |            2 |        nan |        nan |        nan |
+```
+
+### Quellen
+
+- **Ogimet:** https://www.ogimet.com/getsynop_help.phtml.en
+
 ## Bevölkerungsentwicklung in Österreich
 
 In diesem Dataset befindet sich der Stand der Österreichischen Bevölkerung mit Stichtag 1.1.2022.
