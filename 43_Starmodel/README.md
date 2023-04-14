@@ -353,8 +353,8 @@ GO
 
 CREATE TABLE PopulationStage (
     Population     INTEGER NOT NULL,
-    GenderNameDe   CHAR(8) NOT NULL,
-    GenderNameEn   CHAR(6) NOT NULL,
+    GenderNameDe   VARCHAR(9) NOT NULL,
+    GenderNameEn   VARCHAR(6) NOT NULL,
     GenderId       INTEGER NOT NULL,
     CityKennziffer INTEGER NOT NULL,
     CityName       VARCHAR(64) NOT NULL,
