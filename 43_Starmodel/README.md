@@ -129,9 +129,9 @@ In SQL ist dies mit den Gruppierungsspalten vergleichbar.
 
 ### Laden der Rohdaten 
 
-Lade die Datei [log_data.7z](log_data.7z) und entpacke die 2 Textdateien aus dem Archiv in das gemountete Verzeichnis des SQL Server Containers.
+Lade die Datei [log_data.7z](log_data.7z) und entpacke die Textdatei aus dem Archiv in das gemountete Verzeichnis des SQL Server Containers.
 Unter Windows ist das *C:\Temp\sql-home*.
-Kontrolliere, ob die Dateien *date_unicode.txt* und *log_unicode.txt* direkt im gemounteten Verzeichnis sind.
+Kontrolliere, ob die Datei *log_unicode.txt* direkt im gemounteten Verzeichnis sind.
 
 Verbinde dich nun mit DBeaver, DataGrip, etc. mit dem SQL Server Container.
 
@@ -189,12 +189,24 @@ FROM '/host/log_unicode.txt' WITH (
 GO
 
 TRUNCATE TABLE Date;
-BULK INSERT Date
-FROM '/host/date_unicode.txt' WITH (
-    CODEPAGE  = 'RAW',
-    FIRSTROW = 2,
-    FIELDTERMINATOR = '\t'
-);
+BEGIN
+    DECLARE @DATE DATETIME2(0) = '2020-12-28'
+    DECLARE @END DATETIME2(0) = '2023-01-02'
+    SET DATEFIRST 1    -- monday = 1, ..., sunday = 7
+    -- very slow without this transaction block (autocommit after each insert)    
+    BEGIN TRANSACTION
+    WHILE @DATE < @END
+        BEGIN
+            INSERT INTO Date VALUES (
+                @DATE, 
+                DATEADD(day, DATEDIFF(day, 0, @DATE), 0),
+                DATEPART(hour, @DATE),
+                DATEPART(weekday, @DATE),
+                CASE WHEN DATEPART(weekday, @DATE) < 6 THEN 1 ELSE 0 END)
+            SET @DATE = DATEADD(hour, 1, @DATE)
+        END
+    COMMIT
+END;
 GO
 SELECT COUNT(*) FROM LogStage;
 SELECT COUNT(*) FROM Date;
@@ -401,5 +413,5 @@ Es hat die Tabellen *ElectionResult* als Fact Table und *Gemeinde, Jahr und Part
 Für eine freiwillige Übung befinden sich in der Datei [grundwasserspiegel_noe_unicode.csv.bz2](../60_Datasets/grundwasserspiegel_noe_unicode.csv.bz2) die Grundwasserstände der Stationen des NÖ hydrografischen Dienstes.
 Eine Beschreibung ist auf [der Startseite der Datasets](../60_Datasets/README.md#grundwasserspiegel-in-nö-ab-2009) enthalten.
 Überlege dir ein Stat Schema.
-Du kannst die Datumstabelle für das 21. Jahrhundert aus der vorigen Übung (Zeitreihenanalyse) verwenden.
+Erzeuge die Datumstabelle für das 21. Jahrhundert mit einem SQL Block und einer *WHILE* Schleife wie oben in der Übung gezeigt.
 
