@@ -47,7 +47,7 @@ Der folgende Befehl startet einen SQL Server 2019 Container und weist das Passwo
 zu. Es muss beim Datengenerator angegeben werden.
 
 ```
-docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/mssql/server:2019-latest      
+docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "ACCEPT_EULA_ML=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge      
 ```
 
 ### Musterdaten Generator

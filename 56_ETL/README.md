@@ -82,7 +82,7 @@ Das Passwort für den User *sa* ist in diesem Befehl *SqlServer2019*.
 
 
 ```
-docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/mssql/server:2019-latest      
+docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "ACCEPT_EULA_ML=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge      
 ```
 
 Natürlich kann auch ein bestehender, installierter SQL Server 2019 verwendet werden. Der Zugriff
