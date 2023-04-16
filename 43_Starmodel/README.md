@@ -344,7 +344,7 @@ Sie muss folgende Werte haben:
 | Oberösterreich   | 1 505 140  |
 | Salzburg         |   562 606  |
 | Steiermark       | 1 252 922  |
-| Tirol            |   760 526  |
+| Tirol            |   764 102  |
 | Vorarlberg       |   401 674  |
 | Wien             | 1 931 593  |
 ```
