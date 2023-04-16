@@ -1,0 +1,105 @@
+name	long_name	desc	unit
+C1	Wolkenart der tiefsten Wolkenschicht	Wolkenart bzw. Gattung der tiefsten Wolkenschicht (Code Table 0500)	Code (Synop)
+C2	Wolkenart der 2.tiefsten Wolkenschicht	Wolkenart bzw. Gattung der 2.tiefsten Wolkenschicht (Code Table 0500)	Code (Synop)
+C3	Wolkenart der 3.tiefsten Wolkenschicht	Wolkenart bzw. Gattung der 3.tiefsten Wolkenschicht (Code Table 0500)	Code (Synop)
+C4	Wolkenart der 4.tiefsten Wolkenschicht	Wolkenart bzw. Gattung der 4.tiefsten Wolkenschicht (Code Table 0500)	Code (Synop)
+CH	Art der hohen Wolken	Gattung bzw. Art der hohen Wolken (Code Table 0509)	Code (Synop)
+CL	Art der tiefen Wolken	Gattung bzw. Art der tiefen Wolken (Code Table 0513)	Code (Synop)
+CM	Art der mittelhohen Wolken	Gattung bzw. Art der mittelhohen Wolken (Code Table 0515)	Code (Synop)
+Ch1	1.Wolkenart unterhalb der Station	1.Art der Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 0500)	Code (Synop)
+Ch2	2.Wolkenart unterhalb der Station	2.Art der Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 0500)	Code (Synop)
+Ch3	3.Wolkenart unterhalb der Station	3.Art der Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 0500)	Code (Synop)
+Ct1	1.Aussehen der Wolkenobergrenze der Wolken unterhalb der Station	1.Aussehen bzw. Merkmale der Wolkenobergrenze der Wolken unterhalb des Stationsniveaus (Code Table 0552)	Code (Synop)
+Ct2	2.Aussehen der Wolkenobergrenze der Wolken unterhalb der Station	2.Aussehen bzw. Merkmale der Wolkenobergrenze der Wolken unterhalb des Stationsniveaus (Code Table 0552)	Code (Synop)
+Ct3	3.Aussehen der Wolkenobergrenze der Wolken unterhalb der Station	3.Aussehen bzw. Merkmale der Wolkenobergrenze der Wolken unterhalb des Stationsniveaus(Code Table 0552)	Code (Synop)
+Da	Richtungsangabe der Wirbelerscheinung	Richtung der Wirbelerscheinung, wieTornado,Wasserhosen, 919MwDa (Code Table 0700)	Code (Synop)
+E	Erdbodenzustand ohne Schnee/Eis	Erdbodenzustand ohne eine Decke aus Schnee/Hagel/Graupel (Code Table 0901)	Code (Synop)
+Eschnee	Erdbodenzustand mit Schneedecke/Eis	Erdbodenzustand mit Schneedecke/Eis (vormals Ehk) (Code 0 - 9, Table 0901)	Code (Synop)
+Ir	Niederschlagsindikator	Niederschlagsindikator für Gruppe 6RRRtR (Code Table 1819)	Code (Synop)
+Iw	Einheit der Windgeschwindigkeit	Einheit der Windgeschwindigkeit im Originalsynop (Table 1855)	Code (Synop)
+Ix	Indikator für Wettergruppen und Stationstyp	Indikator für Wettergruppen WW und Stationstyp bzw. Betriebsart der Station (Code Table 1860)	Code (Synop)
+Mw	Art der Wirbelerscheinung	Wirbelart, z.B. Tornado,Wasserhosen, 919MwDa (Code Table 2555)	Code (Synop)
+N	Gesamtbedeckung des Himmels mit Wolken	Betrag der Gesamtbedeckung des Himmels mit Wolken in Achtel (Code Table 2700)	Code (Synop)
+Nh	Bedeckungsgrad mit tiefen oder mittelhohen Wolken	Bedeckungsgrad mit tiefen oder (falls nicht vorhanden) mittelhohen Wolken (Code Table 2700)	Code (Synop)
+Nh1	1.Bedeckungsgrad mit Wolken unter der Station	1.Bedeckungsgrad mit Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 2700)	Code (Synop)
+Nh2	2.Bedeckungsgrad mit Wolken unter der Station	2.Bedeckungsgrad mit Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 2700)	Code (Synop)
+Nh3	3.Bedeckungsgrad mit Wolken unter der Station	3.Bedeckungsgrad mit Wolken mit Untergrenzen unterhalb des Stationsniveaus (Code Table 2700)	Code (Synop)
+Ns1	Bedeckungsgrad der tiefsten Wolkenschicht	Bedeckungsgrad des Himmels mit Wolken der tiefsten Wolkenschicht (Code Table 2700)	Code (Synop)
+Ns2	Bedeckungsgrad der 2.tiefesten Wolkenschicht	Bedeckungsgrad des Himmels mit Wolken der 2.tiefesten Wolkenschicht (Code Table 2700)	Code (Synop)
+Ns3	Bedeckungsgrad der 3.tiefesten Wolkenschicht	Bedeckungsgrad des Himmels mit Wolken der 3.tiefesten Wolkenschicht (Code Table 2700)	Code (Synop)
+Ns4	Bedeckungsgrad der 4.tiefesten Wolkenschicht	Bedeckungsgrad des Himmels mit Wolken der 4.tiefesten Wolkenschicht (Code Table 2700)	Code (Synop)
+Pg	Luftdruck	Luftdruck in Stationsniveau, wenn <1000, dann 10000 hinzuaddiert	hPa
+Pp	Reduzierter Luftdruck	Auf Meeresniveau reduzierter Luftdruck, wenn <1000, dann 10000 hinzuaddiert (1/10 hPa oder geopotentielle Meter)	hPa
+RR24	Niederschlagsmenge in den 24 Stunden vor der Beobachtung	Niederschlagsmenge in den 24 Stunden vor der Beobachtung, 24-stündige Summe (9999=Spuren von Niederschlag)	mm
+RR3	Niederschlagsmenge Sektion3	Niederschlagsmenge Sektion3 im Beobachtungszeitraum tr3 (0 = Spuren von Nied., -1 = kein Nied.)	mm
+RR932	Hagelkorndurchmesser	Maximaler Hagelkorndurchmesser, teilw. in mm + Code (Code Table 3570)	Code (Synop)
+RR934	Glatteisdicke	Glatteisdicke, teilw. in mm + Code (Code Table 3570)	Code (Synop)
+RRR	Niederschlagsmenge im Beobachtungszeitraum tr	Niederschlagsmenge im Beobachtungszeitraum tr (0 = Spuren von Nied., -1 = kein Nied.)	mm
+RRRv	Niederschlagsmenge des Vortages	Niederschlagsmenge des Vortages, Menge von 6-18 UTC	mm
+So	Reif oder färbiger Niederschlag	Reif oder färbiger Niederschlag, 926Soio (Code Table 3761)	Code (Synop)
+T	Lufttemperatur	Lufttemperatur	°C
+Td	Taupunkttemperatur	Taupunkt (bis 2001/06/19 tw. mit rel beschickt!)	°C
+Tg	Minimum der Lufttemperatur 5cm über Boden	Erdbodenminimumstemperatur 5cm über Boden (12-stündig: 6 und 18 UTC, eventuell auch 15-stündig: 6, 9, 18 UTC)	°C
+Tmax	Maximum der Lufttemperatur	Temperaturmaximum (12-stündig: 6 und 18 UTC), vormals SnTx	°C
+Tmaxv	Maximum der Lufttemperatur des Vortags	Temperaturmaximum vom Vortag (von 0-24 UTC, gemeldet um 6 UTC)	°C
+Tmin	Minimum der Lufttemperatur	Temperaturminimum (12-stündig: 6 und 18 UTC, eventuell auch 15-stündig: 6, 9, 18 UTC), vormals SnTn	°C
+Tw	Wassertemperatur	Wassertemperatur bei Küstenstationen (seit Dez. 1999)	°C
+VV	Sichtweite	Horizontale Sichtweite am Boden (Code Table 4377)	Code (Synop)
+W1	1.Wetterverlauf	1.Wetterverlauf (6 oder 12 Std) (Code Table 4561 od. 4531 je nach Ix)	Code (Synop)
+W2	2.Wetterverlauf	2.Wetterverlauf (6 oder 12 Std)  (Code Table 4561 od. 4531 je nach Ix)	Code (Synop)
+a	Luftdrucktendenz (3 Stunden)	Luftdrucktendenz über die letzten 3 Stunden (Code Table 0200)	Code (Synop)
+app24	Luftdrucktendenz (24 Stunden)	Luftdrucktendenz über die letzten 24 Stunden (Sektion3 58ppp steigend/gleichbleibend, 59ppp fallend)	Code (Synop)
+boe	Höchste Bö (10 Minuten)	Höchste Windspitze in den letzten 10 Minuten	m/s
+corr	Korrektur-Flag	"Korrekturflag:  "" "" oder ""C"""	
+czeit	Beobachtungszeit	Beobachtungszeit im Format hhmm ,vormals hh	
+datumsec	Beobachtungszeit	Beobachtungszeit in Sekunden seit 1.1.1970	s
+dd	Windrichtung	Windrichtung  in Grad , 990=umlaufender Wind (Code Table 0877)	°
+einspielzeit	Einspielzeit in die Datenbank	Sekunden seit 1.1.1970	s
+ff	Windgeschwindigkeit	Windgeschwindigkeit in 1/10 m/s (wird umgerechnet, wenn Knoten: *5.14)	m/s
+flag_rst	Flag Reststring	Flag von Rest-String, bit, = true, wenn noch restlich verbleibender Synop-Code vorhanden ist	Code
+gruen	Korrekturflag	grüne Korrektur, bit	Code
+h	Höhe der tiefsten Wolken	Höhe der Untergrenze der tiefsten Wolken über Stationsniveau (Code Table 1600)	Code (Synop)
+hh1	1.Obergrenze der Wolken unter der Station	1.Höhe der Obergrenze der Wolken unterhalb des Stationsniveaus über NN	m
+hh2	2.Obergrenze der Wolken unter der Station	2.Höhe der Obergrenze der Wolken unterhalb des Stationsniveaus über NN	m
+hh3	3.Obergrenze der Wolken unter der Station	3.Höhe der Obergrenze der Wolken unterhalb des Stationsniveaus über NN	m
+hs1	Wolkenhöhe der tiefsten Wolkenschicht	Höhe der Untergrenze der tiefsten Wolkenschicht über Grund (Code Table 1677)	Code (Synop)
+hs2	Wolkenhöhe der 2.tiefsten Wolkenschicht	Höhe der Untergrenze der 2.tiefsten Wolkenschicht über Grund (Code Table 1677)	Code (Synop)
+hs3	Wolkenhöhe der 3.tiefsten Wolkenschicht	Höhe der Untergrenze der 3.tiefsten Wolkenschicht über Grund (Code Table 1677)	Code (Synop)
+hs4	Wolkenhöhe der 4.tiefsten Wolkenschicht	Höhe der Untergrenze der 4.tiefsten Wolkenschicht über Grund (Code Table 1677)	Code (Synop)
+io	Intenstität von Reif oder färbigem Niederschlag	Intenstität von Reif oder färbigem Niederschlag, 926Soio (Code Table 1861)	Code (Synop)
+nschnee	Neuschneehöhe	Höhe des Neuschnees, Code 01 - 99 (Table 3870)	Code (Synop)
+p	Betrag der Luftdruckänderung	Betrag der 3-stündigen Luftdruckänderung in 1/10mb	hPa
+qflag	Qualitätsflag	Qualitätsflag	
+rel	Relative Feuchte	Relative Luftfeuchte (bis 2001/06/19 = 254, nicht gemeldet)	%
+rest	Reststring	Rest-String, restlich verbleibender Synop-Code	
+rot	Korrekturflag	rote Korrektur, bit	Code
+schnee	Gesamtschneehöhe	Gesamtschneehöhe in cm + Code (<1cm), (Code 001 - 999, Table 3889)	Code (Synop)
+schwarz	Korrekturflag	schwarze Korrektur, bit	Code
+sonne	Sonnenscheindauer der letzten Stunde	Sonnenscheindauer in der vorangegangenen Stunde, Stundensumme	h
+sonnetag	Sonnenscheindauer des Vortags	Sonnenscheindauer, Tagessumme des Vortags	h
+sp1	Besondere Wettererscheinungen, 1. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 1. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp10	Besondere Wettererscheinungen, 10. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 10. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp11	Besondere Wettererscheinungen, 11. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 11. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp12	Besondere Wettererscheinungen, 12. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 12. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp13	Besondere Wettererscheinungen, 13. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 13. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp14	Besondere Wettererscheinungen, 14. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 14. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp15	Besondere Wettererscheinungen, 15. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 15. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp2	Besondere Wettererscheinungen, 2. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 2. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp3	Besondere Wettererscheinungen, 3. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 3. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp4	Besondere Wettererscheinungen, 4. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 4. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp5	Besondere Wettererscheinungen, 5. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 5. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp6	Besondere Wettererscheinungen, 6. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 6. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp7	Besondere Wettererscheinungen, 7. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 7. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp8	Besondere Wettererscheinungen, 8. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 8. 9er Gruppe (Code Table 3778)	Code (Synop)
+sp9	Besondere Wettererscheinungen, 9. 9er Gruppe	Ergänzende Informationen zu speziellen Wettererscheinungen, 9SpSpspsp, 9. 9er Gruppe (Code Table 3778)	Code (Synop)
+tr	Beobachtungszeitraum für Niederschlagsmenge	Beobachtungszeitraum für Niederschlagsmenge RRR (Code Table 4019), Code 1=6std, 2=12std, 3=18std, 4=24std, 5=1std, 6=2std, 7=3std, 8=9std, 9=15std	Code (Synop)
+tr3	Beobachtungszeitraum für Niederschlagsmenge RR3, Sektion 3	Beobachtungszeitraum für Niederschlagsmenge RR3, Sektion 3 (Code Table 4019), Code 1=6std, 2=12std, 3=18std, 4=24std, 5=1std, 6=2std, 7=3std, 8=9std, 9=15std	Code (Synop)
+w1boe	Höchste Bö (W1W2)	Höchste Böe im Zeitraum von W1W2 (siehe Gruppe 7wwW1W2)	m/s
+w1ffmax	Höchste mittlere Windgeschwindigkeit (W1W2)	Höchste mittlere Windgeschwindigkeit (10 Minuten-Mittel) im Zeitraum von W1W2 (siehe Gruppe 7wwW1W2)	m/s
+ww	Wetter zur Beobachtungszeit	Wetterzustand zur Beobachtungszeit oder in der letzten Stunde davor (Code Table 4677 od. 4680 je nach Ix)	Code (Synop)
+ww960	Erweiterter Wetterzustand: gleichzeitig mit ww	Wettererscheinung gleichzeitig oder zusätzlich mit ww in 7wwW1W2 (Code Table 4677 od. 4680 je nach Ix)	Code (Synop)
+ww961	Erweiterter Wetterzustand: gleichzeitig mit w1w1	Wettererscheinung gleichzeitig oder zusätzlich mit oder Erweiterung zu ww in 7wwW1W2 (Code Table 4687)	Code (Synop)
+ww962	Erweiterter Wetterzustand: in der letzten Stunde, bei ww=20-29	Wettererscheinung in der letzten Stunde, aber nicht zum Beobachtungszeitraum, Erweiterungsdetail bei ww=20-29 (Code Table 4677 od. 4680 je nach Ix)	Code (Synop)
+ww963	Erweiterter Wetterzustand: in der letzten Stunde, bei w1w1=20-29	Wettererscheinung in der letzten Stunde, aber nicht zum Beobachtungszeitraum, Erweiterungsdetail bei w1w1=20-29  (Code Table 4687)	Code (Synop)
+ww964	Erweiterter Wetterzustand: im Bezugszeitraum von W1W2 bei ww	Erweiterungsdetail von W1 oder W2 in 7wwW1W2 im Bezugszeitraum von W1W2 bei ww (Code Table 4677 od. 4680 je nach Ix)	Code (Synop)
+ww965	Erweiterter Wetterzustand: im Bezugszeitraum von W1W2 bei w1w1	Erweiterungsdetail von W1 oder W2 in 7wwW1W2 im Bezugszeitraum von W1W2 bei w1w1 (Code Table 4687)	Code (Synop)
