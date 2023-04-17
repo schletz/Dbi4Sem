@@ -1,35 +1,100 @@
 # Datasets für Data Science
 
-## Wetterdaten seit 2000
+## Wetterdaten der letzten 30 Jahre (1993-2022)
 
-In diesem Dataset befinden sich die Stundenmeldungen von 4 ausgewählten Wetterstationen der ZAMG:
+Seit 2022 sind die Wetterdaten von GeoSphere Austria (vormals ZAMG) unter https://data.hub.zamg.ac.at abrufbar.
+In diesem Dataset befinden sich die Stundenmeldungen von 6 ausgewählten Wetterstationen der ZAMG:
 
-- Wien Innere Stadt (ID 11034)
-- Wien Hohe Warte (ID 11035)
-- Gumpoldskirchen (ID 11082)
-- Rax Bergstation (ID 11180)
+| Id    | Name                  | Bundesland       | Lat [°]   | Lon [°]   | Altitude [m] |
+|-------|-----------------------|------------------|-----------|-----------|--------------|
+| 11082 | GUMPOLDSKIRCHEN       | Niederösterreich | 48.035833 | 16.280833 | 212          |
+| 11180 | RAX/SEILBAHN-BERGSTAT | Niederösterreich | 47.7175   | 15.778611 | 1547         |
+| 11343 | SONNBLICK - AUTOM.    | Salzburg         | 47.054167 | 12.9575   | 3109         |
+| 11101 | BREGENZ               | Vorarlberg       | 47.499167 | 9.746111  | 424          |
+| 11034 | WIEN-INNERE STADT     | Wien             | 48.198333 | 16.366944 | 177          |
+| 11035 | WIEN/HOHE WARTE       | Wien             | 48.248611 | 16.356389 | 198          |
+
+Im Dataset werden die folgenden meteorologischen Parameter gespeichet.
+Beachte, dass Tmax nur um 18h UTC und Tmin nur um 6h UTC gemeldet wurde.
+In neueren Datensätzen wird Tmax und Tmin (beide) um 6h unf 18h UTC gemeldet, da das Tagesmaximum bei Föhnlagen im Winter auch in der Nacht auftreten kann.
+
+<details>
+<summary>Anzahl der Tagesmeldungen pro Station anzeigen</summary>
+
+| Jahr | 11034 | 11035 | 11082 | 11101 | 11180 | 11343 |
+|------|-------|-------|-------|-------|-------|-------|
+| 1993 | 362   | 365   | 362   | 365   | 0     | 0     |
+| 1994 | 362   | 365   | 347   | 365   | 15    | 0     |
+| 1995 | 363   | 365   | 363   | 365   | 348   | 0     |
+| 1996 | 366   | 366   | 366   | 365   | 363   | 0     |
+| 1997 | 358   | 365   | 364   | 365   | 359   | 117   |
+| 1998 | 321   | 365   | 363   | 365   | 352   | 295   |
+| 1999 | 360   | 365   | 362   | 364   | 356   | 329   |
+| 2000 | 269   | 366   | 357   | 366   | 338   | 272   |
+| 2001 | 357   | 365   | 352   | 365   | 338   | 278   |
+| 2002 | 365   | 365   | 363   | 364   | 363   | 362   |
+| 2003 | 359   | 365   | 360   | 364   | 348   | 358   |
+| 2004 | 362   | 366   | 360   | 365   | 360   | 357   |
+| 2005 | 365   | 365   | 365   | 364   | 358   | 362   |
+| 2006 | 365   | 365   | 365   | 360   | 362   | 365   |
+| 2007 | 365   | 365   | 363   | 363   | 365   | 364   |
+| 2008 | 366   | 366   | 366   | 360   | 366   | 339   |
+| 2009 | 361   | 365   | 360   | 360   | 363   | 357   |
+| 2010 | 360   | 365   | 362   | 352   | 363   | 359   |
+| 2011 | 365   | 365   | 365   | 365   | 362   | 365   |
+| 2012 | 365   | 366   | 365   | 365   | 365   | 364   |
+| 2013 | 365   | 365   | 365   | 364   | 365   | 361   |
+| 2014 | 365   | 365   | 364   | 365   | 365   | 359   |
+| 2015 | 364   | 365   | 364   | 365   | 365   | 365   |
+| 2016 | 365   | 366   | 365   | 365   | 365   | 365   |
+| 2017 | 365   | 365   | 365   | 365   | 365   | 365   |
+| 2018 | 365   | 365   | 364   | 365   | 364   | 361   |
+| 2019 | 364   | 365   | 365   | 364   | 365   | 359   |
+| 2020 | 363   | 366   | 366   | 366   | 366   | 360   |
+| 2021 | 365   | 365   | 365   | 364   | 364   | 363   |
+| 2022 | 364   | 365   | 361   | 361   | 363   | 364   |
+</details>
+
+```
+| Parameter | Bedeutung                                                  | Beschreibung                                                                                                                                                      | Einheit      |
+|-----------|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| T         | Lufttemperatur                                             | Lufttemperatur                                                                                                                                                    | °C           |
+| Tmax      | Maximum der Lufttemperatur                                 | Temperaturmaximum (12-stündig: 6 und 18 UTC), vormals SnTx                                                                                                        | °C           |
+| Tmin      | Minimum der Lufttemperatur                                 | Temperaturminimum (12-stündig: 6 und 18 UTC, eventuell auch 15-stündig:   6, 9, 18 UTC), vormals SnTn                                                             | °C           |
+| Td        | Taupunkttemperatur                                         | Taupunkt (bis 2001/06/19 tw. mit rel beschickt!)                                                                                                                  | °C           |
+| rel       | Relative Feuchte                                           | Relative Luftfeuchte (bis 2001/06/19 = 254, nicht gemeldet)                                                                                                       | %            |
+| dd        | Windrichtung                                               | Windrichtung  in Grad ,   990=umlaufender Wind (Code Table 0877)                                                                                                  | °            |
+| ff        | Windgeschwindigkeit                                        | Windgeschwindigkeit in 1/10 m/s (wird umgerechnet, wenn Knoten: *5.14)                                                                                            | m/s          |
+| Pg        | Luftdruck                                                  | Luftdruck in Stationsniveau, wenn <1000, dann 10000 hinzuaddiert                                                                                                  | hPa          |
+| Pp        | Reduzierter Luftdruck                                      | Auf Meeresniveau reduzierter Luftdruck, wenn <1000, dann 10000   hinzuaddiert (1/10 hPa oder geopotentielle Meter)                                                | hPa          |
+| RR3       | Niederschlagsmenge Sektion3                                | Niederschlagsmenge Sektion3 im Beobachtungszeitraum tr3 (0 = Spuren von   Nied., -1 = kein Nied.)                                                                 | mm           |
+| RRR       | Niederschlagsmenge im Beobachtungszeitraum tr              | Niederschlagsmenge im Beobachtungszeitraum tr (0 = Spuren von Nied., -1 =   kein Nied.)                                                                           | mm           |
+| tr        | Beobachtungszeitraum für Niederschlagsmenge                | Beobachtungszeitraum für Niederschlagsmenge RRR (Code Table 4019), Code   1=6std, 2=12std, 3=18std, 4=24std, 5=1std, 6=2std, 7=3std, 8=9std, 9=15std              | Code (Synop) |
+| tr3       | Beobachtungszeitraum für Niederschlagsmenge RR3, Sektion 3 | Beobachtungszeitraum für Niederschlagsmenge RR3, Sektion 3 (Code Table   4019), Code 1=6std, 2=12std, 3=18std, 4=24std, 5=1std, 6=2std, 7=3std,   8=9std, 9=15std | Code (Synop) |
+| sonne     | Sonnenscheindauer der letzten Stunde                       | Sonnenscheindauer in der vorangegangenen Stunde, Stundensumme                                                                                                     | h            |
+```
 
 ### Dateien
 
-- [weatherdata.csv.bz2](weatherdata.csv.bz2): UTF-8, Separator `;`, Header, CR+LF
-- [weatherdata_unicode.csv.bz2](weatherdata_unicode.csv.bz2): UTF-16 (Unicode), Separator `;`, Header, CR+LF
-- [weatherdata.parquet](weatherdata.parquet)
+- [zamg_weatherdata.csv.bz2](zamg_weatherdata.csv.bz2): UTF-8, Separator `;`, Header, CR+LF
+- [zamg_weatherdata_unicode.csv.bz2](zamg_weatherdata_unicode.csv.bz2): UTF-16 (Unicode), Separator `;`, Header, CR+LF
+- [zamg_weatherdata.parquet](zamg_weatherdata.parquet)
 
 ### Sample
 
 ```
-|   station | date                | datetime            |   year |   month |   day |   hour |   minute |   temp |   dewp |   pressure |   prec_amount |   prec_duration |   cloud_octas |   wind_dir |   wind_speed |   max_temp |   min_temp |   sunshine |
-|----------:|:--------------------|:--------------------|-------:|--------:|------:|-------:|---------:|-------:|-------:|-----------:|--------------:|----------------:|--------------:|-----------:|-------------:|-----------:|-----------:|-----------:|
-|     11034 | 2011-08-26 00:00:00 | 2011-08-26 21:00:00 |   2011 |       8 |    26 |     21 |        0 |   29.3 |   17.5 |      988.8 |           nan |             nan |           nan |         17 |            8 |        nan |        nan |        nan |
-|     11180 | 2002-12-01 00:00:00 | 2002-12-01 17:00:00 |   2002 |      12 |     1 |     17 |        0 |   -2   |   -2.4 |      839.6 |           nan |             nan |           nan |         18 |            5 |        nan |        nan |        nan |
-|     11034 | 2021-10-04 00:00:00 | 2021-10-04 12:00:00 |   2021 |      10 |     4 |     12 |        0 |   20.6 |   12.5 |      996   |             0 |               6 |           nan |         12 |            3 |        nan |        nan |         60 |
-|     11035 | 2019-08-20 00:00:00 | 2019-08-20 04:00:00 |   2019 |       8 |    20 |      4 |        0 |   20.9 |   16.2 |      994.9 |           nan |             nan |           nan |         32 |            1 |        nan |        nan |          0 |
-|     11082 | 2013-10-30 00:00:00 | 2013-10-30 21:00:00 |   2013 |      10 |    30 |     21 |        0 |   11.2 |    4.4 |     1001.1 |           nan |             nan |           nan |         31 |            2 |        nan |        nan |        nan |
+| time                      |   station |    T |   Tmax |   Tmin |   Td |   rel |   dd |   ff |     Pg |     Pp |   RR3 |   RRR |   tr |   tr3 |   sonne |
+|:--------------------------|----------:|-----:|-------:|-------:|-----:|------:|-----:|-----:|-------:|-------:|------:|------:|-----:|------:|--------:|
+| 2010-10-12 13:00:00+00:00 |     11101 | 11.4 |  nan   |  nan   |  8.8 |   nan |  nan |    1 |  960.9 | 1012.5 |   nan |    -1 |  nan |   nan |     0.5 |
+| 2002-01-17 09:00:00+00:00 |     11082 | -3.2 |  nan   |  nan   | -5.1 |   nan |  nan |    2 | 1001.8 | 1030.4 |   nan |    -1 |  nan |   nan |     0   |
+| 2018-03-13 04:00:00+00:00 |     11035 |  9.2 |  nan   |  nan   |  3   |   nan |  nan |    5 |  977.9 | 1002.7 |   nan |    -1 |  nan |   nan |     0   |
+| 2020-12-27 06:00:00+00:00 |     11034 | -0.9 |    1.6 |   -2.4 | -7.4 |   nan |  nan |    4 |  995.4 | 1017.8 |   nan |    -1 |    2 |   nan |     0   |
+| 2014-05-25 00:00:00+00:00 |     11180 |  9.5 |  nan   |  nan   |  8.2 |   nan |  nan |   10 |  846.9 |  852.8 |   nan |     0 |    1 |   nan |   nan   |
 ```
 
 ### Quellen
 
-- **Ogimet:** https://www.ogimet.com/getsynop_help.phtml.en
+- **ZAMG Data Hub:** https://data.hub.zamg.ac.at
 
 ## Bevölkerungsentwicklung in Österreich
 
