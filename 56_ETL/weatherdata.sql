@@ -1,3 +1,4 @@
+CREATE DATABASE Weatherdata;
 USE Weatherdata;
 
 CREATE TABLE Bundesland (
