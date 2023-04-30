@@ -1,0 +1,9 @@
+CustomerID	FirstName	LastName	ZIP	City
+1	Fritz	Müller	1010	Wien
+2	Susi	Müller	1010	Wien
+4	Gudrun	Wastan	1050	Wien
+5	Markus	Merau	2500	Baden
+6	Alexander	Fleisch	2700	Wr. Neustadt
+7	Max	Walli	2700	Wr. Neustadt
+8	Maria	Walli	1050	Wien
+9	Werner	Berger	1070	Wien

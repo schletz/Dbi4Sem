@@ -40,6 +40,7 @@
                 <li><a href="43_Starmodel/README.md">Das Star Schema</a></li>
                 <li><a href="https://en.wikipedia.org/wiki/OLAP_cube" target="_blank">OLAP cube (Wikipedia)</a></li>
                 <li><a href="https://www.microsoft.com/en-us/download/details.aspx?id=58494" target="_blank">PowerBI (Downloadlink)</a></li>
+                <li><a href="49_Bi_Griesmayer/README.md" target="_blank">Umsetzung der BI Themen von griesmayer.com mit Python</a></li>
             </ul>
             <strong>4 Data Science mit Python und Pandas</strong>
             <ul>

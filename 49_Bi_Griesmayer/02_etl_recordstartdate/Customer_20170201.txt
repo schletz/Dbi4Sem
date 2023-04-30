@@ -1,0 +1,6 @@
+CustomerID	FirstName	LastName	ZIP	City
+1	Fritz	Müller	2500	Baden
+2	Susi	Berger	1010	Wien
+3	Werner	Mayer	2700	Wr. Neustadt
+4	Gudrun	Wastan	1050	Wien
+5	Markus	Merau	1010	Wien
