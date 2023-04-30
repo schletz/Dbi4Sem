@@ -2,72 +2,110 @@
 
 ## Voraussetzungen
 
-Um ein Jupyter Notebook zu erstellen, muss folgendes vorbereitet werden:
+Um überhaupt mit Python arbeiten zu können, muss natürlich Python selbst und einige Pakete installiert werden.
+
+### Windows
 
 - Installation der neuesten Python Version von https://www.python.org/downloads/.
   Bitte *Custom Installation* wählen und als Pfad *C:\Python3* wählen.
-  Bitte auch *Add to PATH* (Umgebungsvariable registrieren) auswählen.
-  Geben Sie zur Kontrolle den Befehl *python --version* ein. Er muss die Version ausgeben. Falls
+  Danach *Add to PATH* (Umgebungsvariable registrieren) auswählen.
+  Gib zur Kontrolle den Befehl *python --version* ein. Er muss die Version ausgeben. Falls
   *Befehl nicht gefunden* erscheint, ist die PATH Variable nicht korrekt gesetzt.
-- Installation von Visual Studio Code (wenn noch nicht vorhanden)
-  - Installation der Extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) in VS Code.
-  - Installation der Extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) in VS Code.
-- Aktualisieren des Packaga Managers und Installieren der folgenden Pakete in der Konsole:
+- Installiere danach den [Microsoft ODBC Driver 18 for SQL Server von der Microsoft Downloadseite.](https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server)
+
+Nun können in der Konsole die Pakete, die wir brauchen werden, installiert werden:
 
 ```
 python -m pip install --upgrade pip
-pip install ipykernel --upgrade
-pip install sqlalchemy --upgrade
-pip install pyodbc --upgrade
-pip install requests --upgrade
-pip install numpy --upgrade
-pip install matplotlib --upgrade
-pip install pandas --upgrade
-pip install scipy --upgrade
-pip install statsmodels --upgrade
-pip install nbconvert[webpdf] --upgrade
+pip3 install ipykernel --upgrade
+pip3 install pyodbc --upgrade
+pip3 install sqlalchemy --upgrade
+pip3 install requests --upgrade
+pip3 install numpy --upgrade
+pip3 install matplotlib --upgrade
+pip3 install pandas --upgrade
+pip3 install scipy --upgrade
+pip3 install statsmodels --upgrade
+pip3 install faker --upgrade
+pip3 install nbconvert[webpdf] --upgrade
+```
+
+### macOS
+
+Für macOS kann der Packetmanager [https://brew.sh](Homebrew) zur Installation von Python verwendet werden.
+Zusätzlich muss noch das Paket *unixodbc* installiert werden, um auf den SQL Server Container zugreifen zu können.
+Danach wird der SQL Server ODBC Treiber wie [auf microsoft.com beschrieben](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/install-microsoft-odbc-driver-sql-server-macos?view=sql-server-ver16) installiert.
+
+**Installation von Homebrew (wenn nicht schon vorhanden)**
+
+````
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+````
+
+**Installation der Pakete**
+
+Achte darauf, dass die Schritte auch erfolgreich ausgeführt werden konnten.
+Ein Weiterarbeiten bei einem fehlerhaften Installationsschritt macht keinen Sinn.
+
+```
+brew install python@3.11
+brew install unixodbc
+```
+
+```
+brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+brew update
+HOMEBREW_ACCEPT_EULA=Y brew install msodbcsql18 mssql-tools18
+
+sudo ln -s /usr/local/etc/odbcinst.ini /etc/odbcinst.ini
+sudo ln -s /usr/local/etc/odbc.ini /etc/odbc.ini
+```
+
+```
+python3.11 -m pip install --upgrade pip
+pip3 install ipykernel --upgrade
+pip3 install --no-cache-dir --no-binary :all: pyodbc --upgrade
+pip3 install sqlalchemy --upgrade
+pip3 install requests --upgrade
+pip3 install numpy --upgrade
+pip3 install matplotlib --upgrade
+pip3 install pandas --upgrade
+pip3 install scipy --upgrade
+pip3 install statsmodels --upgrade
+pip3 install faker --upgrade
+pip3 install nbconvert[webpdf] --upgrade
 ```
 
 Mit dem Parameter *upgrade* wird die aktuellste Version installiert, falls vorher durch
 dependencies eine andere Versions schon installiert wurde. Durch das letzte Paket können Jupyter
 Notebooks in ein PDF konvertiert werden.
 
-### Vorhandene SQL Server Datenbank
+### Extensions für VS Code (alle OS)
 
-Das erste Beispiel verwendet die generierte Fahrkarten Datenbank in SQL Server. Dafür muss
-eine SQL Server Installation vorhanden sein. Entweder sie wird wie im vorigen Schritt
-([41_SqlServerInstall](../41_SqlServerInstall/README.md)) installiert oder es wird ein Docker
-Image von SQL Server verwendet.
+- Installation von Visual Studio Code (wenn noch nicht vorhanden)
+  - Installation der Extension [Jupyter](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter) in VS Code.
+  - Installation der Extension [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python) in VS Code.
 
-#### SQL Server als Docker Image
 
-Wenn [Docker für Windows](https://docs.docker.com/desktop/windows/install/#install-docker-desktop-on-windows)
-vorhanden ist, kann SQL Server 2019 auch als Container laufen.
-Der folgende Befehl startet einen SQL Server 2019 Container und weist das Passwort *SqlServer2019*
-zu. Es muss beim Datengenerator angegeben werden.
+### Verbindungstest zu einer SQL Server Datenbank
+
+Zum Testen der Verbindung muss natürlich ein SQL Server Container laufen.
+Falls er nicht schon angelegt wurde, kann mit dem folgenden Befehl ein Container erstellt werden:
 
 ```
 docker run -d -p 1433:1433  --name sqlserver2019 -e "ACCEPT_EULA=Y" -e "ACCEPT_EULA_ML=Y" -e "SA_PASSWORD=SqlServer2019" mcr.microsoft.com/azure-sql-edge      
 ```
 
-### Musterdaten Generator
+#### Befüllen der Datenbank
 
-In [42_DatabaseGenerator](../42_DatabaseGenerator/README.md) gibt es ein .NET Programm, welches
-Musterdaten in die SQL Server Datenbank schreibt.
+In [42_DatabaseGenerator](../42_DatabaseGenerator/README.md) haben wir für die Fahrkartenverkäufe eine Datenbank *Fahrkarten* erstellt. Auf diese Datenbank werden wir zugreifen.
 
-## Das erste Skript: Verbinden zur Datenbank
+#### Das erste Skript: Verbinden zur Datenbank
 
-Auf [docs.microsoft.com](https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/step-3-proof-of-concept-connecting-to-sql-using-pyodbc?view=sql-server-ver15)
-ist ein kleines Beispiel für ein Python Skript zur Verbindung mit der Datenbank. In der vorigen
-Übung haben wir SQL Server mit dem Instanznamen *SQLSERVER2019* installiert. Der Admin User (*sa*)
-hat das Kennwort *1234*. Mit diesen Daten versuchen wir nun, eine Verbindung mit der Datenbank
-herzustellen.
-
-Wird der Docker Container von SQL Server wie oben erwähnt verwendet, ist der Host *127.0.0.1*
-und das Passwort *SqlServer2019*.
-
-Dafür erstellen wir eine Datei mit dem Namen *dbAccess.py* in Visual Studio Code. Kopieren Sie danach
-folgenden Inhalt in die leere Datei:
+Erstelle in VS Code eine Datei *connect_test.ipynb*.
+Die Endung *ipynb* bedeutet *Jupyter Notebook*.
+Kopiere in den Codeblock folgende Anweisungen und führe sie aus.
+Es werden mit einer Abfrage alle Datenbanken, die im SQL Server Container vorhanden sind, ausgegeben.
 
 ```python
 import pyodbc
@@ -76,43 +114,25 @@ import sqlalchemy
 connection_url = sqlalchemy.engine.URL.create(
     "mssql+pyodbc",
     username="sa",
-    password="1234",               # oder SqlServer2019 (Docker Image)
-    host=".\SQLSERVER2019",        # oder 127.0.0.1 (Docker Image)
-    database="Fahrkarten",
+    password="SqlServer2019",
+    host="localhost",
+    database="tempdb",
     query={
-        "driver": "ODBC Driver 17 for SQL Server"
-    },
+        "driver": "ODBC Driver 18 for SQL Server",
+    }
 )
-
-engine = sqlalchemy.create_engine(connection_url)
+engine = sqlalchemy.create_engine(connection_url, connect_args={
+        "TrustServerCertificate": "yes"
+    })
 with engine.connect() as conn:
-    result = conn.execute("SELECT * FROM Station")
+    result = conn.execute(sqlalchemy.text("SELECT name, database_id, create_date FROM sys.databases"))
     records = result.fetchall()
     for row in records:
         print(row[0], row[1], row[2])
+
 ```
 
-Das Skript kann auf 2 Arten ausgeführt werden:
-
-- Durch die Eingabe von *python dbAccess.py* in der Konsole.
-- Durch Drücken von *F5* in Visual Studio Code. Hier startet der Debugger. Bei der Konfiguration muss
-  beim ersten Start *Python File* ausgewählt werden. Es können auch - wie in Visual Studio - Breakpoints
-  gesetzt werden. Mit *F10* kann das Programm Schritt für Schritt durchgegangen werden.
-
-## Jupyter Notebooks
-
-Im Data Science Bereich müssen oft dynamische Dokumente hergestellt werden. Das sind Dokumente
-auf Markdown Basis, die aber Berechnungen beinhalten. Einige Programme wie z. B. Mathcad verfolgen
-ähnliche Ideen.
-
-Um ein Jupyter Notebook anzulegen, öffnen Sie mit *F1* (oder *STRG+SHIFT+P*) die Einstellungen von
-VS Code. Dort finden Sie *Create: New Jupyter Notebook*. Speichern Sie das Notebook als
-*firstNotebook.ipynb* ab.
-
-Nun fügen wir eine Codezelle mit dem kleinen Skript von oben ein und starten es. Wir sehen nun
-die Ausgaben im Notebook. 
-
-### Ausgabe als PDF
+#### Ausgabe als PDF
 
 Die Ausgaben des Jupyter Notebooks können wir auch als PDF weitergeben. Der Export geschieht
 in der Kommandozeile:
