@@ -1,6 +1,12 @@
 # Umsetzung der BI Themen von griesmayer.com mit Python
 
 Voraussetzungen: Python und Jupyter Umgebung, siehe [Kapitel Jupyter Notebooks](../50_JupyterNotebooks/README.md)
+Einige Übungen laden Exceldateien im alten Excel Format (xls).
+Daher muss vorher das Python Paket *xlrd* in der Konsole installiert werden:
+
+```
+pip3 install xlrd --upgrade
+```
 
 ## ETL_MLoad
 
@@ -20,5 +26,10 @@ Voraussetzungen: Python und Jupyter Umgebung, siehe [Kapitel Jupyter Notebooks](
 **Jupyter Notebooks:**
 - [airport.ipynb](03_cube/airport.ipynb)
 - [bar.ipynb](03_cube/bar.ipynb)
+- [catering.ipynb](03_cube/catering.ipynb)
+- [cinema.ipynb](03_cube/cinema.ipynb)
+- [note.ipynb](03_cube/note.ipynb)
 - [online_order.ipynb](03_cube/online_order.ipynb)
+- [share.ipynb](03_cube/share.ipynb)
+- [university.ipynb](03_cube/university.ipynb)
 
