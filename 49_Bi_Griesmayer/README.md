@@ -33,3 +33,7 @@ pip3 install xlrd --upgrade
 - [share.ipynb](03_cube/share.ipynb)
 - [university.ipynb](03_cube/university.ipynb)
 
+## Star Schema
+
+**Quelle:** http://www.griesmayer.com/?menu=Business%20Intelligence&semester=Semsester_6&topic=04_StarSchema  
+**SQL Dump zum Weboster Modell:** [webhoster.sql](04_star_schema/webhoster.sql) (für SQL Server)
