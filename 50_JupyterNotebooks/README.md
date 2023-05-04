@@ -132,7 +132,12 @@ with engine.connect() as conn:
 
 ```
 
-#### Ausgabe als PDF
+### Verbinden mit einer Oracle Datenbank
+
+Natürlich kann man mit Python auch eine Oracle Datenbank ansprechen.
+Ein Beispiel ist im Notebook [jupyter_oracle.ipynb](jupyter_oracle.ipynb).
+
+### Ausgabe als PDF
 
 Die Ausgaben des Jupyter Notebooks können wir auch als PDF weitergeben. Der Export geschieht
 in der Kommandozeile:
