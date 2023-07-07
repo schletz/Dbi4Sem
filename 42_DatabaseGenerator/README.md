@@ -153,8 +153,8 @@ ORDER BY Datum
 
 ## Übung
 
-**(1)** Laden Sie die Datei [timeline-faelle-bundeslaender_unicode.csv](timeline-faelle-bundeslaender_unicode.csv) in das Verzeichnis *C:\Temp*.
-Es sind Daten der COVID Fallzahlen, die auf https://info.gesundheitsministerium.gv.at/data/timeline-faelle-bundeslaender.csv publiziert werden.
+**(1)** Laden Sie die Datei [timeline-faelle-bundeslaender_unicode.csv](timeline-faelle-bundeslaender_unicode.csv) in das Verzeichnis *C:\Temp\sql-home*.
+Es ist ein Abzug der Daten der COVID Fallzahlen, die bis zum 1.7.2023 auf https://info.gesundheitsministerium.gv.at publiziert wurden.
 
 **(2)**  Erstellen Sie eine SQL Server Datenbank COVID, indem Sie sich mit DBeaver, ... als User *sa* zum SQL Server verbinden und den folgenden Befehl eingeben:
 
