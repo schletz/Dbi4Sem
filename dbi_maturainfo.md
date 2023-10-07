@@ -1,6 +1,6 @@
 # DBI Matura für die AIF/KIF
 
-Stand: 14. Februar 2023, Änderungen vorbehalten
+Stand: 7. Oktober 2023, Änderungen vorbehalten
 
 ## Aufbau der Fragen, Thema ziehen 
 
@@ -36,13 +36,19 @@ Siehe https://github.com/schletz/Dbi3sem
 - **JSON Format:** Aufbau, Datentypen, Modelklassen, Abfragebeispiele 
 - **Dokumentbasierende NoSQL Datenbanken (MongoDB)**
     - Was ist eine Collection? Was ist ein Document? 
+    - Was ist schemaless? Müssen alle Keys immer in jedem Document vorhanden sein?
+      Was gibt es für Probleme, wenn man in C# oder Java darauf zugreift?
+    - Migrations: Was passiert, wenn zukünftige Dokumente ein Attribut mehr haben?
+      Ich muss u. U. meine bestehenden Documents in der DB aktualisieren.
     - Schemaentwurf wie auf
-   https://github.com/schletz/Dbi3Sem/blob/master/13_NoSQL/Uebungen%20Modelling/Terminverwaltung.md: Collections identifizieren, Document, Embedding, Referencing 
-    - Relational vs. NoSQL (ER Diagramm in ein Schema transformieren):
-    Ein ER Diagramm wird gegeben, entwerfen Sie ein Schema für eine NoSQL Datenbank. 
+   https://github.com/schletz/Dbi3Sem/blob/master/13_NoSQL/03_MongoDb_Examsdb.md: Collections identifizieren, Document, Embedding, Referencing 
     - Eine Collection mit *find()* und *aggregate()* abfragen können.
+      - https://github.com/schletz/Dbi3Sem/blob/master/13_NoSQL/05_MongoDb_Find.md und
+        https://github.com/schletz/Dbi3Sem/blob/master/13_NoSQL/07_MongoDb_Aggregate.md
+      - Den Begriff der Aggregation Pipeline erklären können und Vergleiche zu SQL ziehen könnnen.
     - Updates: SQL Update vs. NoSQL Update mit eingebetteten Daten. Beispiel: Der Lehrer wird als 
-    Klassenvorstand in das Document *Class* eingebettet. Der Lehrer ändert seine Email Adresse. Was ist zu tun? "Update Anomalie". 
+    Klassenvorstand in das Document *Class* eingebettet. Der Lehrer ändert seine Email Adresse. Was ist zu tun? 
+    - "Update Anomalie". 
 
 ### 3 Architekturen und Administration von Datenbanksystemen bei HIK 
 
@@ -50,25 +56,25 @@ Siehe https://github.com/schletz/Dbi3sem
 
 siehe https://github.com/schletz/Dbi4Sem 
 
-#### ETL Prozess 
-
-- Stagetabellen 
-(https://github.com/schletz/Dbi4Sem/blob/master/13_IncrementalLoad/README.md) 
-- Was ist ein ETL Prozess? (https://github.com/schletz/Dbi4Sem/blob/master/56_ETL/README.md) 
-
 #### SQL*Loader
 
 siehe  https://github.com/schletz/Dbi4Sem/blob/master/12_SqlLoader/README.md
 
+Was passiert, wenn ich meine Datenbank mit Fremddaten (regelmäßig) befüllen muss?
+
+- Stagetabellen (https://github.com/schletz/Dbi4Sem/blob/master/13_IncrementalLoad/README.md) 
+- Was ist ein ETL Prozess? (Grafik auf https://github.com/schletz/Dbi4Sem/blob/master/56_ETL/README.md erklären) 
 - Welche Möglichkeiten gibt es, Daten zu importieren? 
 - Welche Probleme gibt es beim Import von Textdateien? 
 - Konvertierungen (Datum, Zahlen, ...) 
+- Welchen Sinn haben Stagetabellen? Wie kann ich vorgehen, um ein inkrementelles Laden zu realisieren?
+- Gibt es Probleme mit verknüpften Daten in der Datenbank?
 
 #### Cubes und Star Model
 
-- Videos auf https://github.com/schletz/Dbi4Sem unter "Business Intelligence"
-- Grundoperatopnen in Cubes (https://de.wikipedia.org/wiki/OLAP-W%C3%BCrfel) 
-- Star Model (siehe Videos) 
+- Das Star Schema auf https://github.com/schletz/Dbi4Sem/blob/master/43_Starmodel/README.md erklären können.
+- Fact Tables und Dimension Tables auf Basis von Textdateien erkennen.
+- Der OLAP Cube, Grundoperationen in Cubes (https://de.wikipedia.org/wiki/OLAP-W%C3%BCrfel) 
 
 ### 5 Datenmodelle und Datenbankanwendungen bei HIK 
 
