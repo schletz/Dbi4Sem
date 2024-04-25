@@ -1,6 +1,6 @@
 # Reguläre Ausdrücke
 
-Unterlagen auf http://griesmayer.com/?menu=Oracle&semester=Semester_5&topic=07_RegularExpression
+Unterlagen auf https://griesmayer.com/?menu=Linux%20Crash&semester=Semester_3&topic=03_RegularExpression
 
 ## Übung
 Gehen Sie auf die Seite https://regex101.com/ und kopieren Sie die Musterstrings unter den Übungsbeispielen
