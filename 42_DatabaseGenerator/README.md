@@ -41,7 +41,7 @@ Sie können sich zum oben angelegten Docker Container mit folgenden Daten verbin
 
 ## Programm zum Generieren der Musterdatenbank
 
-Starten Sie das .NET 6 Programm im Ordner DataGenerator mit dem folgenden Befehl im Ordner *42_DatabaseGenerator/DataGenerator*:
+Starten Sie das .NET 8 Programm im Ordner DataGenerator mit dem folgenden Befehl im Ordner *42_DatabaseGenerator/DataGenerator*:
 
 ```text
 dotnet restore --no-cache && dotnet run -c Release 
